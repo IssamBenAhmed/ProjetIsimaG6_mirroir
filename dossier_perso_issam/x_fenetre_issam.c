@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
@@ -49,9 +50,9 @@ int main(int argc, char* argv[]) {
         while (SDL_PollEvent(&event)) { // le moteur surveille les événements
             if (event.type == SDL_QUIT) { // Si l'utilisateur ferme la fenêtre
                 isRunning = false; // On quitte la boucle
-            } else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-                currentWidth = event.window.data1;
-                currentHeight = event.window.data2;
+            } else if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {// Si la fenêtre est redimensionnée
+                currentWidth = event.window.data1;// On met à jour les dimensions de la fenêtre
+                currentHeight = event.window.data2;// On met à jour les dimensions de la fenêtre
             } else if (event.type == SDL_KEYDOWN) { // Si une touche est pressée
                 if (event.key.keysym.sym == SDLK_ESCAPE) {// Si c'est la touche Echap
                     isRunning = false;// On quitte la boucle
@@ -69,6 +70,9 @@ int main(int argc, char* argv[]) {
         // 3. Tracé du X
         SDL_RenderDrawLine(renderer, 0, 0, currentWidth, currentHeight);
         SDL_RenderDrawLine(renderer, 0, currentHeight, currentWidth, 0);
+        //test
+        SDL_SetRenderDrawColor(renderer,125,0,255,255);
+        SDL_RenderDrawLine(renderer, 0,0,300,300);
 
         // 4. Affichage
         SDL_RenderPresent(renderer);
