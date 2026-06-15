@@ -15,21 +15,7 @@ Ce journal de bord suit l'avancement du projet, les décisions techniques, les e
 
 ## Suivi des travaux
 
-### Date
+### Lundi 15 Juin
 
-- Étape ou séance de travail :
-- Objectif de la séance :
-- Actions réalisées :
-- Résultats obtenus :
-- Problèmes rencontrés :
-- Suite à donner :
-
-## Notes techniques
-
-- Méthodes ou algorithmes étudiés :
-- Paramètres importants :
-- Observations sur les performances :
-
-## Bilan provisoire
-
-À compléter au fur et à mesure de l'avancement du projet.
+Avancée progressive sur les premières taches, tout le groupe a complété le X_fenetre, et aura fini le bac à serpent avant demain.
+Début de réflexion sur le thème et les idées du projet final.
