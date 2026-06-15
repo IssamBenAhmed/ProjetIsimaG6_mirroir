@@ -6,7 +6,7 @@
 #define SEGMENT 20
 #define MAX 50
 
-typedef struct {
+typedef struct { //type de serpant
     int x[MAX];
     int y[MAX];
     int len;
@@ -15,7 +15,7 @@ typedef struct {
 } Snake;
 
 
-void initSnake(Snake *s)
+void initSnake(Snake *s) //initialisation
 {
     s->len = 10;
 
@@ -36,7 +36,7 @@ int plus_ou_moins(){
 
 
 
-void moveSnake(Snake *s)
+void moveSnake(Snake *s) //mouvement fluide
 {
     for (int i = s->len - 1; i > 0; i--) {
         s->x[i] = s->x[i - 1];
@@ -69,7 +69,7 @@ void moveSnake(Snake *s)
 
 
 
-void randomColor(SDL_Renderer *r)
+void randomColor(SDL_Renderer *r) //radominize color each secondes
 {
     Uint8 red = rand() % 256;
     Uint8 green = rand() % 256;
@@ -81,7 +81,7 @@ void randomColor(SDL_Renderer *r)
 
 
 
-void drawSnake(SDL_Renderer *r, Snake *s)
+void drawSnake(SDL_Renderer *r, Snake *s) 
 {
     for (int i = 0; i < s->len; i++) {
 
@@ -104,7 +104,7 @@ int main()
     SDL_Init(SDL_INIT_VIDEO);
     srand(time(NULL));
 
-    SDL_Window *window = SDL_CreateWindow(
+    SDL_Window *window = SDL_CreateWindow( //creation et vérification de écran
         "Snake rectangles",
         100, 100,
         1000, 1000,
@@ -119,7 +119,7 @@ int main()
     int running = 1;
     SDL_Event e;
 
-    while (running)
+    while (running) //event loop(mouvement de serpant)
     {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT)
@@ -138,7 +138,7 @@ int main()
         SDL_Delay(100);
     }
 
-    SDL_DestroyRenderer(renderer);
+    SDL_DestroyRenderer(renderer); // fin de jeu
     SDL_DestroyWindow(window);
     SDL_Quit();
 
