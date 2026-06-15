@@ -16,6 +16,6 @@ Ce journal de bord suit l'avancement du projet, les décisions techniques, les e
 ## Suivi des travaux
 
 ### Lundi 15 Juin
-
-Avancée progressive sur les premières taches, tout le groupe a complété le X_fenetre, et aura fini le bac à serpent avant demain.
+ 
+Avancée progressive sur les premières tâches : tout le groupe a complété le X_fenêtre et aura fini le bac à serpents d'ici demain.
 Début de réflexion sur le thème et les idées du projet final.
