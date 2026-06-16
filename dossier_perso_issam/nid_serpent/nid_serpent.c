@@ -10,7 +10,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define SNAKE_LENGTH 40     // plus long pour accentuer la fluidite
-#define SPACING 8.0f        // distance exacte maintenue entre chaque articulation
+#define SPACING 16.0f        // distance exacte maintenue entre chaque articulation
 #define SPEED 4.0f
 #define RECT_SIZE 16
 #define PI 3.14159265358979323846f
@@ -104,7 +104,7 @@ int main(int argc, char* argv[]) {
             float dx = snake[i-1].x - snake[i].x;
             float dy = snake[i-1].y - snake[i].y;
             
-            // calcul de la distance absolue avec le theoreme de pythagore
+            // calcul de la distance eulerienne
             float dist = sqrt(dx*dx + dy*dy);
             
             // si l'articulation s'eloigne au-dela de l'espacement autorise, on la tire
