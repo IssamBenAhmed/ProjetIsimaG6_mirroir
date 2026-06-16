@@ -1,14 +1,4 @@
-#include <SDL2/SDL.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-#define NB_PAR_DIAGONALE 15
-#define NB_FENETRES (2 * NB_PAR_DIAGONALE - 1)
-
-#define LARGEUR_INIT 110
-#define HAUTEUR_INIT 70
-
-#define LARGEUR_MIN 70
 //X_fenetre fait par LAAMARCHI NABIL 
 
 /*
