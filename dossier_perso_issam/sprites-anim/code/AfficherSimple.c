@@ -1,33 +1,33 @@
 // printsimple main - ben ahmed issam
 
-#include <SDL2/SDL.h>           // Inclut l'API principale de SDL2 (fenêtre, rendu, événements, etc.)
+#include <SDL2/SDL.h>           // inclut l'api principale de sdl2 (fenetre, rendu, evenements, etc.)
 #include <SDL2/SDL_image.h>     
 #include <stdbool.h>            
 #include <stdio.h>              
 #include <stdlib.h>             
 
-#define WINDOW_WIDTH 800       // Constante largeur de fenêtre
-#define WINDOW_HEIGHT 600      // Constante hauteur de fenêtre
+#define WINDOW_WIDTH 800       // constante largeur de fenetre
+#define WINDOW_HEIGHT 600      // constante hauteur de fenetre
 
 static void end_sdl(bool ok, const char *message, SDL_Window *window, SDL_Renderer *renderer)
 {
-  // Fonction utilitaire: nettoie les ressources SDL et termine le programme.
-  // `ok` : true => sortie réussie, false => sortie en erreur.
+  // fonction utilitaire: nettoie les ressources sdl et termine le programme.
+  // ok : true => sortie reussie, false => sortie en erreur.
   if (message != NULL) {
-    fprintf(stderr, "%s\n", message); // Affiche le message d'erreur si fourni
+    fprintf(stderr, "%s\n", message); // affiche le message d'erreur si fourni
   }
 
   if (renderer != NULL) {
-    SDL_DestroyRenderer(renderer);    // Libère le renderer si créé
+    SDL_DestroyRenderer(renderer);    // libere le renderer si cree
   }
 
   if (window != NULL) {
-    SDL_DestroyWindow(window);        // Libère la fenêtre si créée
+    SDL_DestroyWindow(window);        // libere la fenetre si creee
   }
 
-  IMG_Quit();                         // Désactive SDL_image
-  SDL_Quit();                         // Désactive SDL2
-  exit(ok ? EXIT_SUCCESS : EXIT_FAILURE); // Termine le processus avec le code approprié
+  IMG_Quit();                         // desactive sdl_image
+  SDL_Quit();                         // desactive sdl2
+  exit(ok ? EXIT_SUCCESS : EXIT_FAILURE); // termine le processus avec le code approprie
 }
 
 void PrintImage(char *image){
