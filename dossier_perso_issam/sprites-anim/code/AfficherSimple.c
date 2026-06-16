@@ -89,6 +89,6 @@ void PrintImage(char *image){
 }
 
 int main() {
-    PrintImage("/home/issam/Images/BODY_skeleton.png");
+    PrintImage("../img/sk/background.jpg");
     return 1;
 }
