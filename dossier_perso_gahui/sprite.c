@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
     SDL_Renderer* renderer = NULL;
     SDL_Texture * my_texture = NULL ; 
 
-    SDL_DisplayMode screen;               // Future fenêtre de gauche  
+    //SDL_DisplayMode screen;               // Future fenêtre de gauche  
        /* Initialisation de la SDL  + gestion de l'échec possible */
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
         SDL_Log("Error : SDL initialisation - %s\n", 
@@ -72,12 +72,18 @@ int main(int argc, char **argv) {
     renderer = SDL_CreateRenderer(window, -1,SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (renderer == NULL) end_sdl(0, "ERROR RENDERER CREATION", window, renderer);
 
-    //my_texture = IMG_LoadTexture(renderer,"Documents/Maze.png");
-    //if (my_texture == NULL) end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
+    my_texture = IMG_LoadTexture(renderer,"Maze.png");
+    if (my_texture == NULL) end_sdl(0, "Echec du chargement de l'image dans la texture", window, renderer);
 
-    
+    SDL_Rect destination;
 
-
+    destination.x = 0;
+    destination.y = 0;
+    destination.w = 1000;
+    destination.h = 800;
+     
+    SDL_RenderClear(renderer);
+    SDL_RenderCopy(renderer,my_texture,NULL,&destination);
     SDL_RenderPresent(renderer);/* Normalement, on devrait ici remplir les fenêtres... */
     SDL_Delay(2000);                           // Pause exprimée  en ms
 
@@ -92,5 +98,7 @@ int main(int argc, char **argv) {
     SDL_Quit();                               
  
     return 0;
-     }
+}
+
+
 
