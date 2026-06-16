@@ -113,10 +113,12 @@ static void display_movement(const char *image_path, const char *background_pic)
         end_sdl(false, IMG_GetError(), window, renderer, texture, background_texture);
     }
 
-    // Charge l'image de fond.
-    background_texture = IMG_LoadTexture(renderer, background_pic);
-    if (background_texture == NULL) {
-        end_sdl(false, IMG_GetError(), window, renderer, texture, background_texture);
+    // Charge l'image de fond si elle existe, sinon on utilisera un fond uni.
+    if (background_pic != NULL) {
+        background_texture = IMG_LoadTexture(renderer, background_pic);
+        if (background_texture == NULL) {
+            SDL_ClearError();
+        }
     }
 
     // Récupère la taille totale de la feuille de sprite.
@@ -200,7 +202,12 @@ static void display_movement(const char *image_path, const char *background_pic)
             }
 
             // Redessine l'écran avec la nouvelle frame du sprite.
-            SDL_RenderCopy(renderer, background_texture, NULL, NULL);
+            if (background_texture != NULL) {
+                SDL_RenderCopy(renderer, background_texture, NULL, NULL);
+            } else {
+                SDL_SetRenderDrawColor(renderer, 30, 30, 30, 255);
+                SDL_RenderClear(renderer);
+            }
             SDL_RenderCopy(renderer, texture, &tab_src[direction_index][k], &destination_rect);
             SDL_RenderPresent(renderer);
         }
@@ -217,8 +224,8 @@ static void display_movement(const char *image_path, const char *background_pic)
 int main(void)
 {
     // Lance l'animation avec la feuille de sprite du squelette.
-    const char *image_path = "/home/issam/Images/BODY_skeleton.png";
-    const char *background_pic = "/home/issam/Images/background.png";
+    const char *image_path = "../img/sk/skeleton.png";
+    const char *background_pic = "../img/sk/background.png";
 
     display_movement(image_path, background_pic);
     return EXIT_SUCCESS;
