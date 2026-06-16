@@ -19,7 +19,16 @@
 // la feuille est organisee en 4 lignes, une ligne par direction.
 #define DIRECTION_COUNT 4
 
-// libere proprement les ressources sdl et termine le programme.
+/**
+ * @brief libere les ressources sdl et termine le programme.
+ *
+ * @param ok indique si la sortie est normale.
+ * @param message message d'erreur a afficher, ou NULL.
+ * @param window fenetre sdl a detruire, ou NULL.
+ * @param renderer renderer sdl a detruire, ou NULL.
+ * @param texture texture principale a detruire, ou NULL.
+ * @param background_texture texture de fond a detruire, ou NULL.
+ */
 static void end_sdl(bool ok, const char *message, SDL_Window *window, SDL_Renderer *renderer, SDL_Texture *texture, SDL_Texture *background_texture)
 {
     // affiche le message si une erreur doit etre signalee.
@@ -55,7 +64,12 @@ static void end_sdl(bool ok, const char *message, SDL_Window *window, SDL_Render
     exit(ok ? EXIT_SUCCESS : EXIT_FAILURE);
 }
 
-// charge la feuille de sprite et deplace l'image affichee selon les fleches.
+/**
+ * @brief charge la feuille de sprite et deplace l'image affichee selon les fleches.
+ *
+ * @param image_path chemin vers la feuille de sprite.
+ * @param background_pic chemin vers le fond, ou NULL si aucun fond n'est souhaite.
+ */
 static void display_movement(const char *image_path, const char *background_pic)
 {
     // pointeurs sdl principaux.
@@ -220,7 +234,11 @@ static void display_movement(const char *image_path, const char *background_pic)
     end_sdl(true, NULL, window, renderer, texture, background_texture);
 }
 
-// point d'entree du programme.
+/**
+ * @brief point d'entree du programme.
+ *
+ * @return EXIT_SUCCESS si l'execution se termine correctement.
+ */
 int main(void)
 {
     // lance l'animation avec la feuille de sprite du squelette.

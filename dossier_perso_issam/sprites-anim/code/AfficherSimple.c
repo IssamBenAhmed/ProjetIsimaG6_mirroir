@@ -9,6 +9,14 @@
 #define WINDOW_WIDTH 800       // constante largeur de fenetre
 #define WINDOW_HEIGHT 600      // constante hauteur de fenetre
 
+/**
+ * @brief libere les ressources sdl et termine le programme.
+ *
+ * @param ok indique si la sortie est normale.
+ * @param message message d'erreur a afficher, ou NULL.
+ * @param window fenetre sdl a detruire, ou NULL.
+ * @param renderer renderer sdl a detruire, ou NULL.
+ */
 static void end_sdl(bool ok, const char *message, SDL_Window *window, SDL_Renderer *renderer)
 {
   // fonction utilitaire: nettoie les ressources sdl et termine le programme.
@@ -30,6 +38,11 @@ static void end_sdl(bool ok, const char *message, SDL_Window *window, SDL_Render
   exit(ok ? EXIT_SUCCESS : EXIT_FAILURE); // termine le processus avec le code approprie
 }
 
+/**
+ * @brief charge et affiche une image dans une fenetre sdl.
+ *
+ * @param image chemin de l'image a afficher.
+ */
 void PrintImage(char *image){
     
     SDL_Window *window = SDL_CreateWindow(image, 
@@ -88,6 +101,11 @@ void PrintImage(char *image){
 
 }
 
+/**
+ * @brief point d'entree du programme.
+ *
+ * @return EXIT_SUCCESS si l'execution se termine correctement.
+ */
 int main() {
     PrintImage("../img/sk/background.jpg");
     return 1;
