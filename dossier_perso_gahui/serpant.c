@@ -1,23 +1,26 @@
 #include <SDL2/SDL.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #define SIZE 20
 #define SEGMENT 20
 #define MAX 50
+#define LIMIT 0.8
 
 typedef struct { //type de serpant
-    int x[MAX];
-    int y[MAX];
+    float x[MAX];
+    float y[MAX];
     int len;
-    int dirX;
-    int dirY;
+    float dirX;
+    float dirY;
+    float angle;
 } Snake;
 
 
 void initSnake(Snake *s) //initialisation
 {
-    s->len = 10;
+    s->len = 20;
 
     for (int i = 0; i < s->len; i++) {
         s->x[i] = 200 - i * SEGMENT;
@@ -28,46 +31,39 @@ void initSnake(Snake *s) //initialisation
     s->dirY = 0;
 }
 
-int plus_ou_moins(){
-    srand(time(NULL));
-    return rand()%2 ; // 1==plus , 0 == moins
-}
-
-
-
-
-void moveSnake(Snake *s) //mouvement fluide
+void moveSnake(Snake *s)
 {
-    for (int i = s->len - 1; i > 0; i--) {
-        s->x[i] = s->x[i - 1];
-        s->y[i] = s->y[i - 1];
-    }
+    // 1. tête (mouvement fluide contrôlé)
+    s->angle += (rand() % 100 - 50) * 0.0005f;
 
+    float speed = 9.0f;
 
-    s->dirX = rand()%20;
-    s->dirY = rand()%30;
+    s->dirX = cos(s->angle) * speed;
+    s->dirY = sin(s->angle) * speed;
 
-    if(plus_ou_moins ==0){
-        s->x[0] -= s->dirX;
+    s->x[0] += s->dirX;
+    s->y[0] += s->dirY;
 
-    }
-    else{
-        s->x[0] += s->dirX;
-
-    }
-
-    if(plus_ou_moins ==0){
-        s->y[0] -= s->dirY;
-
-    }
-    else{
-        s->y[0] += s->dirY;
+    // 2. corps (follow fluide)
+    for(int i = 1; i < s->len; i++) {
+            // calcul du vecteur de direction entre le segment precedent et l'actuel
+            float dx = s->x[i-1] - s->x[i];
+            float dy = s->y[i-1] - s->y[i];
+            
+            // calcul de la distance absolue avec le theoreme de pythagore
+            float dist = sqrt(dx*dx + dy*dy);
+            
+            // si l'articulation s'eloigne au-dela de l'espacement autorise, on la tire
+            if (dist > 10.0f) {
+                // (dx / dist) et (dy / dist) creent un vecteur normalise (de taille 1)
+                // on multiplie ce vecteur par l'espacement voulu pour placer le segment a la bonne distance
+                // on soustrait ce resultat a la position du segment precedent
+                s->x[i] = s->x[i-1] - (dx / dist) * 10.0f;
+                s->y[i] = s->y[i-1] - (dy / dist) * 10.0f;
+            }
 
     }
 }
-
-
-
 
 void randomColor(SDL_Renderer *r) //radominize color each secondes
 {
@@ -116,7 +112,7 @@ int main()
     Snake snake;
     initSnake(&snake);
 
-    int running = 1;
+    int running = 1;//true
     SDL_Event e;
 
     while (running) //event loop(mouvement de serpant)
