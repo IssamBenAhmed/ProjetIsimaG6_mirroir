@@ -18,6 +18,9 @@
 #define CELL_AI_2 3
 #define CELL_AI_3 4
 
+/* Direction courante de la moto dans la grille.
+ * Ce ne sont pas des actions: le demi-tour immediat reste interdit.
+ */
 #define DIR_UP 0
 #define DIR_RIGHT 1
 #define DIR_DOWN 2
