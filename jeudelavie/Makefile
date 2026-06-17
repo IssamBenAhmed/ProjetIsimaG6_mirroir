@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c11 -Iinclude $(shell pkg-config --cflags sdl2)
+CFLAGS = -Wall -Wextra -g -std=c11 -Iinclude $(shell pkg-config --cflags sdl2)
 LDLIBS = $(shell pkg-config --libs sdl2)
 
 NAME = jeudelavie
