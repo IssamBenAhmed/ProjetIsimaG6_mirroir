@@ -8,6 +8,7 @@
 #include "../include/mj.h"
 #include "../include/graphique.h"
 
+
 int main(int argc, char *argv[]) {
     // eviter les warnings pour les arguments non utilises
     (void)argc; 
