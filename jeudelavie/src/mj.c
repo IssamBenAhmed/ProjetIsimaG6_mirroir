@@ -1,4 +1,5 @@
 #include "mj.h"
+#include "agent.h"
 
 int compter_voisins(int grille[WIDTH][HEIGHT], int x, int y){
     int compteur = 0;
@@ -22,12 +23,14 @@ int compter_voisins(int grille[WIDTH][HEIGHT], int x, int y){
     return compteur;
 }
 
+
+
 void maj_synchrone(int grille_courante[WIDTH][HEIGHT], int grille_future[WIDTH][HEIGHT]){
     for (int i = 0 ; i < WIDTH ; i ++){
         for(int j = 0 ; j < HEIGHT ; j ++){
             int etat_current = grille_courante[i][j] ; 
             int nb_voisins_vivants = compter_voisins(grille_courante, i, j);
-             grille_future[i][j] = agir_agent(état_current, nb_voisins_vivants);/// à vérifier
+             grille_future[i][j] = agir_agent( nb_voisins_vivants, etat_current,);
         }
     }
 
