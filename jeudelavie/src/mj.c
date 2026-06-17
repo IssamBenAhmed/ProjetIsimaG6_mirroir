@@ -30,7 +30,7 @@ void maj_synchrone(int grille_courante[WIDTH][HEIGHT], int grille_future[WIDTH][
         for(int j = 0 ; j < HEIGHT ; j ++){
             int etat_current = grille_courante[i][j] ; 
             int nb_voisins_vivants = compter_voisins(grille_courante, i, j);
-             grille_future[i][j] = is_alive( nb_voisins_vivants, etat_current,);
+             grille_future[i][j] = is_alive( nb_voisins_vivants, etat_current);
         }
     }
 
