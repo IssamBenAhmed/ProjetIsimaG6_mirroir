@@ -1,6 +1,8 @@
 #include "../include/agent.h"
 
+/* applique les regles de survie et de naissance de conway */
 int is_alive(int nb_voisins, int etat) {
+    /* une cellule vivante reste vivante avec deux ou trois voisins */
     if (etat == 1) {
         if (nb_voisins == 2 || nb_voisins == 3) {
             return 1;
@@ -10,6 +12,7 @@ int is_alive(int nb_voisins, int etat) {
         }
     }
     
+    /* une cellule morte devient vivante avec exactement trois voisins */
     if (etat == 0) {
         if (nb_voisins == 3) {
             return 1;
@@ -19,6 +22,6 @@ int is_alive(int nb_voisins, int etat) {
         }
     }
     
-    // Sécurité obligatoire pour satisfaire le compilateur
+    /* securite de retour par defaut */
     return 0; 
 }
