@@ -2,11 +2,7 @@
 #define GRAPHISME_H
 
 #include <SDL2/SDL.h>
-
-/* Dimensions de la grille */
-#define WIDTH 80
-#define HEIGHT 50
-#define TAILLE_CASE 10
+#include "config.h"
 
 /* Création de la fenêtre SDL2 */
 SDL_Window *creer_fenetre(int largeur, int hauteur);
@@ -29,3 +25,5 @@ void gerer_interaction(SDL_Event *event,
                        int *cam_y);
 
 #endif
+
+
