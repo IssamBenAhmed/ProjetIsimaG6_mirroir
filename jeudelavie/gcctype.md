@@ -1,0 +1,1 @@
+gcc -Wall -Wextra -std=c11 -Iinclude $(pkg-config --cflags sdl2) src/main.c src/agent.c src/mj.c src/graphique.c -o jeudelavie $(pkg-config --libs sdl2)
