@@ -81,3 +81,47 @@ Ce module prend en charge le rendu visuel de la matrice et capture les actions d
   * `grille` : La matrice modifiable en temps réel.
   * `zoom`, `cam_x`, `cam_y` : Les variables de configuration de la vue.
 * **Sortie :** Aucune.
+
+
+
+
+# Architecture et Flux de Données (Jeu de la Vie)
+
+## Schéma d'Architecture
+
+          [ UTILISATEUR ]
+                 |
+                 | (Clics / Molette)
+                 v
+       +-------------------+        (4) Lit la grille        +-------------------+
+       |                   | <------------------------------ |                   |
+       |   1. GRAPHISTE    |                                 | 3. MAÎTRE DU JEU  |
+       |                   | ------------------------------> |       (MJ)        |
+       +-------------------+  (1) Modifie la grille (clic)   +-------------------+
+                                                                  |    ^
+                                         (2) Perception (voisins) |    | (3) Action (état t+1)
+                                                                  v    |
+                                                          +-------------------+
+                                                          |                   |
+                                                          |     2. AGENT      |
+                                                          |                   |
+                                                          +-------------------+
+
+## Liste des Interactions (Cycle d'un tour de jeu)
+
+**1. Interaction Utilisateur (Graphiste ➔ Grille)**
+* Le **Graphiste** écoute les événements matériels (souris).
+* Si l'utilisateur clique, le Graphiste traduit les pixels en coordonnées et modifie *directement* l'état de la case dans la grille courante.
+
+**2. Phase de Perception (MJ ➔ Agent)**
+* Le **MJ** parcourt chaque case de la grille courante.
+* Il calcule mathématiquement le nombre de voisins vivants (en appliquant le modulo pour le tore).
+* Il interroge l'**Agent** en lui fournissant deux données : son état actuel et son nombre de voisins.
+
+**3. Phase de Décision (Agent ➔ MJ)**
+* L'**Agent** reçoit la perception, applique les règles déterministes de Conway, et renvoie `0` (mort) ou `1` (vivant).
+* Le **MJ** réceptionne cette réponse et l'inscrit dans la grille *future* (pour garantir la mise à jour synchrone).
+
+**4. Phase de Rendu (MJ ➔ Graphiste)**
+* Une fois la grille entière traitée, la boucle principale échange les adresses des grilles courante et future.
+* Le **Graphiste** reçoit la nouvelle grille courante et effectue le rendu visuel (traduction des `0` et `1` en carrés noirs et blancs à l'écran).
