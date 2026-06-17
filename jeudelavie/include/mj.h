@@ -1,10 +1,11 @@
-#ifdef MAITRE_JEU
-#define MAITRE_JEU
+#ifndef MJ_H
+#define MJ_H
 
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "config.h"
 
 
 
