@@ -1,4 +1,4 @@
-#include "graphisme.h"
+#include "graphique.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -19,7 +19,7 @@ SDL_Window *creer_fenetre(int largeur, int hauteur)
         SDL_WINDOWPOS_CENTERED,
         largeur,
         hauteur,
-        SDL_WINDOW_SHOWN
+        SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE
     );
 
     if (window == NULL)
@@ -57,7 +57,7 @@ SDL_Renderer *creer_renderer(SDL_Window *window)
 }
 
 void dessiner_grille(SDL_Renderer *renderer,
-                     int grille[HEIGHT][WIDTH],
+                     int grille[WIDTH][HEIGHT],
                      float zoom,
                      int cam_x,
                      int cam_y)
@@ -74,16 +74,16 @@ void dessiner_grille(SDL_Renderer *renderer,
         taille_affichee = 1;
     }
 
-    for (y = 0; y < HEIGHT; y++)
+    for (x = 0; x < WIDTH; x++)
     {
-        for (x = 0; x < WIDTH; x++)
+        for (y = 0; y < HEIGHT; y++)
         {
             cellule.x = x * taille_affichee + cam_x;
             cellule.y = y * taille_affichee + cam_y;
             cellule.w = taille_affichee;
             cellule.h = taille_affichee;
 
-            if (grille[y][x] == 1)
+            if (grille[x][y] == 1)
             {
                 SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
                 SDL_RenderFillRect(renderer, &cellule);
@@ -101,7 +101,7 @@ void dessiner_grille(SDL_Renderer *renderer,
 }
 
 void gerer_interaction(SDL_Event *event,
-                       int grille[HEIGHT][WIDTH],
+                       int grille[WIDTH][HEIGHT],
                        float *zoom,
                        int *cam_x,
                        int *cam_y)
@@ -145,7 +145,7 @@ void gerer_interaction(SDL_Event *event,
                 if (case_x >= 0 && case_x < WIDTH &&
                     case_y >= 0 && case_y < HEIGHT)
                 {
-                    grille[case_y][case_x] = 1 - grille[case_y][case_x];
+                    grille[case_x][case_y] = 1 - grille[case_x][case_y];
                 }
             }
         }
@@ -191,5 +191,4 @@ void gerer_interaction(SDL_Event *event,
         }
     }
 }
-        
 
