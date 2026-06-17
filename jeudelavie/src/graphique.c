@@ -38,7 +38,7 @@ SDL_Renderer *creer_renderer(SDL_Window *window)
 
     if (window == NULL)
     {
-        SDL_Log("Erreur : la fenêtre est NULL");
+        SDL_Log("Erreur : la fenetre est NULL");
         SDL_Quit();
         exit(EXIT_FAILURE);
     }
@@ -67,7 +67,7 @@ void dessiner_grille(SDL_Renderer *renderer,
     int x;
     int y;
 
-    taille_affichee = (int)(TAILLE_CASE * zoom);
+    taille_affichee = (int)(CELL_SIZE * zoom);
 
     if (taille_affichee < 1)
     {
@@ -120,7 +120,7 @@ void gerer_interaction(SDL_Event *event,
     int case_x;
     int case_y;
 
-    taille_affichee = (int)(TAILLE_CASE * (*zoom));
+    taille_affichee = (int)(CELL_SIZE * (*zoom));
 
     if (taille_affichee < 1)
     {
@@ -191,3 +191,5 @@ void gerer_interaction(SDL_Event *event,
         }
     }
 }
+        
+
