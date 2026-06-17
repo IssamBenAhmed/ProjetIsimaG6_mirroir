@@ -1,29 +1,19 @@
-#ifndef GRAPHISME_H
-#define GRAPHISME_H
+#ifndef GRAPHIQUE_H
+#define GRAPHIQUE_H
 
 #include <SDL2/SDL.h>
 #include "config.h"
 
-/* Création de la fenêtre SDL2 */
 SDL_Window *creer_fenetre(int largeur, int hauteur);
 
-/* Création du renderer SDL2 */
 SDL_Renderer *creer_renderer(SDL_Window *window);
 
-/* Dessin de la grille */
-void dessiner_grille(SDL_Renderer *renderer,
-                     int grille[HEIGHT][WIDTH],
-                     float zoom,
-                     int cam_x,
-                     int cam_y);
+void dessiner_grille(SDL_Renderer *renderer,int grille[WIDTH][HEIGHT],float zoom,int cam_x,int cam_y);
 
-/* Gestion des interactions souris */
-void gerer_interaction(SDL_Event *event,
-                       int grille[HEIGHT][WIDTH],
-                       float *zoom,
-                       int *cam_x,
-                       int *cam_y);
+void gerer_interaction(SDL_Event *event,int grille[WIDTH][HEIGHT],float *zoom, int *cam_x, int *cam_y);
 
 #endif
+
+
 
 
