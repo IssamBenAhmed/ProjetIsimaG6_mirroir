@@ -15,4 +15,7 @@
 /* delai de rafraichissement par defaut */
 #define DELAY_MS 32
 
+/* zoom minimum pour garder la grille a sa taille de base */
+#define MIN_ZOOM ((float)WINDOW_WIDTH / ((float)WIDTH * CELL_SIZE))
+
 #endif /* CONFIG_H */

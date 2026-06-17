@@ -36,6 +36,8 @@ void dessiner_grille(SDL_Renderer *renderer,int grille[WIDTH][HEIGHT],float zoom
  * @param zoom pointeur vers le zoom courant.
  * @param cam_x pointeur vers le decalage horizontal.
  * @param cam_y pointeur vers le decalage vertical.
+ * @note le clic gauche simple inverse une cellule et le clic gauche maintenu
+ *       permet de deplacer la vue.
  */
 void gerer_interaction(SDL_Event *event,int grille[WIDTH][HEIGHT],float *zoom, int *cam_x, int *cam_y);
 

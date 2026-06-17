@@ -121,13 +121,18 @@ void gerer_interaction(SDL_Event *event,
                        int *cam_x,
                        int *cam_y)
 {
-    static int clic_droit_appuye = 0;
+    static int clic_gauche_appuye = 0;
+    static int clic_gauche_en_drag = 0;
     static int ancien_x = 0;
     static int ancien_y = 0;
 
     int souris_x;
     int souris_y;
     int taille_affichee;
+    int largeur_grille_affichee;
+    int hauteur_grille_affichee;
+    int cam_x_min;
+    int cam_y_min;
 
     int local_x;
     int local_y;
@@ -144,60 +149,112 @@ void gerer_interaction(SDL_Event *event,
         taille_affichee = 1;
     }
 
+    /* calcule les limites de la camera pour rester dans la grille */
+    largeur_grille_affichee = WIDTH * taille_affichee;
+    hauteur_grille_affichee = HEIGHT * taille_affichee;
+    cam_x_min = WINDOW_WIDTH - largeur_grille_affichee;
+    cam_y_min = WINDOW_HEIGHT - hauteur_grille_affichee;
+
+    if (cam_x_min > 0)
+    {
+        cam_x_min = 0;
+    }
+
+    if (cam_y_min > 0)
+    {
+        cam_y_min = 0;
+    }
+
     /* clics souris et appuis */
     if (event->type == SDL_MOUSEBUTTONDOWN)
     {
-        /* clic gauche: inverse l'etat de la cellule visee */
+        /* clic gauche: prepare soit un toggle soit un drag */
         if (event->button.button == SDL_BUTTON_LEFT)
         {
+            clic_gauche_appuye = 1;
+            clic_gauche_en_drag = 0;
             souris_x = event->button.x;
             souris_y = event->button.y;
 
-            /* convertit la position ecran en coordonnees locales */
+            ancien_x = souris_x;
+            ancien_y = souris_y;
+
+            /* calcule la cellule visee pour un toggle possible au relachement */
             local_x = souris_x - *cam_x;
             local_y = souris_y - *cam_y;
 
-            /* ignore les clics hors zone utile */
             if (local_x >= 0 && local_y >= 0)
             {
                 case_x = local_x / taille_affichee;
                 case_y = local_y / taille_affichee;
-
-                /* protege les acces hors limites */
-                if (case_x >= 0 && case_x < WIDTH &&
-                    case_y >= 0 && case_y < HEIGHT)
-                {
-                    grille[case_x][case_y] = 1 - grille[case_x][case_y];
-                }
             }
         }
-
-        /* clic droit: active le deplacement de la camera */
-        if (event->button.button == SDL_BUTTON_RIGHT)
-        {
-            clic_droit_appuye = 1;
-            ancien_x = event->button.x;
-            ancien_y = event->button.y;
-        }
     }
 
-    /* relachement du clic droit */
+    /* relachement du clic gauche */
     if (event->type == SDL_MOUSEBUTTONUP)
     {
-        if (event->button.button == SDL_BUTTON_RIGHT)
+        if (event->button.button == SDL_BUTTON_LEFT)
         {
-            clic_droit_appuye = 0;
+            if (!clic_gauche_en_drag)
+            {
+                souris_x = event->button.x;
+                souris_y = event->button.y;
+
+                local_x = souris_x - *cam_x;
+                local_y = souris_y - *cam_y;
+
+                if (local_x >= 0 && local_y >= 0)
+                {
+                    case_x = local_x / taille_affichee;
+                    case_y = local_y / taille_affichee;
+
+                    if (case_x >= 0 && case_x < WIDTH &&
+                        case_y >= 0 && case_y < HEIGHT)
+                    {
+                        grille[case_x][case_y] = 1 - grille[case_x][case_y];
+                    }
+                }
+            }
+
+            clic_gauche_appuye = 0;
+            clic_gauche_en_drag = 0;
         }
     }
 
-    /* deplacement de la souris avec clic droit maintenu */
+    /* deplacement de la souris avec clic gauche maintenu */
     if (event->type == SDL_MOUSEMOTION)
     {
-        if (clic_droit_appuye)
+        if (clic_gauche_appuye)
         {
+            /* active le drag si la souris a bouge d'au moins un pixel */
+            if (event->motion.xrel != 0 || event->motion.yrel != 0)
+            {
+                clic_gauche_en_drag = 1;
+            }
+
             /* translate la vue selon le mouvement de souris */
             *cam_x = *cam_x + event->motion.x - ancien_x;
             *cam_y = *cam_y + event->motion.y - ancien_y;
+
+            /* bloque la camera aux bords de la grille */
+            if (*cam_x > 0)
+            {
+                *cam_x = 0;
+            }
+            else if (*cam_x < cam_x_min)
+            {
+                *cam_x = cam_x_min;
+            }
+
+            if (*cam_y > 0)
+            {
+                *cam_y = 0;
+            }
+            else if (*cam_y < cam_y_min)
+            {
+                *cam_y = cam_y_min;
+            }
 
             ancien_x = event->motion.x;
             ancien_y = event->motion.y;
@@ -212,9 +269,15 @@ void gerer_interaction(SDL_Event *event,
             *zoom = *zoom + 0.1f;
         }
 
-        if (event->wheel.y < 0 && *zoom > 0.2f)
+        if (event->wheel.y < 0 && *zoom > MIN_ZOOM)
         {
             *zoom = *zoom - 0.1f;
+        }
+
+        /* empeche tout zoom en dessous de la taille de base de la grille */
+        if (*zoom < MIN_ZOOM)
+        {
+            *zoom = MIN_ZOOM;
         }
     }
 }
