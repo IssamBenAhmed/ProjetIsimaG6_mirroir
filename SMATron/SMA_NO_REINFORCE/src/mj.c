@@ -92,6 +92,9 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             // droite = rotation +90°
             int rdx = dy;
             int rdy = -dx;
+            
+            int nx = 0;
+            int ny= 0 ;
 
             if (action == 0) { nx = x + dx; ny = y + dy; } //tout droit
             if (action == 1) { nx = x + ldx; ny = y + ldy; }//gauche
