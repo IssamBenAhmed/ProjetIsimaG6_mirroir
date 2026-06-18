@@ -24,16 +24,16 @@ typedef struct { //type de serpant
 } Snake;
 
 
-void initSnake(Snake *s) //initialisation
+void initSnake(Snake *s) //initialisation de serpant et sa position
 {
     s->len = 40;
 
     for (int i = 0; i < s->len; i++) {
-        s->x[i] = 200 - i * SEGMENT;
+        s->x[i] = 200 - i * SEGMENT; // la position initiale de son corps
         s->y[i] = 200;
     }
 
-    s->dirX = SEGMENT;
+    s->dirX = SEGMENT; // la direction initial de serpant
     s->dirY = 0;
 }
 
@@ -108,9 +108,9 @@ void drawSnake(SDL_Renderer *r, Snake *s)
 {
     for (int i = 0; i < s->len; i++) {
 
-        randomColor(r);
+        randomColor(r); // on choisit le couleur au hasard
 
-        SDL_Rect rect = {
+        SDL_Rect rect = { // une des segments de serpant est un rectangle
             s->x[i],
             s->y[i],
             20,
@@ -142,21 +142,21 @@ int main()
     int running = 1;//true
     SDL_Event e;
 
-    while (running) //event loop(mouvement de serpant)
+    while (running) //event loop(mouvement de serpent)
     {
         while (SDL_PollEvent(&e)) {
             if (e.type == SDL_QUIT)
                 running = 0;
         }
 
-        moveSnake(&snake);
+        moveSnake(&snake); //serpent bouge
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
         SDL_RenderClear(renderer);
 
         drawSnake(renderer, &snake);
 
-        SDL_RenderPresent(renderer);
+        SDL_RenderPresent(renderer); // à chaque instant, on redessine le courleur de chaque segment de serpent
 
         SDL_Delay(100);
     }
