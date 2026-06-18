@@ -1,0 +1,16 @@
+## Qu'est-ce qui va changer ?
+
+
+### La perception du MJ :
+Au lieu d'une simple perception linéaire , le mj devra pouvoir être capable de donner une vision plus générale de la grille à l'agent :
+la vision linéaire très précise ( il y a un mur du joueur 3 à 7 cases de moi à droite ) est conservée , et une vision plus "floue" des zones triangulaire diagonales ( il y a le joueur 2 actuellement dans la zone gauche , et le joueur 3 dans la zone haute).
+
+### L'adaptation de l'agent : 
+d'un point de vu génie logiciel , il faudrait que changer la nature de la perception n'influe pas la totalité du code, il faut donc que l'agent s'adapte au type de perception : 1ère idée : toute perception sera placé dans un tableau de meme dimension pour tout type de perception, et l'agent identifiera sa nature pour prendre les décisions adéquates.
+
+### implémentation du REINFORCE
+#### retirer le joueur actif 
+Afin d'entrainer nos Agents , il faut qu'il puisse rejouer une tonne de fois les parties, donc on implémentera un jeu autonome où les 4 agents s'entrainent entre eux
+
+#### système d'apprentissage
+implémenter l'apprentissage REINFORCE
