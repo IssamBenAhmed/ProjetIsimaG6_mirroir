@@ -20,7 +20,13 @@ Ce journal de bord suit l'avancement du projet, les décisions techniques, les e
 Avancée progressive sur les premières tâches : tout le groupe a complété le X_fenêtre et aura fini le bac à serpents d'ici demain.
 Début de réflexion sur le thème et les idées du projet final.
 
+gahui Ban : commencé de programmer X-fenetre. Pour cela, j’ai utilisé la fonction de création de fenêtre en stockant les window dans une table de 100 cases, et utiliser l’opération boucle “while” pour afficher la fenetre sur l’écran. le serpant m'aide à apprendre sur le tracer une figure sur l'écran et le déplacement, ce qui est une bonne première étape pour le début de projet.  
+
 ### Mardi 16 Juin
 
 Étapes préliminaires complétées : l'intégralité du groupe a terminé le bac à serpents, ainsi que les sprites, à quelques optimisations près.
 Une réflexion sur la structure et les étapes de conception du jeu de la vie a été engagée, et certaines étapes seront préparées à l'avance.
+
+
+
+### 
