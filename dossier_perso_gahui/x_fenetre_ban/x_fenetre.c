@@ -1,14 +1,15 @@
 #include <SDL2/SDL.h>
 #include <stdio.h>
-#define ECRAN_HAUTEUR 800
-#define ECRAN_LARGEUR 1700
+#define ECRAN_HAUTEUR 700
+#define ECRAN_LARGEUR 1850
+#define TAILLE 100
 
      /************************************/
      /*  exemple de création de fenêtres */
      /************************************/
 
 
-void SDL_axe1 (SDL_Window *window[100]){
+void SDL_axe1 (SDL_Window *window[TAILLE]){
   int i =1;
   int j =1; 
   int nb = 0;
@@ -25,8 +26,8 @@ void SDL_axe1 (SDL_Window *window[100]){
         SDL_Quit();                              // On referme la SDL       
         exit(EXIT_FAILURE);
       }  
-      j = j+20; 
-      i = i+40; 
+      j = j+21; 
+      i = i+49; 
       nb ++ ;
 
 
@@ -37,7 +38,7 @@ void SDL_axe1 (SDL_Window *window[100]){
 
 
 
-void SDL_axe2 (SDL_Window *window[100]){
+void SDL_axe2 (SDL_Window *window[TAILLE]){
   int k = 0 ; // x initial
   int l = ECRAN_HAUTEUR; // y initial
   int nb = 0 ;
@@ -56,8 +57,8 @@ void SDL_axe2 (SDL_Window *window[100]){
         SDL_Quit();                              // On referme la SDL       
         exit(EXIT_FAILURE);
       }  
-      l -= 20; //hauteur
-      k += 41; //largeur
+      l -= 21; //hauteur
+      k += 49; //largeur
       nb ++;
   }
 
@@ -65,7 +66,7 @@ void SDL_axe2 (SDL_Window *window[100]){
 
 
 
-void liberer_window(SDL_Window *window[100], int nb){
+void liberer_window(SDL_Window *window[TAILLE], int nb){
   for (int m = 0; m < nb; m++) {
     if (window[m]!= NULL){
       SDL_DestroyWindow(window[m]);
@@ -82,28 +83,33 @@ void liberer_window(SDL_Window *window[100], int nb){
 
 
 int main(int argc, char **argv) {
-   (void)argc;
-   (void)argv;
+  (void)argc;
+  (void)argv;
 
-   SDL_Window *window_1[100] = {NULL},*window_2[100] = {NULL};                     // Future fenêtre de droite
+  SDL_Window *window_1[TAILLE] = {NULL},*window_2[TAILLE] = {NULL};                     // Future fenêtre de droite
 
-   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        SDL_Log("Error : SDL initialisation - %s\n", SDL_GetError());                
-        exit(EXIT_FAILURE);
-      }
+  if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+      SDL_Log("Error : SDL initialisation - %s\n", SDL_GetError());                
+      exit(EXIT_FAILURE);
+  }
+
+  
+
+  
 
 
 
-   SDL_axe1( window_1 );   
 
-   SDL_axe2(window_2) ;
+  SDL_axe1( window_1 );   
+
+  SDL_axe2(window_2) ;
 
    
-   SDL_Delay(4000);                           // Pause exprimée  en ms
+  SDL_Delay(4000);                           // Pause exprimée  en ms
 
     
-   liberer_window(window_1, 100);
-   liberer_window(window_2,100);
+  liberer_window(window_1, TAILLE);
+  liberer_window(window_2,TAILLE);
 
     
   SDL_Quit();                               
