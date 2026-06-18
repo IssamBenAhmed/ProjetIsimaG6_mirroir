@@ -27,6 +27,11 @@ gahui Ban : commencé de programmer X-fenetre. Pour cela, j’ai utilisé la fon
 Étapes préliminaires complétées : l'intégralité du groupe a terminé le bac à serpents, ainsi que les sprites, à quelques optimisations près.
 Une réflexion sur la structure et les étapes de conception du jeu de la vie a été engagée, et certaines étapes seront préparées à l'avance.
 
+gahui ban :  le programme “serpent ” a été finalisé et l’animation commence. Cela m’entraine d’afficher, superposer, déplacer avec le mouvement de Sprite ou non. 
+
+ 
+### Mercredi 17 Juin
 
 
-### 
+
+### jeudi 18 juin
