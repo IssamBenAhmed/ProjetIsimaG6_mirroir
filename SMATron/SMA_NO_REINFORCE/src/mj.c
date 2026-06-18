@@ -63,7 +63,7 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
 
 void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1]) {
 	int i = 0;
-    for(i = 0; i < MAX_MOTOS+1; i++){
+    for(i = 2; i < MAX_MOTOS+1; i++){
        
         int x = pos_motos[i][0] ;
         int y = pos_motos[i][1];
@@ -80,9 +80,9 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             int dx, dy;
 
             // vecteur devant selon direction de moto
-            if(direction == 0){ dx = 1; dy = 0; }
+            if(direction == 0){ dx = 0; dy = 1; }
             else if(direction == 1){ dx = -1; dy = 0; }
-            else if(direction == 2){ dx = 0; dy = 1; }
+            else if(direction == 2){ dx = 1; dy = 0; }
             else { dx = 0; dy = -1; }
 
             // gauche = rotation -90°
