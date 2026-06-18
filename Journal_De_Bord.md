@@ -38,6 +38,14 @@ gahui ban :  le programme “serpent ” a été finalisé et l’animation comm
  
 ### Mercredi 17 Juin
 
+Le groupe a compris le principe d’un **SMA** : plusieurs agents qui agissent dans un même environnement selon des règles simples.Nous avons aussi compris le **Jeu de la Vie**, nous l’avons codé, puis nous avons commencé à travailler sur le deuxième jeu : **le jeu de Tron**.
 
+LAAMARCHI Nabil:J’ai compris le principe d’un **SMA** et le fonctionnement du **Jeu de la Vie**, puis j’ai participé au codage du jeu.J’ai pris la tâche de **dessiner l’interface graphique du Jeu de la Vie**, et j’ai aussi commencé à travailler sur la partie **interface graphique du jeu de Tron**.
 
 ### Jeudi 18 juin
+
+Nous avons terminé le **jeu de Tron** avec et nous avons finalisé les dernières parties du projet.
+Nous avons aussi rédigé la **présentation de soutenance** afin d’expliquer notre travail, les jeux réalisés et les tâches de chacun.
+
+LAAMARCHI Nabil:J’ai codé **l’interface graphique du jeu de Tron** avec SDL2.J’ai aussi ajouté le contrôle du joueur avec le clavier, ce qui permet de déplacer la moto dans l’arène pendant le jeu.
+
