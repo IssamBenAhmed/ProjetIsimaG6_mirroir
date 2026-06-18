@@ -7,8 +7,11 @@
 #include "../include/graphisme.h"
 #include "../include/mj.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
+	(void)argc;
+	(void)argv;
+
 	int grid[WIDTH][HEIGHT] = {0};
 	int pos_motos[MAX_MOTOS + 1][2] = {0};
 	int dir_motos[MAX_MOTOS + 1] = {0};
@@ -95,21 +98,32 @@ int main(void)
 			// Mise à jour de la physique globale gérée par Gahui
 			mettre_a_jour_monde(grid, pos_motos, dir_motos, moto_alive);
 
-			// Vérification de la condition d'arrêt
-			bool any_alive = false;
+			// Vérification de la condition de victoire/fin (1 seule moto restante ou moins)
+			int motos_vivantes = 0;
 			for (int id = CELL_PLAYER; id <= CELL_AI_3; id++) {
 				if (moto_alive[id]) {
-					any_alive = true;
-					break;
+					motos_vivantes++;
 				}
 			}
 
-			if (!any_alive) {
+			if (motos_vivantes <= 1) {
+				// 1. Dessiner l'arène dans son état final
+				dessiner_arene(renderer, grid);
+				// 2. Ajouter le panneau "END" par-dessus
+				dessiner_panneau_fin(renderer);
+				// 3. Afficher à l'écran
+				SDL_RenderPresent(renderer);
+				
+				// 4. Mettre en pause pendant 2000 ms (2 secondes)
+				SDL_Delay(2000);
+				
+				// 5. Stopper la boucle pour fermer le jeu
 				running = false;
+				continue; 
 			}
 		}
 
-		// Rendu graphique de l'arène géré par Nabil
+		// Rendu graphique standard en cours de partie
 		dessiner_arene(renderer, grid);
 		SDL_Delay(16); 
 	}

@@ -52,27 +52,31 @@ void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
 }
 
 void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1]) {
-    // On boucle uniquement sur les IA (de 2 à 4)
-    for (int i = CELL_AI_1; i <= CELL_AI_3; i++) {
+    // On boucle sur TOUTES les motos vivantes (Joueur inclus : de 1 à 4)
+    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
         if (!etats_vie[i]) continue;
 
         int x = pos_motos[i][0];
         int y = pos_motos[i][1];
-        int direction = dir_motos[i];
-        float perception[PERCEPTION_SIZE] = {0};
+        
+        // --- ISOLATION DE L'AGENT ---
+        // Seules les Agents (ID >= 2) utilisent la perception et ta fonction choisir_action
+        if (i >= CELL_AI_1) {
+            float perception[PERCEPTION_SIZE] = {0};
+            calculer_perception(grille, x, y, dir_motos[i], perception);
 
-        calculer_perception(grille, x, y, direction, perception);
+            int action = choisir_action(perception);
 
-        int action = choisir_action(perception);
-
-        // Mise a jour de la direction globale en fonction de l'action
-        if (action == ACTION_LEFT) {
-            dir_motos[i] = (direction + 3) % 4; // Rotation -90° (gauche)
-        } else if (action == ACTION_RIGHT) {
-            dir_motos[i] = (direction + 1) % 4; // Rotation +90° (droite)
+            if (action == ACTION_LEFT) {
+                dir_motos[i] = (dir_motos[i] + 3) % 4; // Rotation -90°
+            } else if (action == ACTION_RIGHT) {
+                dir_motos[i] = (dir_motos[i] + 1) % 4; // Rotation +90°
+            }
         }
+        // Le Joueur (i == 1) ignore ce bloc. Sa direction est gérée par Nabil via le clavier.
+        // -------------------------
 
-        // Calcul du nouveau vecteur de deplacement avec la direction mise a jour
+        // --- DEPLACEMENT COMMUN (Joueur + Agents) ---
         int dx, dy;
         obtenir_vecteur(dir_motos[i], &dx, &dy);
 

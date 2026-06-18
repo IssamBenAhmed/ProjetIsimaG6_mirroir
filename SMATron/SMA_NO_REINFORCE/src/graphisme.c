@@ -61,4 +61,41 @@ void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running)
         *direction_joueur = DIR_LEFT;
     }
 }
+void dessiner_panneau_fin(SDL_Renderer *renderer)
+{
+    // Panneau central rouge
+    SDL_Rect panneau = {WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT / 2 - 50, 300, 100};
+    SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
+    SDL_RenderFillRect(renderer, &panneau);
 
+    // Bordure blanche
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_RenderDrawRect(renderer, &panneau);
+
+    // Dessin manuel des lettres E N D en gros pixels
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    
+    // Lettre E
+    SDL_Rect e1 = {panneau.x + 50, panneau.y + 20, 10, 60};
+    SDL_Rect e2 = {panneau.x + 50, panneau.y + 20, 40, 10};
+    SDL_Rect e3 = {panneau.x + 50, panneau.y + 45, 30, 10};
+    SDL_Rect e4 = {panneau.x + 50, panneau.y + 70, 40, 10};
+    SDL_RenderFillRect(renderer, &e1); SDL_RenderFillRect(renderer, &e2);
+    SDL_RenderFillRect(renderer, &e3); SDL_RenderFillRect(renderer, &e4);
+
+    // Lettre N
+    SDL_Rect n1 = {panneau.x + 120, panneau.y + 20, 10, 60};
+    SDL_Rect n2 = {panneau.x + 160, panneau.y + 20, 10, 60};
+    SDL_Rect n3 = {panneau.x + 130, panneau.y + 30, 15, 15};
+    SDL_Rect n4 = {panneau.x + 145, panneau.y + 45, 15, 15};
+    SDL_RenderFillRect(renderer, &n1); SDL_RenderFillRect(renderer, &n2);
+    SDL_RenderFillRect(renderer, &n3); SDL_RenderFillRect(renderer, &n4);
+
+    // Lettre D
+    SDL_Rect d1 = {panneau.x + 200, panneau.y + 20, 10, 60};
+    SDL_Rect d2 = {panneau.x + 200, panneau.y + 20, 30, 10};
+    SDL_Rect d3 = {panneau.x + 200, panneau.y + 70, 30, 10};
+    SDL_Rect d4 = {panneau.x + 230, panneau.y + 30, 10, 40};
+    SDL_RenderFillRect(renderer, &d1); SDL_RenderFillRect(renderer, &d2);
+    SDL_RenderFillRect(renderer, &d3); SDL_RenderFillRect(renderer, &d4);
+}
