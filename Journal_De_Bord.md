@@ -34,4 +34,4 @@ gahui ban :  le programme “serpent ” a été finalisé et l’animation comm
 
 
 
-### jeudi 18 juin
+### Jeudi 18 juin
