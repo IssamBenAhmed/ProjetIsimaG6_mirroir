@@ -1,132 +1,92 @@
 #include "../include/mj.h"
-#include "agent.h"
+#include "../include/agent.h"
 
-void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction, float perception[PERCEPTION_SIZE]) {
-	
-	int devant = 0, gauche = 0, droite = 0; 
-
-    int dx, dy;
-
-    // vecteur devant selon direction de moto
-    if(direction == 0){ dx = 1; dy = 0; }
-    else if(direction == 1){ dx = -1; dy = 0; }
-    else if(direction == 2){ dx = 0; dy = 1; }
-    else { dx = 0; dy = -1; }
-
-    // gauche = rotation -90°
-    int ldx = -dy;
-    int ldy = dx;
-
-    // droite = rotation +90°
-    int rdx = dy;
-    int rdy = -dx;
-
-    // perception devant
-    for(int i = 1; i < WIDTH; i++){
-        int nx = x + i * dx; //calcul de coordonnée de case devant de moto
-        int ny = y + i * dy;
-
-        if(nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) break;//quand la case est hors de zone , on s'arrete
-        if(grille[nx][ny] != 0) break; //quand la case est bloqué , on s'arrete
-
-        devant++;
-    }
-
-    // gauche
-    for(int i = 1; i < WIDTH; i++){
-        int nx = x + i * ldx; //calcul de coordonnée de case gauche de moto
-        int ny = y + i * ldy;
-
-        if(nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) break;//quand la case est hors de zone , on s'arrete
-        if(grille[nx][ny] != 0) break; //quand la case est bloqué , on s'arrete
-
-
-        gauche++;
-    }
-
-    // droite
-    for(int i = 1; i < WIDTH; i++){
-        int nx = x + i * rdx;//calcul de coordonnée de case droite de moto
-        int ny = y + i * rdy;
-
-        if(nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) break;//quand la case est hors de zone , on s'arrete
-        if(grille[nx][ny] != 0) break; //quand la case est bloqué , on s'arrete
-
-
-        droite++;
-    }
-
-    perception[0] = devant;
-    perception[1] = gauche;
-    perception[2] = droite;
+// Fonction utilitaire interne pour avoir les bons vecteurs partout
+static void obtenir_vecteur(int direction, int *dx, int *dy) {
+    if (direction == DIR_UP) { *dx = 0; *dy = -1; }
+    else if (direction == DIR_RIGHT) { *dx = 1; *dy = 0; }
+    else if (direction == DIR_DOWN) { *dx = 0; *dy = 1; }
+    else if (direction == DIR_LEFT) { *dx = -1; *dy = 0; }
 }
 
-void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1]) {
-	int i = 0;
-    for(i = 2; i < MAX_MOTOS+1; i++){
-       
-        int x = pos_motos[i][0] ;
-        int y = pos_motos[i][1];
-        int direction = dir_motos[i];
-        float perception[3]={0};
-        calculer_perception(grille, x, y,direction, perception); //on regarde si à la vue de moto, il y a des places libres
-        if (perception[0] ==0 && perception[1] ==0 && perception[2] ==0){//il est bloqué partout
-            etats_vie[i] = 0; //le moto mort 
-            nettoyer_trainee(grille, i); // on nettoie son trajet
+void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction, float perception[PERCEPTION_SIZE]) {
+    int dx, dy;
+    obtenir_vecteur(direction, &dx, &dy);
+
+    // Rotation matricielle correcte
+    int ldx = dy;   // Gauche
+    int ldy = -dx;
+    int rdx = -dy;  // Droite
+    int rdy = dx;
+
+    int distances[3] = {0, 0, 0};
+    int rayons_dx[3] = {dx, ldx, rdx};
+    int rayons_dy[3] = {dy, ldy, rdy};
+
+    // Lancer de rayons factorisé
+    for (int r = 0; r < 3; r++) {
+        for (int i = 1; i < WIDTH; i++) {
+            int nx = x + i * rayons_dx[r];
+            int ny = y + i * rayons_dy[r];
+
+            if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) break;
+            if (grille[nx][ny] != CELL_EMPTY) break;
+
+            distances[r]++;
         }
-        else {
-            int action = choisir_action(perception); 
-            //agent choisi, en fonction de sa perception, à quelle action qu'il va choisir : 0= tout droite ; 1 = gauche ; 2 = droite
-            int dx, dy;
-
-            // vecteur devant selon direction de moto
-            if(direction == 0){ dx = 0; dy = 1; }
-            else if(direction == 1){ dx = -1; dy = 0; }
-            else if(direction == 2){ dx = 1; dy = 0; }
-            else { dx = 0; dy = -1; }
-
-            // gauche = rotation -90°
-            int ldx = -dy;
-            int ldy = dx;
-
-            // droite = rotation +90°
-            int rdx = dy;
-            int rdy = -dx;
-            
-            int nx = 0;
-            int ny= 0 ;
-
-            if (action == 0) { nx = x + dx; ny = y + dy; } //tout droit
-            if (action == 1) { nx = x + ldx; ny = y + ldy; }//gauche
-            if (action == 2) { nx = x + rdx; ny = y + rdy; } //droite
-
-            // vérification sécurité
-            if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && grille[nx][ny] == 0) {
-
-                grille[nx][ny] = i;   //il se place à nouveau position
-
-                pos_motos[i][0] = nx;  // nouvelle position
-                pos_motos[i][1] = ny;
-            } 
-            else { //si le case ciblé est non vide
-            etats_vie[i] = false; //le moto mort
-            nettoyer_trainee(grille, i); //on efface sa trajet et moto
-            }
-
-
-        }
-
     }
 
+    perception[0] = distances[0];
+    perception[1] = distances[1];
+    perception[2] = distances[2];
 }
 
 void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
-	for(int i = 0 ; i < WIDTH ; i++){
+    for(int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
-            if( grille[i][j] == id_moto){ //si il y a le trajet de moto mort, on le vide
-                grille[i][j] = 0;
+            if( grille[i][j] == id_moto){
+                grille[i][j] = CELL_EMPTY;
             }
         }
     }
+}
 
+void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1]) {
+    // On boucle uniquement sur les IA (de 2 à 4)
+    for (int i = CELL_AI_1; i <= CELL_AI_3; i++) {
+        if (!etats_vie[i]) continue;
+
+        int x = pos_motos[i][0];
+        int y = pos_motos[i][1];
+        int direction = dir_motos[i];
+        float perception[PERCEPTION_SIZE] = {0};
+
+        calculer_perception(grille, x, y, direction, perception);
+
+        int action = choisir_action(perception);
+
+        // Mise a jour de la direction globale en fonction de l'action
+        if (action == ACTION_LEFT) {
+            dir_motos[i] = (direction + 3) % 4; // Rotation -90° (gauche)
+        } else if (action == ACTION_RIGHT) {
+            dir_motos[i] = (direction + 1) % 4; // Rotation +90° (droite)
+        }
+
+        // Calcul du nouveau vecteur de deplacement avec la direction mise a jour
+        int dx, dy;
+        obtenir_vecteur(dir_motos[i], &dx, &dy);
+
+        int nx = x + dx;
+        int ny = y + dy;
+
+        // Verification de collision
+        if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && grille[nx][ny] == CELL_EMPTY) {
+            grille[nx][ny] = i;
+            pos_motos[i][0] = nx;
+            pos_motos[i][1] = ny;
+        } else {
+            etats_vie[i] = false;
+            nettoyer_trainee(grille, i);
+        }
+    }
 }
