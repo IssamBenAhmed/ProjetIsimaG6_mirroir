@@ -65,16 +65,16 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
 	int i = 0;
     for(i = 0; i < MAX_MOTOS+1; i++){
        
-    int x = pos_motos[i][0] ;
-    int y = pos_motos[i][1];
-    int direction = dir_motos[i];
-    float perception[3]={0};
-    calculer_perception(grille, x, y,direction, perception); //on regarde si à la vue de moto, il y a des places libres
-    if (perception[0] ==0 && perception[1] ==0 && perception[2] ==0){//il est bloqué partout
+        int x = pos_motos[i][0] ;
+        int y = pos_motos[i][1];
+        int direction = dir_motos[i];
+        float perception[3]={0};
+        calculer_perception(grille, x, y,direction, perception); //on regarde si à la vue de moto, il y a des places libres
+        if (perception[0] ==0 && perception[1] ==0 && perception[2] ==0){//il est bloqué partout
             etats_vie[i] = 0; //le moto mort 
             nettoyer_trainee(grille, i); // on nettoie son trajet
-    }
-    else {
+        }
+        else {
             int action = choisir_action(perception); 
             //agent choisi, en fonction de sa perception, à quelle action qu'il va choisir : 0= tout droite ; 1 = gauche ; 2 = droite
             int dx, dy;
@@ -100,14 +100,14 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             // vérification sécurité
             if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && grille[nx][ny] == 0) {
 
-                grille[nx][ny] = i;    // nouvelle position
+                grille[nx][ny] = i;   //il se place à nouveau position
 
-                pos_motos[i][0] = nx;
+                pos_motos[i][0] = nx;  // nouvelle position
                 pos_motos[i][1] = ny;
             } 
-            else {
-            etats_vie[i] = false;
-            nettoyer_trainee(grille, i);
+            else { //si le case ciblé est non vide
+            etats_vie[i] = false; //le moto mort
+            nettoyer_trainee(grille, i); //on efface sa trajet et moto
             }
 
 
