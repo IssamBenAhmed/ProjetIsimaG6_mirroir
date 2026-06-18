@@ -17,3 +17,6 @@ Afin d'entrainer nos Agents , il faut qu'il puisse rejouer une tonne de fois les
 
 ### système d'apprentissage
 implémenter l'apprentissage REINFORCE
+
+## graphisme et esthétique 
+### améliorer le rendu graphique avec des limites et une grille définie et esthétique.

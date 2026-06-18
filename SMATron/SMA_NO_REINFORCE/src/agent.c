@@ -18,8 +18,10 @@ int choisir_action(float perception[PERCEPTION_SIZE]) {
             z[i] = -999.0f; // Score infiniment bas -> Proba Softmax proche de 0%
         } 
         else {
+            // Normalisation pour éviter le dépassement de capacité de exp() (Overflow)
+            float perception_normalisee = perception[i] / (float)WIDTH; 
             // Le score Z dépend du nombre de cases libres + un peu de hasard (exploration)
-            z[i] = (perception[i] * poids_espace) + (random_float() * 1.5f);
+            z[i] = (perception_normalisee * poids_espace) + (random_float() * 1.5f);
         }
     }
 
@@ -50,6 +52,5 @@ int choisir_action(float perception[PERCEPTION_SIZE]) {
     }
 
     // Sécurité au cas où l'imprécision des float fausse la somme
- 
     return ACTION_FORWARD;
 }
