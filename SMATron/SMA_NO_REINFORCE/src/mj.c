@@ -75,22 +75,41 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             nettoyer_trainee(grille, i); // on nettoie son trajet
     }
     else {
-        	int action = choisir_action(perception); 
+            int action = choisir_action(perception); 
             //agent choisi, en fonction de sa perception, à quelle action qu'il va choisir : 0= tout droite ; 1 = gauche ; 2 = droite
-           if (action == 0 && x > 0) {
-                grille[x-1][y] = i;
-                pos_motos[i][0] = x-1;
-            }
-            if (action == 1 && y > 0) {
-                grille[x][y-1] = i;
-                pos_motos[i][1] = y-1;
-            }
-            if (action == 2 && y < HEIGHT - 1) {
-                grille[x][y+1] = i;
-                pos_motos[i][1] = y+1;
+            int dx, dy;
 
+            // vecteur devant selon direction de moto
+            if(direction == 0){ dx = 1; dy = 0; }
+            else if(direction == 1){ dx = -1; dy = 0; }
+            else if(direction == 2){ dx = 0; dy = 1; }
+            else { dx = 0; dy = -1; }
 
-            }      
+            // gauche = rotation -90°
+            int ldx = -dy;
+            int ldy = dx;
+
+            // droite = rotation +90°
+            int rdx = dy;
+            int rdy = -dx;
+
+            if (action == 0) { nx = x + dx; ny = y + dy; } //tout droit
+            if (action == 1) { nx = x + ldx; ny = y + ldy; }//gauche
+            if (action == 2) { nx = x + rdx; ny = y + rdy; } //droite
+
+            // vérification sécurité
+            if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && grille[nx][ny] == 0) {
+
+                grille[nx][ny] = i;    // nouvelle position
+
+                pos_motos[i][0] = nx;
+                pos_motos[i][1] = ny;
+            } 
+            else {
+            etats_vie[i] = false;
+            nettoyer_trainee(grille, i);
+            }
+
 
         }
 
