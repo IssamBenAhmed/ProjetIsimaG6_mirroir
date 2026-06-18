@@ -124,7 +124,7 @@ void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
 	for(int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
             if( grille[i][j] == id_moto){ //si il y a le trajet de moto mort, on le vide
-                grille[i][j] == 0;
+                grille[i][j] = 0;
             }
         }
     }

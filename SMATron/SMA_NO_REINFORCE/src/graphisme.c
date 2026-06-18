@@ -1,8 +1,4 @@
 #include "../include/graphisme.h"
-#include<SDL2/SLD.h>
-#include<SDL2/SDL_image.h>
-#include<stdio.h>
-#include<stdlib.h>
 
 void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
 {
@@ -11,83 +7,58 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    for (int x = 0; x < WIDTH; x++)
-    {
-        for (int y = 0; y < HEIGHT; y++)
-        {
-            case_rect.x = x * TAILLE_CASE;
-            case_rect.y = y * TAILLE_CASE;
-            case_rect.w = TAILLE_CASE;
-            case_rect.h = TAILLE_CASE;
+    for (int x = 0; x < WIDTH; x++) {
+        for (int y = 0; y < HEIGHT; y++) {
+            if (grille[x][y] == CELL_EMPTY) {
+                continue;
+            }
 
-            if (grille[x][y] == 1)
-            {
-                SDL_RenderCopy(renderer, moto_joueur, NULL, &case_rect);
+            case_rect.x = x * CELL_SIZE;
+            case_rect.y = y * CELL_SIZE;
+            case_rect.w = CELL_SIZE;
+            case_rect.h = CELL_SIZE;
+
+            if (grille[x][y] == CELL_PLAYER) {
+                SDL_SetRenderDrawColor(renderer, 0, 180, 255, 255);
+            } else if (grille[x][y] == CELL_AI_1) {
+                SDL_SetRenderDrawColor(renderer, 255, 140, 0, 255);
+            } else if (grille[x][y] == CELL_AI_2) {
+                SDL_SetRenderDrawColor(renderer, 0, 200, 100, 255);
+            } else {
+                SDL_SetRenderDrawColor(renderer, 220, 80, 200, 255);
             }
-            else if (grille[x][y] == 2)
-            {
-                SDL_RenderCopy(renderer, moto_1, NULL, &case_rect);
-            }
-            else if (grille[x][y] == 3)
-            {
-                SDL_RenderCopy(renderer, moto_2, NULL, &case_rect);
-            }
-            else if (grille[x][y] == 4)
-            {
-                SDL_RenderCopy(renderer, moto_3, NULL, &case_rect);
-            }
+
+            SDL_RenderFillRect(renderer, &case_rect);
         }
     }
 
     SDL_RenderPresent(renderer);
 }
 
-
 void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running)
 {
-    if (event->type == SDL_QUIT)
-    {
+    if (event->type == SDL_QUIT) {
         *running = false;
+        return;
     }
 
-    if (event->type == SDL_KEYDOWN)
-    {
-        if (event->key.keysym.sym == SDLK_ESCAPE)
-        {
-            *running = false;
-        }
+    if (event->type != SDL_KEYDOWN) {
+        return;
+    }
 
-        if (event->key.keysym.sym == SDLK_UP)
-        {
-            if (*direction_joueur != BAS)
-            {
-                *direction_joueur = HAUT;
-            }
-        }
+    if (event->key.keysym.sym == SDLK_ESCAPE) {
+        *running = false;
+        return;
+    }
 
-        if (event->key.keysym.sym == SDLK_RIGHT)
-        {
-            if (*direction_joueur != GAUCHE)
-            {
-                *direction_joueur = DROITE;
-            }
-        }
-
-        if (event->key.keysym.sym == SDLK_DOWN)
-        {
-            if (*direction_joueur != HAUT)
-            {
-                *direction_joueur = BAS;
-            }
-        }
-
-        if (event->key.keysym.sym == SDLK_LEFT)
-        {
-            if (*direction_joueur != DROITE)
-            {
-                *direction_joueur = GAUCHE;
-            }
-        }
+    if (event->key.keysym.sym == SDLK_UP && *direction_joueur != DIR_DOWN) {
+        *direction_joueur = DIR_UP;
+    } else if (event->key.keysym.sym == SDLK_RIGHT && *direction_joueur != DIR_LEFT) {
+        *direction_joueur = DIR_RIGHT;
+    } else if (event->key.keysym.sym == SDLK_DOWN && *direction_joueur != DIR_UP) {
+        *direction_joueur = DIR_DOWN;
+    } else if (event->key.keysym.sym == SDLK_LEFT && *direction_joueur != DIR_RIGHT) {
+        *direction_joueur = DIR_LEFT;
     }
 }
 
