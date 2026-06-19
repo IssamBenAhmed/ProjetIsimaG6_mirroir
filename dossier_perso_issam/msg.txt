@@ -1,0 +1,1 @@
+j'ai besoin que vous fassiez pour chacun de vos programmes personnels ( x_fenetre ,  bac_a_serpent , sprite_animation) une courte description sur le fonctionnement et les fonctions utilisées , ainsi que sur les problèmes rencontrés

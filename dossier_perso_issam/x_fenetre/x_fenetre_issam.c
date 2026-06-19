@@ -18,13 +18,13 @@ int main(int argc, char* argv[]) {
     (void)argc;
     (void)argv;
 
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {// si init est déffectueux
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {// si l'initialisation de la SDL est déffectueuse
         fprintf(stderr, "Erreur SDL_Init : %s\n", SDL_GetError());
         return EXIT_FAILURE;
     }
 
     SDL_DisplayMode ecran;
-    if (SDL_GetCurrentDisplayMode(0, &ecran) != 0) { // si ecran est défectueux
+    if (SDL_GetCurrentDisplayMode(0, &ecran) != 0) { // si la récupération de la résolution de l'écran est déffectueuse
         fprintf(stderr, "Erreur DisplayMode : %s\n", SDL_GetError());
         SDL_Quit();
         return EXIT_FAILURE;
@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
         index++;
     }
 
-    // --- NOUVEAU : LA BOUCLE DE JEU ET D'ÉVÉNEMENTS ---
+    
     bool isRunning = true;
     SDL_Event event;
     int x, y;

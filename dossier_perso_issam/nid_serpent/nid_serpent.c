@@ -10,7 +10,7 @@
 #define WINDOW_WIDTH 800
 #define WINDOW_HEIGHT 600
 #define SNAKE_LENGTH 40     // plus long pour accentuer la fluidite
-#define SPACING 16.0f        // distance exacte maintenue entre chaque articulation
+#define SPACING 5.0f        // distance exacte maintenue entre chaque articulation, l'ajout de 'f' force le type float pour des calculs plus precis et rapides
 #define SPEED 4.0f
 #define RECT_SIZE 16
 #define PI 3.14159265358979323846f
@@ -77,6 +77,7 @@ int main(int argc, char* argv[]) {
         // modification lente de l'angle principal pour que le serpent tourne au hasard
         // (rand() % 100) - 50 donne un nombre entre -50 et 49
         // on multiplie par un tres petit float pour lisser la rotation d'une frame a l'autre
+        // "gère la découverte de la map par le serpent" 
         base_angle += ((rand() % 100) - 50) * 0.002f; 
         
         // ajout de la fonction sinus basee sur le temps ecoule (sdl_getticks)
@@ -92,9 +93,9 @@ int main(int argc, char* argv[]) {
         // gestion des collisions avec les bords par reflexion d'angle
         // pi (m_pi) represente 180 degres. faire m_pi - angle inverse la direction horizontale
         // faire -angle inverse la direction verticale
-        if (snake[0].x < 0) { snake[0].x = 0; base_angle = PI - base_angle; }
+        if (snake[0].x < 0) { snake[0].x = 0; base_angle = PI - base_angle; } //cos(pi-angle) = -cos(angle)
         if (snake[0].x > WINDOW_WIDTH) { snake[0].x = WINDOW_WIDTH; base_angle = PI - base_angle; }
-        if (snake[0].y < 0) { snake[0].y = 0; base_angle = -base_angle; }
+        if (snake[0].y < 0) { snake[0].y = 0; base_angle = -base_angle; }//sin(-angle) = -sin(angle)
         if (snake[0].y > WINDOW_HEIGHT) { snake[0].y = WINDOW_HEIGHT; base_angle = -base_angle; }
 
         // 3. cinematique inverse (le corps suit la tete)
