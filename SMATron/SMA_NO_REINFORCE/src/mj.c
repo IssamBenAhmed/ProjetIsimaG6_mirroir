@@ -65,7 +65,7 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             float perception[PERCEPTION_SIZE] = {0};
             calculer_perception(grille, x, y, dir_motos[i], perception);
 
-            int action = choisir_action(perception);
+            int action = choisir_action(perception); //venant de "agent.h"
 
             if (action == ACTION_LEFT) {
                 dir_motos[i] = (dir_motos[i] + 3) % 4; // Rotation -90°
