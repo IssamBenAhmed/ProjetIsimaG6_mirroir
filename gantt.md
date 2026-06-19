@@ -2,6 +2,8 @@
 
 link d'accès à gantt : https://app.asana.com/1/554206103283195/project/1215832105853190/timeline/1215832127835644
 
-(accessible pour les utilisateurs de etu.uca.fr)
+(accessible pour les invités)
+
+
 
 
