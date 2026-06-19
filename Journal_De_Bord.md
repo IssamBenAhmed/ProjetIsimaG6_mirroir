@@ -79,3 +79,8 @@ L'utilisation d'une sprite sheet , avec un déplacement à la fois sur la feuill
 #### LAAMARCHI Nabil
  J’ai codé **l’interface graphique du jeu de Tron** avec SDL2.J’ai aussi ajouté le contrôle du joueur avec le clavier, ce qui permet de déplacer la moto dans l’arène pendant le jeu.
 
+#### BAN Gahui
+Le projet de création d’un jeu basé sur les SMA continue. J’ai distribué la première version de ma fonction permettant de calculer la perception devant, à gauche et à droite de la moto, puis d’afficher l’action choisie par l’agent dans le jeu. 
+Comme nous utilisons une matrice pour représenter l’espace dans lequel évolue l’agent, j’ai réutilisé une partie de la fonction de calcul de la perception pour mettre à jour le déplacement de la moto, notamment le calcul du vecteur de déplacement en fonction de sa direction. Cependant, contrairement à ce que je pensais au départ, la direction est définie relativement à la vue de l’utilisateur et non à celle de la moto. J’ai donc dû corriger certaines parties de mon code afin que le déplacement de la moto ne dépende plus de son orientation. Par exemple, la direction « haut » correspond toujours au haut de l’écran du point de vue de l’utilisateur, et non à l’avant de la moto. 
+Après ces modifications, le comportement du jeu semble correct. Ce qui m’a particulièrement surpris, c’est que j’ai pu simplifier mon code et le rendre plus clair et plus efficace en ajoutant quelques variables ainsi que des fonctions auxiliaires, notamment pour la gestion des vecteurs. De plus, les discussions avec les membres de mon groupe m’ont permis d’améliorer ma compréhension du fonctionnement et des concepts du jeu.
+
