@@ -44,7 +44,8 @@ Une réflexion sur la structure et les étapes de conception du jeu de la vie a 
  Le passage des coordonées polaires aux coordonées cartésienne ayant été vu pendant l'année , il fut plaisant de réinvestir de telles conaissances.
  
  Pour ce qui est du mouvement du reste du corps on utilise une variable appelée SPACING : 
-  pour tout segment du serpent excepté la tête, si le segment juste devant s'éloigne d'une distance euclidienne supérieure à SPACING, il est téléporté directement à une distance strictement égale à celle de SPACING, et ceux à chaque frame, ce qui donne un bel effet continu et fluide
+  pour tout segment du serpent excepté la tête, si le segment juste devant s'éloigne d'une distance euclidienne supérieure à SPACING, il est téléporté directement à une distance strictement égale à celle de SPACING, et ceux à chaque frame, ce qui donne un bel effet continu et fluide.
+ Des pseudos-collisions on été crées : lorsque la tete du serpent atteint le bord de la fenetre une décison est prise pour inverser son angle et le faire partir de l'autre côté.
 
 Ce fut aussi l'occasion de m'entrainer sur les changements de couleurs.
 
@@ -67,7 +68,6 @@ L'utilisation d'une sprite sheet , avec un déplacement à la fois sur la feuill
  À force de question auprès des professeurs et des camarades, nous étions parvenu à nous imaginer une division équitable du travail et à la compréhension globale du rôle du SMA dans le jeu de la vie : c'est lui qui joue le role d'automate , n'ayant aucune appréhension du monde mise à part ce que le maitre du jeu lui fournis.
  Son seul rôle est d'appliquer ses propres règles et de renvoyer une décision à prendre, et ceux pour chaque cellule de la grille.
  J'ai pu coder la partie agent sans soucis, avant d'apporter mon soutien a mes camarades dans leur partie respective.
-
 
  #### LAAMARCHI Nabil
   J’ai compris le principe d’un **SMA** et le fonctionnement du **Jeu de la Vie**, puis j’ai participé au codage du jeu.J’ai pris la tâche de **dessiner l’interface graphique du Jeu de la Vie**, et j’ai aussi commencé à travailler sur la partie **interface graphique du jeu de Tron**.
