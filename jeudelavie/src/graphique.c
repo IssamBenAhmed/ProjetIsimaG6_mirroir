@@ -1,4 +1,5 @@
-#include "graphique.h"
+
+ #include "graphique.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -281,4 +282,5 @@ void gerer_interaction(SDL_Event *event,
         }
     }
 }
+
 
