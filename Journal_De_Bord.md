@@ -54,7 +54,8 @@ L'utilisation d'une sprite sheet , avec un déplacement à la fois sur la feuill
 
 #### BAN Gahui
 
- Le programme “serpent ” a été finalisé et l’animation commence. Cela m’entraine d’afficher, superposer, déplacer avec le mouvement de Sprite ou non. 
+ Le programme « Serpent » a été finalisé et le travail sur l’animation des sprites a commencé. Cette phase m’a permis d’apprendre à afficher, superposer et déplacer des textures avec SDL2_image. La première étape consistait à superposer des images et à les modifier dynamiquement. La principale difficulté a été de comprendre certaines fonctions de SDL2_image et de corriger plusieurs erreurs de syntaxe. Cette étape était indispensable pour maîtriser l’affichage des textures et préparer les animations plus avancées. Ensuite, j’ai créé une fonction auxiliaire nommée « play_with_texture_3_alter » afin de réaliser le déplacement d’une image. Cette fonction permet notamment de produire un mouvement circulaire et de gérer l’apparition progressive de l’image grâce à la fonction « SDL_SetTextureAlphaMod ». La modélisation du mouvement et le réglage de sa vitesse ont constitué les principales difficultés, résolues à l’aide des fonctions trigonométriques cos et sin. Enfin, j’ai commencé l’animation par changement de sprite à chaque image affichée. Grâce aux fonctions « SDL_GetWindowSize » et « SDL_QueryTexture », j’ai pu sélectionner différentes parties d’une texture source et obtenir une animation fonctionnelle.
+ 
 
  
 ### Mercredi 17 Juin
@@ -80,7 +81,7 @@ L'utilisation d'une sprite sheet , avec un déplacement à la fois sur la feuill
  J’ai codé **l’interface graphique du jeu de Tron** avec SDL2.J’ai aussi ajouté le contrôle du joueur avec le clavier, ce qui permet de déplacer la moto dans l’arène pendant le jeu.
 
 #### BAN Gahui
-Le projet de création d’un jeu basé sur les SMA continue. J’ai distribué la première version de ma fonction permettant de calculer la perception devant, à gauche et à droite de la moto, puis d’afficher l’action choisie par l’agent dans le jeu. 
+ Le projet de création d’un jeu basé sur les SMA continue. J’ai distribué la première version de ma fonction permettant de calculer la perception devant, à gauche et à droite de la moto, puis d’afficher l’action choisie par l’agent dans le jeu. 
 Comme nous utilisons une matrice pour représenter l’espace dans lequel évolue l’agent, j’ai réutilisé une partie de la fonction de calcul de la perception pour mettre à jour le déplacement de la moto, notamment le calcul du vecteur de déplacement en fonction de sa direction. Cependant, contrairement à ce que je pensais au départ, la direction est définie relativement à la vue de l’utilisateur et non à celle de la moto. J’ai donc dû corriger certaines parties de mon code afin que le déplacement de la moto ne dépende plus de son orientation. Par exemple, la direction « haut » correspond toujours au haut de l’écran du point de vue de l’utilisateur, et non à l’avant de la moto. 
 Après ces modifications, le comportement du jeu semble correct. Ce qui m’a particulièrement surpris, c’est que j’ai pu simplifier mon code et le rendre plus clair et plus efficace en ajoutant quelques variables ainsi que des fonctions auxiliaires, notamment pour la gestion des vecteurs. De plus, les discussions avec les membres de mon groupe m’ont permis d’améliorer ma compréhension du fonctionnement et des concepts du jeu.
 
