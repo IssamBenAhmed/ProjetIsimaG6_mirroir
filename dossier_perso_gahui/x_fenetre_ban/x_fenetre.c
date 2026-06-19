@@ -26,8 +26,8 @@ void SDL_axe1 (SDL_Window *window[TAILLE]){
         SDL_Quit();                              // On referme la SDL       
         exit(EXIT_FAILURE);
       }  
-      j = j+21; 
-      i = i+49; 
+      j = j+21; //modification de coordonnée y
+      i = i+49; //modification de coordonnée x
       nb ++ ;
 
 
@@ -66,7 +66,7 @@ void SDL_axe2 (SDL_Window *window[TAILLE]){
 
 
 
-void liberer_window(SDL_Window *window[TAILLE], int nb){
+void liberer_window(SDL_Window *window[TAILLE], int nb){ //fonction pour libérer les fenetres
   for (int m = 0; m < nb; m++) {
     if (window[m]!= NULL){
       SDL_DestroyWindow(window[m]);
@@ -100,12 +100,12 @@ int main(int argc, char **argv) {
 
 
 
-  SDL_axe1( window_1 );   
+  SDL_axe1( window_1 );   //tracer un diagonale 
 
-  SDL_axe2(window_2) ;
+  SDL_axe2(window_2) ; //tracer autre diagonale 
 
    
-  SDL_Delay(4000);                           // Pause exprimée  en ms
+  SDL_Delay(3000);                           // Pause exprimée  en ms
 
     
   liberer_window(window_1, TAILLE);
