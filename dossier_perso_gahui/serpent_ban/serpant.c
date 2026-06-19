@@ -5,9 +5,9 @@
 
 
 
-#define SIZE 20
+#define SIZE 20 
 #define SEGMENT 20
-#define MAX 50
+#define MAX 50 //le nombre maximale de jointure de serpant
 #define LIMIT 0.8
 #define PI 3.14
 #define ECRAN_HAUTEUR 1000
@@ -26,10 +26,10 @@ typedef struct { //type de serpant
 
 void initSnake(Snake *s) //initialisation de serpant et sa position
 {
-    s->len = 40;
+    s->len = 40; //le nombre de jointure, doit etre <=MAX
 
     for (int i = 0; i < s->len; i++) {
-        s->x[i] = 200 - i * SEGMENT; // la position initiale de son corps
+        s->x[i] = 200 - i * SEGMENT; // la position initiale de son corps(jointure)
         s->y[i] = 200;
     }
 
@@ -40,14 +40,14 @@ void initSnake(Snake *s) //initialisation de serpant et sa position
 void moveSnake(Snake *s)
 {
     // 1. tête (mouvement fluide contrôlé)
-    s->angle += (rand() %100 - 50) * 0.005f;
+    s->angle += (rand() %100 - 50) * 0.005f; //on choisit l'angle de tete
 
-    float speed = 9.0f;
+    float speed = 9.0f; //la vitesse de serpent
 
-    s->dirX = cos(s->angle) * speed;
+    s->dirX = cos(s->angle) * speed; //direction de serpent
     s->dirY = sin(s->angle) * speed;
 
-    s->x[0] += s->dirX;
+    s->x[0] += s->dirX; //la position ou la tete de serpent va aller
     s->y[0] += s->dirY;
 
     //revendiquer si le serpent essaie d'échapper l'écran
@@ -94,11 +94,11 @@ void moveSnake(Snake *s)
 
 void randomColor(SDL_Renderer *r) //radominize color each secondes
 {
-    Uint8 red = rand() % 256;
+    Uint8 red = rand() % 256;//choisir la valeur de RGB au hasard
     Uint8 green = rand() % 256;
     Uint8 blue = rand() % 256;
 
-    SDL_SetRenderDrawColor(r, red, green, blue, 100);
+    SDL_SetRenderDrawColor(r, red, green, blue, 100);//selectionner le couleur
 }
 
 
@@ -110,14 +110,14 @@ void drawSnake(SDL_Renderer *r, Snake *s)
 
         randomColor(r); // on choisit le couleur au hasard
 
-        SDL_Rect rect = { // une des segments de serpant est un rectangle
+        SDL_Rect rect = { // jointure de serpant est un modélisé par rectangle
             s->x[i],
             s->y[i],
             20,
             SEGMENT
         };
 
-        SDL_RenderFillRect(r, &rect);
+        SDL_RenderFillRect(r, &rect);//remplir la jointure(rectangle) de serpent avec ce couleur
     }
 }
 
