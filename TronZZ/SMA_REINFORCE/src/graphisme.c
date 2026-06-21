@@ -3,7 +3,7 @@
 /* Dessine une grille légère pour rendre l'arène plus lisible */
 static void dessiner_grille(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 20, 45, 65, 130);
+    SDL_SetRenderDrawColor(renderer, 20, 45, 65, 130);// Bleu foncé/sombre.
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
@@ -20,10 +20,10 @@ static void dessiner_bordure(SDL_Renderer *renderer)
     SDL_Rect bordure1 = {0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1};
     SDL_Rect bordure2 = {2, 2, WINDOW_WIDTH - 5, WINDOW_HEIGHT - 5};
 
-    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 255);//Bleu cyan
     SDL_RenderDrawRect(renderer, &bordure1);
 
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 180);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 180);//blanc peu transparent 
     SDL_RenderDrawRect(renderer, &bordure2);
 }
 
