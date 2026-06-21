@@ -7,6 +7,6 @@ var searchData=
   ['nb_5fimages_5fchien_4',['NB_IMAGES_CHIEN',['../d0/d2d/Sprite__animation_8c.html#a87015fad0fcb5e9d9a921fa4a0608d13',1,'Sprite_animation.c']]],
   ['nb_5flignes_5fchien_5',['NB_LIGNES_CHIEN',['../d0/d2d/Sprite__animation_8c.html#a1d5df9279f453448ba2701ecbd99eb1c',1,'Sprite_animation.c']]],
   ['nb_5fpar_5fdiagonale_6',['NB_PAR_DIAGONALE',['../d7/d74/X__fenetre_8c.html#aac47c9ab02df9fbf661bc70bb2f73269',1,'X_fenetre.c']]],
-  ['nettoyer_5ftrainee_7',['nettoyer_trainee',['../da/d20/SMATron_2SMA__NO__REINFORCE_2include_2mj_8h.html#a324516bed41f48745847a5fcf0a87897',1,'nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto):&#160;mj.c'],['../d1/d2c/SMATron_2SMA__NO__REINFORCE_2src_2mj_8c.html#a324516bed41f48745847a5fcf0a87897',1,'nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto):&#160;mj.c']]],
+  ['nettoyer_5ftrainee_7',['nettoyer_trainee',['../d4/d7a/TronZZ_2SMA__NO__REINFORCE_2include_2mj_8h.html#a324516bed41f48745847a5fcf0a87897',1,'nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto):&#160;mj.c'],['../d4/db1/TronZZ_2SMA__NO__REINFORCE_2src_2mj_8c.html#a324516bed41f48745847a5fcf0a87897',1,'nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto):&#160;mj.c']]],
   ['nid_5fserpent_2ec_8',['nid_serpent.c',['../d0/d2a/nid__serpent_8c.html',1,'']]]
 ];
