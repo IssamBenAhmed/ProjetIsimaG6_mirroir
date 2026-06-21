@@ -4,7 +4,7 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
 {
     SDL_Rect case_rect;
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);// 255=opaque totalement visible # transparent 
     SDL_RenderClear(renderer);
 
     for (int x = 0; x < WIDTH; x++) {
@@ -19,13 +19,13 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
             case_rect.h = CELL_SIZE;
 
             if (grille[x][y] == CELL_PLAYER) {
-                SDL_SetRenderDrawColor(renderer, 0, 180, 255, 255);
+                SDL_SetRenderDrawColor(renderer, 0, 180, 255, 255);//bleu clair
             } else if (grille[x][y] == CELL_AI_1) {
-                SDL_SetRenderDrawColor(renderer, 255, 140, 0, 255);
+                SDL_SetRenderDrawColor(renderer, 255, 140, 0, 255);// orange
             } else if (grille[x][y] == CELL_AI_2) {
-                SDL_SetRenderDrawColor(renderer, 0, 200, 100, 255);
+                SDL_SetRenderDrawColor(renderer, 0, 200, 100, 255);// vert clair
             } else {
-                SDL_SetRenderDrawColor(renderer, 220, 80, 200, 255);
+                SDL_SetRenderDrawColor(renderer, 220, 80, 200, 255);// rose violet
             }
 
             SDL_RenderFillRect(renderer, &case_rect);
@@ -64,12 +64,12 @@ void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running)
 void dessiner_panneau_fin(SDL_Renderer *renderer)
 {
     // Panneau central rouge
-    SDL_Rect panneau = {WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT / 2 - 50, 300, 100};
+    SDL_Rect panneau = {WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT / 2 - 50, 300, 100};// x,y,largeur,hauteur
     SDL_SetRenderDrawColor(renderer, 200, 0, 0, 255);
     SDL_RenderFillRect(renderer, &panneau);
 
     // Bordure blanche
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);//conteur blan
     SDL_RenderDrawRect(renderer, &panneau);
 
     // Dessin manuel des lettres E N D en gros pixels
