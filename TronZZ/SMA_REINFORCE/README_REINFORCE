@@ -8,7 +8,7 @@ la vision linéaire très précise ( il y a un mur du joueur 3 à 7 cases de moi
 ## L'adaptation de l'agent : 
 d'un point de vu génie logiciel , il faudrait que changer la nature de la perception n'influe pas la totalité du code, il faut donc que l'agent s'adapte au type de perception : 
 - 1ère idée : toute perception sera placé dans un tableau de meme dimension pour tout type de perception, et l'agent identifiera sa nature pour prendre les décisions adéquates.
-- 2ème idée : la perception constituera une structure , complète avec perception précise et floue dans tout les axes possible, les "visions" non utilisées pourront etre fixée à 0 et on pourra activer a souhait les modules de la perception.
+- **2ème idée** : la perception constituera une structure , complète avec perception précise et floue dans tout les axes possible, les "visions" non utilisées pourront etre fixée à 0 et on pourra activer a souhait les modules de la perception.
 
 
 ## implémentation du REINFORCE
