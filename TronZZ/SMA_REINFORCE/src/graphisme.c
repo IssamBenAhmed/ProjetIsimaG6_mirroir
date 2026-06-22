@@ -180,4 +180,4 @@ void dessiner_panneau_fin(SDL_Renderer *renderer)
     SDL_RenderFillRect(renderer, &d2);
     SDL_RenderFillRect(renderer, &d3);
     SDL_RenderFillRect(renderer, &d4);
-} TU PEUX AMELIORER LESTHETIQUE PLUS que ça je veux qu'elle sera extraordinaire 
+}                                                                                
