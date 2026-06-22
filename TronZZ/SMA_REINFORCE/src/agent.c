@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <math.h>
+#include <agent.h>
 #include "../include/config.h"
 
 // fonction utilitaire pour generer un float aleatoire entre zero et un
@@ -11,15 +12,15 @@ int choisir_action(Perception p){
     // 1. Le tableau Z (les logits) liés à la perception
     float z[3];
     float poids_espace = 2.0f; // L'importance donnée à l'espace libre
-
+ 
     for (int i = 0; i < 3; i++) {
         // La "Crainte du mur" : si le mur est à 1 case ou moins
-        if (perception[i] <= 1.0f) {
+        if (p.distances_murs[0] <= 1.0f) {
             z[i] = -999.0f; // Score infiniment bas -> Proba Softmax proche de 0%
         } 
         else {
             // Normalisation pour éviter le dépassement de capacité de exp() (Overflow)
-            float perception_normalisee = perception[i] / (float)WIDTH; 
+            float perception_normalisee = p.distances_murs[i] / (float)WIDTH; 
             // Le score Z dépend du nombre de cases libres + un peu de hasard (exploration)
             z[i] = (perception_normalisee * poids_espace) + (random_float() * 1.5f);
         }

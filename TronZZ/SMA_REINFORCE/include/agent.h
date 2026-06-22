@@ -3,8 +3,6 @@
 
 #include "config.h"
 
-float random_float(void);
-int choisir_action(Perception p);
 
 typedef struct {
     // Module 1 : Vision linéaire de précision (Les rayons) Lidar
@@ -16,5 +14,14 @@ typedef struct {
     int zone_adversaire_2;
     int zone_adversaire_3;
 } Perception;
+
+
+
+
+
+float random_float(void);
+int choisir_action(Perception p);
+
+
 
 #endif
