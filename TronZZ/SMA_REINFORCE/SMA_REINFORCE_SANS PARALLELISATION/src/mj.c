@@ -234,7 +234,7 @@ void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
     }
 }
 
-void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1], FrameMemoire * frame) {
+void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1], EpisodeMemoire memoires[MAX_MOTOS + 1]) {
     /*int gagner_ou_pas = trouver_gagnant(etats_vie) ;
     if (gagner_ou_pas !=-1){
         printf("le gagnant est %d \n", gagner_ou_pas);
