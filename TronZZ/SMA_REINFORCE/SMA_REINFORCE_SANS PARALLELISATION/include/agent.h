@@ -6,18 +6,6 @@
 /* Taille fixe de l'historique d'un episode pour l'apprentissage REINFORCE. */
 #define MAX_FRAMES_EPISODE 10000
 
-/*
- * Perception brute fournie a l'agent.
- * Les distances, densites et zones adverses sont les entrees utilisees pour
- * construire le vecteur de caracteristiques phi.
- */
-typedef struct {
-    float distances_murs[3];
-    float densite_obstacles[4];
-    int zone_adversaire_1;
-    int zone_adversaire_2;
-    int zone_adversaire_3;
-} Perception;
 
 /*
  * Memoire d'une frame:

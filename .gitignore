@@ -1,6 +1,7 @@
 # Prerequisites
 *.d
 /*.txt
+*.json
 # Object files
 *.o
 /*.o

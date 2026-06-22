@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include "agent.h"
+#include "../include/agent.h"
+#include "../include/config.h"
 
 /* Matrice de poids partagee par toutes les decisions de l'agent. */
 float theta[10][3];
@@ -9,6 +10,7 @@ float theta[10][3];
 /* Retourne un flottant uniforme dans [0, 1]. */
 float random_float(void) {
     return (float)rand() / (float)RAND_MAX;
+   
 }
 
 /*
@@ -70,7 +72,7 @@ int choisir_action(Perception p, FrameMemoire *mem_frame) {
     float phi[10];
     generer_phi(p, phi);
 
-    /* Score lineaire de chaque action. */
+    /* Score lineaire de chaque action. Z=theta^T * phi. */
     float z[3] = {0};
     for (int j = 0; j < 3; j++) {
         for (int i = 0; i < 10; i++) {
@@ -78,10 +80,10 @@ int choisir_action(Perception p, FrameMemoire *mem_frame) {
         }
     }
 
-    /* Masquage heuristique: empeche l'action avant si la voie est trop proche. */
+    /* Masquage heuristique: empeche l'action avant si la voie est trop proche. (no suicide) */
     if (phi[0] <= 0.1f) z[0] = -999.0f;
 
-    /* Stabilisation numerique du softmax. */
+    /* Stabilisation numerique du softmax.  */
     float max_z = z[0];
     for (int j = 1; j < 3; j++) {
         if (z[j] > max_z) max_z = z[j];
