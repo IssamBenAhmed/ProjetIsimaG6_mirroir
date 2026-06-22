@@ -251,16 +251,18 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
         // --- ISOLATION DE L'AGENT ---
         // Seules les Agents (ID >= 2) utilisent la perception et ta fonction choisir_action
         if (i >= CELL_AI_1) {
-            Perception * perception = malloc(sizeof(Perception));
-            calculer_perception(grille, x, y, dir_motos[i], perception);
-
-            int action = choisir_action(*perception, frame); //venant de "agent.h"
+            Perception perception;
+            calculer_perception(grille, x, y, dir_motos[i], &perception);
+            int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); //venant de "agent.h"
+            
 
             if (action == ACTION_LEFT) {
                 dir_motos[i] = (dir_motos[i] + 3) % 4; // Rotation -90°
             } else if (action == ACTION_RIGHT) {
                 dir_motos[i] = (dir_motos[i] + 1) % 4; // Rotation +90°
             }
+
+            memoires[i].taille++;
         }
         // Le Joueur (i == 1) ignore ce bloc. Sa direction est gérée par Nabil via le clavier.
         // -------------------------
