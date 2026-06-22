@@ -39,7 +39,7 @@ void initialiser_partie (int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
 }
 /*fin de initialisation*/
 
-int compter_moto_vivants(bool etats_vie[MAX_MOTOS + 1]){ //fonction pour compter le nombre de moro vivants
+int compter_moto_vivants(bool etats_vie[MAX_MOTOS + 1]){
     int i= 0; //indice
     int res = 0 ; //compteur de moto en vie
     for (i = 0 ; i < (MAX_MOTOS+1) ; i++){
@@ -54,14 +54,14 @@ int compter_moto_vivants(bool etats_vie[MAX_MOTOS + 1]){ //fonction pour compter
     return res ; 
 }
 
-int trouver_gagnant(bool etats_vie[MAX_MOTOS + 1]){ // trouver si il y a un gagnant
+int trouver_gagnant(bool etats_vie[MAX_MOTOS + 1]){
     int moto_vivant = compter_moto_vivants(etats_vie) ; //compter le nombre de moto vivants
     if(moto_vivant ==2){
-        for (i = 1 ; i < (MAX_MOTOS+1) ; i++){ //on ne rend pas compte le case vide qui correspond a etat_vie[0]
+        for (int i = 1 ; i < (MAX_MOTOS+1) ; i++){ //on ne rend pas compte le case vide qui correspond a etat_vie[0]
             if (etats_vie[i] != true){
                 continue;
             }
-            else{return i ; } //renvoie gagnant
+            else{return i ; } //
 
         }
 
@@ -79,11 +79,10 @@ int cause_mort( int grille[WIDTH][HEIGHT],  int x , int y){
 
 } 
 
-static void assigner_zone_adversaire(int id,int zone,int *z1,int *z2,int *z3) 
-{
-    if (id == CELL_AI_1) *z1 = zone;
-    else if (id == CELL_AI_2) *z2 = zone;
-    else if (id == CELL_AI_3) *z3 = zone;
+static void assigner_zone_adversaire(int id,int zone,int *z1,int *z2,int *z3){
+    if (id == CELL_AI_1){*z1 = zone;}
+    else if (id == CELL_AI_2) {*z2 = zone;}
+    else if (id == CELL_AI_3) {*z3 = zone;}
 }
 
 
@@ -184,10 +183,6 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
     perception->distance_murs[1] = distances[1]; // rayon de vue gauche
     perception->distance_murs[2] = distances[2]; // rayon de vue droite
 
-
-    nx = x + av * dx + lat * ldx;
-    ny = y + av * dy + lat * ldy;
-
     int adversaire[3] ;
 
     // zone floue
@@ -209,19 +204,19 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
     int id; //id de moto dans une zone flou
 
     //Avant-gauche
-    id = existence_adversaire_dans_zone(grille, x, y, dx, dy, ldx, ldy);
+    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, ldx, ldy);
     assigner_zone_adversaire(id, 0,&perception->zone_adversaire_1,&perception->zone_adversaire_2, &perception->zone_adversaire_3);
 
     //Avant-droite
-    id = existence_adversaire_dans_zone(grille, x, y, dx, dy, rdx, rdy);
+    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, rdx, rdy);
     assigner_zone_adversaire(id, 1, &perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
 
     // Arrière-gauche
-    id = existence_adversaire_dans_zone(grille, x, y, -dx, -dy, ldx, ldy);
+    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, ldx, ldy);
     assigner_zone_adversaire(id, 2,&perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
 
     // Arrière-droite
-    id = existence_adversaire_dans_zone(grille, x, y, -dx, -dy, rdx, rdy);
+    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, rdx, rdy);
     assigner_zone_adversaire(id, 3,&perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
 
 }
@@ -240,6 +235,12 @@ void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
 }
 
 void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1]) {
+    /*int gagner_ou_pas = trouver_gagnant(etats_vie) ;
+    if (gagner_ou_pas !=-1){
+        printf("le gagnant est %d \n", gagner_ou_pas);
+        break ;
+    }
+    */
     // On boucle sur TOUTES les motos vivantes (Joueur inclus : de 1 à 4)
     for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
         if (!etats_vie[i]) continue;
@@ -284,3 +285,5 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
         }
     }
 }
+
+
