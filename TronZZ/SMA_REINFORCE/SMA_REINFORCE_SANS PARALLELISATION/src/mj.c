@@ -179,9 +179,9 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
         }
     }
 
-    perception->distance_murs[0] = distances[0]; // rayon de vue devant
-    perception->distance_murs[1] = distances[1]; // rayon de vue gauche
-    perception->distance_murs[2] = distances[2]; // rayon de vue droite
+    perception->distance_murs[0] = distances[0]/WIDTH; // rayon de vue devant
+    perception->distance_murs[1] = distances[1]/WIDTH; // rayon de vue gauche
+    perception->distance_murs[2] = distances[2]/WIDTH; // rayon de vue droite
 
     int adversaire[3] ;
 
