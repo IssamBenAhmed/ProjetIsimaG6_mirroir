@@ -30,7 +30,7 @@ static void obtenir_vecteur(int direction, int *dx, int *dy);
 
 static float calculer_densite_zone( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2) ;
 
-int existence_adversaire_dans_un_zone ( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2 , int id_adversaire) ;
+int existence_adversaire_dans_un_zone ( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2 ) ;
 
 void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction, Perception * perception ) ;
 
