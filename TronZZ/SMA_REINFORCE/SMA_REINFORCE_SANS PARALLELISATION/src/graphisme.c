@@ -2,26 +2,29 @@
 
 /*
  * Fichier graphisme.c
- * Ici on s'occupe seulement de l'affichage :
- * - belle grille style Tron
- * - couleurs des motos
- * - bordure
- * - compteur de temps écoulé
- * - panneau END
+ * Rendu graphique plus sobre :
+ * - fond sombre
+ * - grille discrète
+ * - bordure lumineuse
+ * - traces plus visibles
+ * - panneau END propre
  */
 
-/* Dessine un petit rectangle */
+/* Petit outil pour dessiner rapidement un rectangle plein */
 static void remplir_rect(SDL_Renderer *renderer, int x, int y, int w, int h)
 {
     SDL_Rect rect = {x, y, w, h};
     SDL_RenderFillRect(renderer, &rect);
 }
 
-/* Dessine une grille plus belle style Tron */
+/* Dessine une grille discrète */
 static void dessiner_grille(SDL_Renderer *renderer)
 {
-    /* Petites lignes de base */
-    SDL_SetRenderDrawColor(renderer, 10, 45, 75, 120);
+    /*
+     * Petite grille très discrète.
+     * Elle aide à voir les cases sans dominer l'affichage.
+     */
+    SDL_SetRenderDrawColor(renderer, 8, 22, 35, 45);
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
@@ -31,8 +34,11 @@ static void dessiner_grille(SDL_Renderer *renderer)
         SDL_RenderDrawLine(renderer, 0, y, WINDOW_WIDTH, y);
     }
 
-    /* Lignes principales toutes les 5 cases */
-    SDL_SetRenderDrawColor(renderer, 0, 180, 255, 160);
+    /*
+     * Grande grille toutes les 5 cases.
+     * Elle donne une structure à l'arène, mais reste douce.
+     */
+    SDL_SetRenderDrawColor(renderer, 0, 120, 180, 70);
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE * 5) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
@@ -41,271 +47,152 @@ static void dessiner_grille(SDL_Renderer *renderer)
     for (int y = 0; y <= WINDOW_HEIGHT; y += CELL_SIZE * 5) {
         SDL_RenderDrawLine(renderer, 0, y, WINDOW_WIDTH, y);
     }
-
-    /* Petits points lumineux aux intersections principales */
-    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 200);
-
-    for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE * 5) {
-        for (int y = 0; y <= WINDOW_HEIGHT; y += CELL_SIZE * 5) {
-            remplir_rect(renderer, x - 1, y - 1, 3, 3);
-        }
-    }
 }
 
-/* Dessine les limites de l'arène */
+/* Dessine une bordure lumineuse mais pas trop agressive */
 static void dessiner_bordure(SDL_Renderer *renderer)
 {
-    SDL_Rect bordure1 = {0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1};
-    SDL_Rect bordure2 = {2, 2, WINDOW_WIDTH - 5, WINDOW_HEIGHT - 5};
-    SDL_Rect bordure3 = {5, 5, WINDOW_WIDTH - 11, WINDOW_HEIGHT - 11};
+    SDL_Rect bordure_ext = {0, 0, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1};
+    SDL_Rect bordure_int = {3, 3, WINDOW_WIDTH - 7, WINDOW_HEIGHT - 7};
 
-    /* Bordure cyan forte */
-    SDL_SetRenderDrawColor(renderer, 0, 240, 255, 255);
-    SDL_RenderDrawRect(renderer, &bordure1);
+    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 255);
+    SDL_RenderDrawRect(renderer, &bordure_ext);
 
-    /* Bordure blanche transparente */
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 170);
-    SDL_RenderDrawRect(renderer, &bordure2);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 90);
+    SDL_RenderDrawRect(renderer, &bordure_int);
 
-    /* Bordure interne bleu foncé */
-    SDL_SetRenderDrawColor(renderer, 0, 100, 160, 160);
-    SDL_RenderDrawRect(renderer, &bordure3);
+    /*
+     * Coins lumineux courts.
+     * Cela donne un style arène sans surcharger tout le contour.
+     */
+    SDL_SetRenderDrawColor(renderer, 0, 255, 255, 230);
 
-    /* Coins lumineux */
-    SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
+    SDL_RenderDrawLine(renderer, 0, 0, 35, 0);
+    SDL_RenderDrawLine(renderer, 0, 0, 0, 35);
 
-    SDL_RenderDrawLine(renderer, 0, 0, 40, 0);
-    SDL_RenderDrawLine(renderer, 0, 0, 0, 40);
+    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, 0, WINDOW_WIDTH - 36, 0);
+    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, 0, WINDOW_WIDTH - 1, 35);
 
-    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, 0, WINDOW_WIDTH - 41, 0);
-    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, 0, WINDOW_WIDTH - 1, 40);
+    SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT - 1, 35, WINDOW_HEIGHT - 1);
+    SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT - 1, 0, WINDOW_HEIGHT - 36);
 
-    SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT - 1, 40, WINDOW_HEIGHT - 1);
-    SDL_RenderDrawLine(renderer, 0, WINDOW_HEIGHT - 1, 0, WINDOW_HEIGHT - 41);
-
-    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1, WINDOW_WIDTH - 41, WINDOW_HEIGHT - 1);
-    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 41);
+    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1,
+                       WINDOW_WIDTH - 36, WINDOW_HEIGHT - 1);
+    SDL_RenderDrawLine(renderer, WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1,
+                       WINDOW_WIDTH - 1, WINDOW_HEIGHT - 36);
 }
 
-/* Choisit la couleur selon le type de cellule */
+/* Couleur principale des traces */
 static void choisir_couleur_cellule(SDL_Renderer *renderer, int cellule)
 {
     if (cellule == CELL_PLAYER) {
         SDL_SetRenderDrawColor(renderer, 0, 230, 255, 255);      /* bleu cyan */
     } else if (cellule == CELL_AI_1) {
-        SDL_SetRenderDrawColor(renderer, 255, 140, 0, 255);      /* orange */
+        SDL_SetRenderDrawColor(renderer, 255, 150, 0, 255);      /* orange */
     } else if (cellule == CELL_AI_2) {
         SDL_SetRenderDrawColor(renderer, 0, 255, 120, 255);      /* vert néon */
     } else {
-        SDL_SetRenderDrawColor(renderer, 230, 80, 255, 255);     /* violet / rose */
+        SDL_SetRenderDrawColor(renderer, 230, 70, 255, 255);     /* violet */
     }
 }
 
-/* Choisit la couleur de la lueur autour d'une cellule */
+/* Couleur de la lueur autour des traces */
 static void choisir_couleur_lueur(SDL_Renderer *renderer, int cellule)
 {
     if (cellule == CELL_PLAYER) {
-        SDL_SetRenderDrawColor(renderer, 0, 90, 150, 150);
+        SDL_SetRenderDrawColor(renderer, 0, 120, 180, 80);
     } else if (cellule == CELL_AI_1) {
-        SDL_SetRenderDrawColor(renderer, 150, 70, 0, 150);
+        SDL_SetRenderDrawColor(renderer, 180, 80, 0, 80);
     } else if (cellule == CELL_AI_2) {
-        SDL_SetRenderDrawColor(renderer, 0, 120, 60, 150);
+        SDL_SetRenderDrawColor(renderer, 0, 160, 70, 80);
     } else {
-        SDL_SetRenderDrawColor(renderer, 120, 35, 150, 150);
+        SDL_SetRenderDrawColor(renderer, 160, 40, 180, 80);
     }
 }
 
-/* Dessine une cellule avec un effet lumineux */
+/* Dessine une case occupée par une moto ou une trace */
 static void dessiner_cellule(SDL_Renderer *renderer, int x, int y, int cellule)
 {
     SDL_Rect glow_rect;
-    SDL_Rect case_rect;
+    SDL_Rect core_rect;
+    SDL_Rect centre_rect;
 
     /*
-     * glow_rect = rectangle un peu grand.
-     * Il donne l'effet lumineux autour de la trace.
+     * Lueur : presque toute la case.
      */
-    glow_rect.x = x * CELL_SIZE + 1;
-    glow_rect.y = y * CELL_SIZE + 1;
-    glow_rect.w = CELL_SIZE - 2;
-    glow_rect.h = CELL_SIZE - 2;
+    glow_rect.x = x * CELL_SIZE;
+    glow_rect.y = y * CELL_SIZE;
+    glow_rect.w = CELL_SIZE;
+    glow_rect.h = CELL_SIZE;
 
     /*
-     * case_rect = vraie trace colorée.
-     * Elle est plus petite pour laisser voir la grille.
+     * Trace principale : plus grande que l'ancienne version.
+     * Avant, CELL_SIZE - 6 rendait les traces trop petites.
      */
-    case_rect.x = x * CELL_SIZE + 3;
-    case_rect.y = y * CELL_SIZE + 3;
-    case_rect.w = CELL_SIZE - 6;
-    case_rect.h = CELL_SIZE - 6;
+    core_rect.x = x * CELL_SIZE + 1;
+    core_rect.y = y * CELL_SIZE + 1;
+    core_rect.w = CELL_SIZE - 2;
+    core_rect.h = CELL_SIZE - 2;
 
-    if (case_rect.w < 1) {
-        case_rect.w = 1;
+    /*
+     * Petit centre plus clair pour donner un effet lumineux.
+     */
+    centre_rect.x = x * CELL_SIZE + CELL_SIZE / 3;
+    centre_rect.y = y * CELL_SIZE + CELL_SIZE / 3;
+    centre_rect.w = CELL_SIZE / 3;
+    centre_rect.h = CELL_SIZE / 3;
+
+    if (core_rect.w < 1) {
+        core_rect.w = 1;
     }
 
-    if (case_rect.h < 1) {
-        case_rect.h = 1;
+    if (core_rect.h < 1) {
+        core_rect.h = 1;
+    }
+
+    if (centre_rect.w < 1) {
+        centre_rect.w = 1;
+    }
+
+    if (centre_rect.h < 1) {
+        centre_rect.h = 1;
     }
 
     choisir_couleur_lueur(renderer, cellule);
     SDL_RenderFillRect(renderer, &glow_rect);
 
     choisir_couleur_cellule(renderer, cellule);
-    SDL_RenderFillRect(renderer, &case_rect);
+    SDL_RenderFillRect(renderer, &core_rect);
+
+    /*
+     * Petit éclat au centre.
+     */
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 120);
+    SDL_RenderFillRect(renderer, &centre_rect);
 }
 
-/*
- * Dessine un chiffre avec 7 segments.
- * Cela permet d'afficher le compteur sans SDL_ttf.
- */
-static void dessiner_chiffre(SDL_Renderer *renderer, int chiffre, int x, int y, int taille)
-{
-    int epaisseur = taille;
-    int longueur = 4 * taille;
-
-    SDL_Rect a = {x + epaisseur, y, longueur, epaisseur};
-    SDL_Rect b = {x + longueur + epaisseur, y + epaisseur, epaisseur, longueur};
-    SDL_Rect c = {x + longueur + epaisseur, y + longueur + 2 * epaisseur, epaisseur, longueur};
-    SDL_Rect d = {x + epaisseur, y + 2 * longueur + 2 * epaisseur, longueur, epaisseur};
-    SDL_Rect e = {x, y + longueur + 2 * epaisseur, epaisseur, longueur};
-    SDL_Rect f = {x, y + epaisseur, epaisseur, longueur};
-    SDL_Rect g = {x + epaisseur, y + longueur + epaisseur, longueur, epaisseur};
-
-    int segments[10][7] = {
-        {1, 1, 1, 1, 1, 1, 0}, /* 0 */
-        {0, 1, 1, 0, 0, 0, 0}, /* 1 */
-        {1, 1, 0, 1, 1, 0, 1}, /* 2 */
-        {1, 1, 1, 1, 0, 0, 1}, /* 3 */
-        {0, 1, 1, 0, 0, 1, 1}, /* 4 */
-        {1, 0, 1, 1, 0, 1, 1}, /* 5 */
-        {1, 0, 1, 1, 1, 1, 1}, /* 6 */
-        {1, 1, 1, 0, 0, 0, 0}, /* 7 */
-        {1, 1, 1, 1, 1, 1, 1}, /* 8 */
-        {1, 1, 1, 1, 0, 1, 1}  /* 9 */
-    };
-
-    if (chiffre < 0 || chiffre > 9) {
-        return;
-    }
-
-    if (segments[chiffre][0]) {
-        SDL_RenderFillRect(renderer, &a);
-    }
-
-    if (segments[chiffre][1]) {
-        SDL_RenderFillRect(renderer, &b);
-    }
-
-    if (segments[chiffre][2]) {
-        SDL_RenderFillRect(renderer, &c);
-    }
-
-    if (segments[chiffre][3]) {
-        SDL_RenderFillRect(renderer, &d);
-    }
-
-    if (segments[chiffre][4]) {
-        SDL_RenderFillRect(renderer, &e);
-    }
-
-    if (segments[chiffre][5]) {
-        SDL_RenderFillRect(renderer, &f);
-    }
-
-    if (segments[chiffre][6]) {
-        SDL_RenderFillRect(renderer, &g);
-    }
-}
-
-/* Dessine les deux points entre minutes et secondes */
-static void dessiner_deux_points(SDL_Renderer *renderer, int x, int y, int taille)
-{
-    remplir_rect(renderer, x, y + 3 * taille, taille, taille);
-    remplir_rect(renderer, x, y + 7 * taille, taille, taille);
-}
-
-/*
- * Dessine le compteur de temps écoulé.
- * Format : MM:SS
- */
-static void dessiner_compteur_temps(SDL_Renderer *renderer)
-{
-    static Uint32 temps_debut = 0;
-
-    if (temps_debut == 0) {
-        temps_debut = SDL_GetTicks();
-    }
-
-    Uint32 temps_actuel = SDL_GetTicks();
-    Uint32 temps_ecoule = (temps_actuel - temps_debut) / 1000;
-
-    int minutes = temps_ecoule / 60;
-    int secondes = temps_ecoule % 60;
-
-    if (minutes > 99) {
-        minutes = 99;
-        secondes = 59;
-    }
-
-    int m1 = minutes / 10;
-    int m2 = minutes % 10;
-    int s1 = secondes / 10;
-    int s2 = secondes % 10;
-
-    SDL_Rect ombre = {11, 11, 116, 38};
-    SDL_Rect panneau = {8, 8, 116, 38};
-
-    /* Fond du compteur */
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 170);
-    SDL_RenderFillRect(renderer, &ombre);
-
-    SDL_SetRenderDrawColor(renderer, 5, 20, 35, 230);
-    SDL_RenderFillRect(renderer, &panneau);
-
-    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 230);
-    SDL_RenderDrawRect(renderer, &panneau);
-
-    /* Chiffres */
-    SDL_SetRenderDrawColor(renderer, 0, 240, 255, 255);
-
-    dessiner_chiffre(renderer, m1, 18, 15, 2);
-    dessiner_chiffre(renderer, m2, 34, 15, 2);
-
-    dessiner_deux_points(renderer, 51, 15, 2);
-
-    dessiner_chiffre(renderer, s1, 58, 15, 2);
-    dessiner_chiffre(renderer, s2, 74, 15, 2);
-}
-
+/* Dessine l'arène complète */
 void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
 {
-    /*
-     * Active la transparence.
-     * Important pour les couleurs avec alpha.
-     */
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     /*
-     * Fond bleu nuit.
+     * Fond très sombre.
+     * Moins de bruit visuel que les bandes répétées.
      */
-    SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);
+    SDL_SetRenderDrawColor(renderer, 2, 5, 12, 255);
     SDL_RenderClear(renderer);
 
     /*
-     * Bandes sombres discrètes dans le fond.
+     * Léger rectangle intérieur pour donner de la profondeur.
      */
-    for (int y = 0; y < WINDOW_HEIGHT; y += 40) {
-        SDL_SetRenderDrawColor(renderer, 5, 15, 30, 80);
-        remplir_rect(renderer, 0, y, WINDOW_WIDTH, 20);
-    }
+    SDL_SetRenderDrawColor(renderer, 4, 10, 22, 255);
+    remplir_rect(renderer, 6, 6, WINDOW_WIDTH - 12, WINDOW_HEIGHT - 12);
 
-    /*
-     * Grille de fond.
-     */
     dessiner_grille(renderer);
 
     /*
-     * Dessin des traces des motos.
+     * Dessin des motos et des traces.
      */
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
@@ -315,19 +202,8 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
         }
     }
 
-    /*
-     * Bordure finale par-dessus tout.
-     */
     dessiner_bordure(renderer);
 
-    /*
-     * Compteur de temps écoulé.
-     */
-    dessiner_compteur_temps(renderer);
-
-    /*
-     * Affichage à l'écran.
-     */
     SDL_RenderPresent(renderer);
 }
 
@@ -360,34 +236,35 @@ void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running)
 
 void dessiner_panneau_fin(SDL_Renderer *renderer)
 {
-    SDL_Rect ombre = {WINDOW_WIDTH / 2 - 155, WINDOW_HEIGHT / 2 - 55, 310, 110};
+    SDL_Rect ombre = {WINDOW_WIDTH / 2 - 160, WINDOW_HEIGHT / 2 - 60, 320, 120};
     SDL_Rect panneau = {WINDOW_WIDTH / 2 - 150, WINDOW_HEIGHT / 2 - 50, 300, 100};
+    SDL_Rect bordure_interne = {panneau.x + 5, panneau.y + 5, panneau.w - 10, panneau.h - 10};
+
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     /*
-     * Ombre derrière le panneau.
+     * Ombre.
      */
-    SDL_SetRenderDrawColor(renderer, 20, 0, 0, 220);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 190);
     SDL_RenderFillRect(renderer, &ombre);
 
     /*
-     * Panneau central rouge sombre.
+     * Panneau sombre rouge.
      */
-    SDL_SetRenderDrawColor(renderer, 120, 0, 20, 245);
+    SDL_SetRenderDrawColor(renderer, 80, 0, 18, 245);
     SDL_RenderFillRect(renderer, &panneau);
 
     /*
-     * Bordure lumineuse.
+     * Bordures.
      */
-    SDL_SetRenderDrawColor(renderer, 255, 40, 80, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 50, 90, 255);
     SDL_RenderDrawRect(renderer, &panneau);
 
-    SDL_Rect bordure_interne = {panneau.x + 4, panneau.y + 4, panneau.w - 8, panneau.h - 8};
-
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 180);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 120);
     SDL_RenderDrawRect(renderer, &bordure_interne);
 
     /*
-     * Dessin manuel des lettres E N D en gros pixels.
+     * Lettres END.
      */
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
