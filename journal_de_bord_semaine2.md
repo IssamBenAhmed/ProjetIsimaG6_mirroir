@@ -8,13 +8,21 @@
 
   ## Objectifs
   Comprendre le principe de l’apprentissage par renforcement.
+
   Étudier la méthode REINFORCE et son fonctionnement.
+
   Appliquer la méthode REINFORCE à notre jeu TronZZ afin d’améliorer le comportement des agents.
+
   Comprendre le principe de la parallélisation dans un programme.
+
   Créer deux versions du projet : une version sans parallélisation et une version avec parallélisation.
+
   Mesurer les temps d’exécution des différentes parties du programme.
+
   Comparer les performances entre la version sans parallélisation et la version avec parallélisation.
+
   Analyser les résultats obtenus, les limites rencontrées et les pistes d’amélioration possibles.
+  
  
 
   ## Suivi des travaux 
