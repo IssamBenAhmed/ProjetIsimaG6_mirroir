@@ -179,25 +179,25 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
         }
     }
 
-    perception->distance_murs[0] = distances[0]/LIMIT_VISION; // rayon de vue devant
-    perception->distance_murs[1] = distances[1]/LIMIT_VISION; // rayon de vue gauche
-    perception->distance_murs[2] = distances[2]/LIMIT_VISION; // rayon de vue droite
+    perception->distances_murs[0] = distances[0]/LIMIT_VISION; // rayon de vue devant
+    perception->distances_murs[1] = distances[1]/LIMIT_VISION; // rayon de vue gauche
+    perception->distances_murs[2] = distances[2]/LIMIT_VISION; // rayon de vue droite
 
     int adversaire[3] ;
 
     // zone floue
     
     //Avant-gauche 
-    perception->densite_obstacle[0] = calculer_densite_zone(grille, x, y,dx, dy,ldx, ldy);
+    perception->densite_obstacles[0] = calculer_densite_zone(grille, x, y,dx, dy,ldx, ldy);
 
     //Avant-droite 
-    perception->densite_obstacle[1] = calculer_densite_zone(grille, x, y,dx, dy,rdx, rdy);
+    perception->densite_obstacles[1] = calculer_densite_zone(grille, x, y,dx, dy,rdx, rdy);
 
     // Arrière-gauche 
-    perception->densite_obstacle[2] =calculer_densite_zone(grille, x, y,-dx, -dy,ldx, ldy);
+    perception->densite_obstacles[2] =calculer_densite_zone(grille, x, y,-dx, -dy,ldx, ldy);
 
     // Arrière-droite
-    perception->densite_obstacle[3] =calculer_densite_zone(grille, x, y,-dx, -dy,rdx, rdy);
+    perception->densite_obstacles[3] =calculer_densite_zone(grille, x, y,-dx, -dy,rdx, rdy);
 
     //maintenant, on calcule la zone ou l'adversaire existe 
 
@@ -254,7 +254,7 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             Perception * perception = malloc(sizeof(Perception));
             calculer_perception(grille, x, y, dir_motos[i], perception);
 
-            int action = choisir_action(perception, frame); //venant de "agent.h"
+            int action = choisir_action(*perception, frame); //venant de "agent.h"
 
             if (action == ACTION_LEFT) {
                 dir_motos[i] = (dir_motos[i] + 3) % 4; // Rotation -90°

@@ -10,6 +10,7 @@
 
 #define FRAME_DELAY_MS 16
 #define PERCEPTION_SIZE 3
+#define LIMIT_VISION 15
 #define MAX_MOTOS 4
 
 #define CELL_EMPTY 0
@@ -30,12 +31,12 @@
 #define ACTION_LEFT 1
 #define ACTION_RIGHT 2
 
-#define filename_theta "../data/theta.bin"
+#define filename_theta "../data/cerveau.bin"
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////// PARTIE REINFORCE ET AGENT ////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
-
+#define MAX_FRAMES_EPISODE 10000
 /*
  * Perception brute fournie a l'agent.
  * Les distances, densites et zones adverses sont les entrees utilisees pour
