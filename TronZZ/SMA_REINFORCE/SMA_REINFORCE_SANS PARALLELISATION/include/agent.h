@@ -3,25 +3,55 @@
 
 #include "config.h"
 
+/* Taille fixe de l'historique d'un episode pour l'apprentissage REINFORCE. */
+#define MAX_FRAMES_EPISODE 10000
 
+/*
+ * Perception brute fournie a l'agent.
+ * Les distances, densites et zones adverses sont les entrees utilisees pour
+ * construire le vecteur de caracteristiques phi.
+ */
 typedef struct {
-    // Module 1 : Vision linéaire de précision (Les rayons) Lidar
-    float distances_murs[3]; // [0]=Devant, [1]=Gauche, [2]=Droite
-    
-    // Module 2 : Vision globale "Floue" (Les zones) Radar
-    float densite_obstacles[4]; // [0]=Avant-G, [1]=Avant-D, [2]=Arriere-G, [3]=Arriere-D
-    int zone_adversaire_1;      // ID de la zone (0 à 3) où se trouve l'adversaire
+    float distances_murs[3];
+    float densite_obstacles[4];
+    int zone_adversaire_1;
     int zone_adversaire_2;
     int zone_adversaire_3;
 } Perception;
 
+/*
+ * Memoire d'une frame:
+ * - phi : etat transforme en variables numeriques
+ * - action : action effectivement choisie
+ * - probabilites : sortie du softmax au moment du choix
+ * - recompense : retour immediat associe a la frame
+ */
+typedef struct {
+    float phi[10];
+    int action;
+    float probabilites[3];
+    float recompense;
+} FrameMemoire;
 
+/* Historique complet d'un episode pour recalculer les retours G_t. */
+typedef struct {
+    FrameMemoire frames[MAX_FRAMES_EPISODE];
+    int taille;
+} EpisodeMemoire;
 
-
-
+/* Construit le vecteur phi a partir de la perception brute. */
+void generer_phi(Perception p, float phi[10]);
+/* Initialise theta avec de petites valeurs aleatoires. */
+void init_theta(void);
+/* Sauvegarde la matrice theta sur disque. */
+void sauvegarder_theta(const char *filename);
+/* Charge theta depuis un fichier, ou reinitialise si le fichier est absent. */
+void charger_theta(const char *filename);
+/* Fournit un alea uniforme dans [0, 1]. */
 float random_float(void);
-int choisir_action(Perception p);
-
-
+/* Choisit une action pendant l'apprentissage et remplit la memoire de frame. */
+int choisir_action(Perception p, FrameMemoire *mem_frame);
+/* Met a jour theta a partir d'un episode complet. */
+void maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
 
 #endif
