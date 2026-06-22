@@ -1,5 +1,5 @@
 CC := gcc
-TARGET := sma_no_reinforce
+TARGET := TronZZ
 SRC := src/main.c \
        src/agent.c \
        src/mj.c \

@@ -13,6 +13,7 @@ typedef struct {
     int zone_adversaire_1;      // ID de la zone (0 à 3) où se trouve l'adversaire
     int zone_adversaire_2;
     int zone_adversaire_3;
+    
 } Perception;
 
 
