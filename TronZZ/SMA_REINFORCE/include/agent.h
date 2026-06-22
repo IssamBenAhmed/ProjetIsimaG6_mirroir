@@ -4,7 +4,7 @@
 #include "config.h"
 
 float random_float(void);
-int choisir_action(float perception[PERCEPTION_SIZE]);
+int choisir_action(Perception p);
 
 typedef struct {
     // Module 1 : Vision linéaire de précision (Les rayons) Lidar

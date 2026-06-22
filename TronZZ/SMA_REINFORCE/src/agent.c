@@ -7,7 +7,7 @@ float random_float(void) {
     return (float)rand() / (float)RAND_MAX;
 }
 
-int choisir_action(float perception[PERCEPTION_SIZE]) {
+int choisir_action(Perception p){
     // 1. Le tableau Z (les logits) liés à la perception
     float z[3];
     float poids_espace = 2.0f; // L'importance donnée à l'espace libre
