@@ -39,7 +39,7 @@ void charger_theta(const char *filename);
 float random_float(void);
 /* Choisit une action pendant l'apprentissage et remplit la memoire de frame. */
 int choisir_action(Perception p, FrameMemoire *mem_frame);
-/* Met a jour theta a partir d'un episode complet. */
-void maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
+/* Met a jour theta a partir d'un episode complet ET RENVOIS LE SCORE TOTAL */
+float maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
 
 #endif
