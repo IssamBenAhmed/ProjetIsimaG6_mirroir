@@ -1,6 +1,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#define ENTRAINEMENT "train"
+#define JOUEUR "play"
+
 #define WIDTH 100
 #define HEIGHT 100
 
