@@ -88,7 +88,7 @@ int choisir_action(Perception p, FrameMemoire *mem_frame) {
     for (int j = 1; j < 3; j++) {
         if (z[j] > max_z) max_z = z[j];
     }
-
+//On retire max_z à toutes les valeurs de z 
     float exp_z[3], somme_exp = 0.0f;
     for (int j = 0; j < 3; j++) {
         exp_z[j] = exp(z[j] - max_z);
