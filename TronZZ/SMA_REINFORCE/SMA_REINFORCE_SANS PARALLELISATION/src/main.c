@@ -255,14 +255,24 @@ int main(int argc, char *argv[])
         int dernier_vainqueur = -1;
 
         long episode = 1;
-        long episodes_totaux = 10000; /* valeur par defaut */
-            if (argc >= 3) {
-                episodes_totaux = strtol(argv[2], NULL, 10);
+        long episodes_totaux = 10000;
+        
                 /*
                 * long strtol( const char * theString, char ** end, int base ); 
                 * Cette fonction, signifiant string to long, permet de transformer une chaîne de caractères,
                 * contenant la représentation textuelle d'un entier, en un entier type long
                 */
+
+            if (argc >= 3) {//nombre d'episodes a executer avant l'arret du programme (pour le batch)
+
+                episodes_totaux = strtol(argv[2], NULL, 10);
+                
+            }
+
+            if (argc >= 4) {//numero de l'episode a partir duquel reprendre l'entrainement (utile pour les batchs interrompus)
+
+                episode = strtol(argv[3], NULL, 10);
+
             }
 
         while (episode <= episodes_totaux && running) {

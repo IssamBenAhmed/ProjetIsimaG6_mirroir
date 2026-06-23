@@ -4,11 +4,8 @@
 #include "../include/agent.h"
 #include "../include/config.h"
 
-/* limite l'apprentissage aux 3 premiers capteurs (les rayons) suite aux erreurs rapportees par mon prof.
- * les poids des autres capteurs resteront figes a 0 mathematiquement.
- * la taille de la matrice reste a 10x3 pour garantir la compatibilite du fichier binaire.
- */
-#define ACTIVE_FEATURES 3 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
+
+#define ACTIVE_FEATURES 10 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
 
 /* matrice de poids theta partagee par tous les agents en apprentissage */
 float theta[15][3];
