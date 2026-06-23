@@ -34,12 +34,15 @@
 #define ACTION_LEFT 1
 #define ACTION_RIGHT 2
 
-#define filename_theta "../data/cerveau.bin"
+#define filename_theta "data/cerveau.bin"
 
 ///////////////////////////////////////////////////////////////////////////////
 //////////// PARTIE REINFORCE ET AGENT ////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 #define MAX_FRAMES_EPISODE 10000
+#define MAX_FRAMES_MEMORY 10000
+#define MAX_FRAMES_TOTAL 1000000
+#define TEMPS_ENTRE_RAPPORTS 20
 /*
  * Perception brute fournie a l'agent.
  * Les distances, densites et zones adverses sont les entrees utilisees pour

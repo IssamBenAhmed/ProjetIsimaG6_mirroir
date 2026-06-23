@@ -8,6 +8,7 @@
 #include <math.h>
 
 #include "config.h"
+#include "agent.h"
 
 
 
@@ -29,12 +30,6 @@ bool gagnant_ou_pas(bool etats_vie[MAX_MOTOS + 1], EpisodeMemoire memoires[MAX_M
 
 
 int cause_mort( int grille[WIDTH][HEIGHT],  int x , int y); 
-
-static void assigner_zone_adversaire(int id,int zone,int *z1,int *z2,int *z3) ;
-
-static void obtenir_vecteur(int direction, int *dx, int *dy); 
-
-static float calculer_densite_zone( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2) ;
 
 int existence_adversaire_dans_un_zone ( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2 ) ;
 
