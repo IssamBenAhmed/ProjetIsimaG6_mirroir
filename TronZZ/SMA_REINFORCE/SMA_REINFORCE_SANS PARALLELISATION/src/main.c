@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include <SDL2/SDL.h>
 
 #include "../include/config.h"
@@ -9,29 +10,22 @@
 
 int main(int argc, char *argv[])
 {
-
-
-
     int grid[WIDTH][HEIGHT] = {0};
     int pos_motos[MAX_MOTOS + 1][2] = {0};
     int dir_motos[MAX_MOTOS + 1] = {0};
     bool moto_alive[MAX_MOTOS + 1] = {false};
     bool running = true;
 
-
-
-    (void)argc;
-    if (argv[1] == NULL) {
+    if (argc < 2) {
         fprintf(stderr, "Usage: %s <mode>\n", argv[0]);
         fprintf(stderr, "Modes: %s, %s\n", ENTRAINEMENT, JOUEUR);
         return EXIT_FAILURE;
     }
 
     if (strcmp(argv[1], JOUEUR) == 0) {
-
-         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "erreur sdl init : %s\n", SDL_GetError());
-        return EXIT_FAILURE;
+        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+            fprintf(stderr, "erreur sdl init : %s\n", SDL_GetError());
+            return EXIT_FAILURE;
         }
 
         SDL_Window *window = SDL_CreateWindow(
@@ -42,7 +36,6 @@ int main(int argc, char *argv[])
             WINDOW_HEIGHT,
             SDL_WINDOW_SHOWN
         );
-
 
         if (window == NULL) {
             fprintf(stderr, "erreur creation fenetre : %s\n", SDL_GetError());
@@ -63,11 +56,20 @@ int main(int argc, char *argv[])
             return EXIT_FAILURE;
         }
 
-         /*
-        * Permet d'utiliser les couleurs avec transparence.
-        * Utile pour la grille, les effets lumineux et le panneau de fin.
-        */
+        /*
+         * Permet d'utiliser les couleurs avec transparence.
+         */
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+
+        /*
+         * Écran titre avant le début du jeu.
+         */
+        if (!afficher_ecran_titre(window, renderer)) {
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            SDL_Quit();
+            return EXIT_SUCCESS;
+        }
 
         srand((unsigned int)SDL_GetTicks());
 
@@ -106,16 +108,17 @@ int main(int argc, char *argv[])
 
             while (SDL_PollEvent(&event)) {
                 capturer_evenements(&event, &dir_motos[CELL_PLAYER], &running);
-        
-            
+            }
 
             Uint32 now = SDL_GetTicks();
+
             if (now - last_tick >= 2 * FRAME_DELAY_MS) {
                 last_tick = now;
 
                 mettre_a_jour_monde(grid, pos_motos, dir_motos, moto_alive);
 
                 int motos_vivantes = 0;
+
                 for (int id = CELL_PLAYER; id <= CELL_AI_3; id++) {
                     if (moto_alive[id]) {
                         motos_vivantes++;
@@ -123,11 +126,13 @@ int main(int argc, char *argv[])
                 }
 
                 if (motos_vivantes <= 1) {
+                    bool joueur_gagne = moto_alive[CELL_PLAYER];
+
                     dessiner_arene(renderer, grid);
-                    dessiner_panneau_fin(renderer);
+                    dessiner_panneau_fin(renderer, joueur_gagne);
                     SDL_RenderPresent(renderer);
 
-                    SDL_Delay(2000);
+                    SDL_Delay(2500);
 
                     running = false;
                     continue;
@@ -143,21 +148,15 @@ int main(int argc, char *argv[])
         SDL_Quit();
 
         return EXIT_SUCCESS;
-    }
-
-    } 
-    else if (strcmp(argv[1], ENTRAINEMENT) == 0) {
-        
+    } else if (strcmp(argv[1], ENTRAINEMENT) == 0) {
+        /*
+         * Ici tes amis pourront garder / ajouter le mode entraînement.
+         * Je ne change rien ici pour ne pas casser leur travail.
+         */
+        return EXIT_SUCCESS;
     } else {
         fprintf(stderr, "Mode inconnu: %s\n", argv[1]);
         fprintf(stderr, "Modes: %s, %s\n", ENTRAINEMENT, JOUEUR);
         return EXIT_FAILURE;
     }
-
-    
-
-
-    
-
-    
 }
