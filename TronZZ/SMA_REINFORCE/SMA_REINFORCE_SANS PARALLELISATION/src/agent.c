@@ -8,7 +8,7 @@
  * les poids des autres capteurs resteront figes a 0 mathematiquement.
  * la taille de la matrice reste a 10x3 pour garantir la compatibilite du fichier binaire.
  */
-#define ACTIVE_FEATURES 3 
+#define ACTIVE_FEATURES 3 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
 
 /* matrice de poids theta partagee par tous les agents en apprentissage */
 float theta[10][3];
