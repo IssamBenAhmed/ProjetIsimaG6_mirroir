@@ -3,8 +3,7 @@
 
 
 
-
-/* initialiser la partie de jeu*/
+/* ---------------------------- initialiser la partie de jeu -----------------------------------*/
 void initialiser_grille( int grille[WIDTH][HEIGHT]){
     for (int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
@@ -37,8 +36,9 @@ void initialiser_partie (int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
     }
 
 }
-/*fin de initialisation*/
+/*--------------------------------fin de initialisation----------------------------*/
 
+/*on regarde l'etat de jeu et moto*/
 int compter_moto_vivants(bool etats_vie[MAX_MOTOS + 1]){
     int i= 0; //indice
     int res = 0 ; //compteur de moto en vie
@@ -69,6 +69,19 @@ int trouver_gagnant(bool etats_vie[MAX_MOTOS + 1]){
     return -1; //pas encore de gagnant 
 }
 
+bool gagnant_ou_pas(bool etats_vie[MAX_MOTOS + 1], EpisodeMemoire memoires[MAX_MOTOS + 1]){ 
+    //gestion de la fin de partie de l'entrainement ou de jeu 
+    int gagner_ou_pas = trouver_gagnant(etats_vie) ; 
+    if (gagner_ou_pas !=-1){
+            printf("le gagnant est %d \n", gagner_ou_pas);
+            modifier_recompense(100.0f, &memoires[gagner_ou_pas].frames[memoires[gagner_ou_pas].taille]); //donner une recompense a la gagnant
+            return true;
+        }    
+    return false ;
+
+}
+
+   
 
 int cause_mort( int grille[WIDTH][HEIGHT],  int x , int y){
     if (x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT){ // il a tapé le mur : cas peu probable
@@ -79,6 +92,12 @@ int cause_mort( int grille[WIDTH][HEIGHT],  int x , int y){
 
 } 
 
+void modifier_recompense (float recompense, FrameMemoire * frame){ //donner la récompense par rapport l'action réalisé par agent et sa conséquence
+    frame->recompense += recompense;  
+}
+
+
+/*---------------------- la partie pour calculer la perception de moto---------------------------------*/
 static void assigner_zone_adversaire(int id,int zone,int *z1,int *z2,int *z3){
     if (id == CELL_AI_1){*z1 = zone;}
     else if (id == CELL_AI_2) {*z2 = zone;}
@@ -94,8 +113,7 @@ static void obtenir_vecteur(int direction, int *dx, int *dy) {
 }
 
 
-static float calculer_densite_zone( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2)
-{
+static float calculer_densite_zone( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2){
     int obstacles = 0;
     int total = 0;
 
@@ -183,7 +201,7 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
     perception->distances_murs[1] = distances[1]/LIMIT_VISION; // rayon de vue gauche
     perception->distances_murs[2] = distances[2]/LIMIT_VISION; // rayon de vue droite
 
-    int adversaire[3] ;
+ 
 
     // zone floue
     
@@ -221,9 +239,9 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
 
 }
 
+/*----------------------  Fin de la partie pour calculer la perception de moto---------------------------------*/
 
-
-
+/*-----------------------------------la partie de deroulement de jeu selon mode (entrainement de IA ou play mode)-------------------------------------------------*/
 void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
     for(int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
@@ -234,13 +252,12 @@ void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto) {
     }
 }
 
+
+
+
+//mj pour le mode de jeu avec l'utilisateur
 void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1], EpisodeMemoire memoires[MAX_MOTOS + 1]) {
-    /*int gagner_ou_pas = trouver_gagnant(etats_vie) ;
-    if (gagner_ou_pas !=-1){
-        printf("le gagnant est %d \n", gagner_ou_pas);
-        break ;
-    }
-    */
+
     // On boucle sur TOUTES les motos vivantes (Joueur inclus : de 1 à 4)
     for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
         if (!etats_vie[i]) continue;
@@ -279,13 +296,79 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             grille[nx][ny] = i;
             pos_motos[i][0] = nx;
             pos_motos[i][1] = ny;
+            if (i == CELL_PLAYER){
+                continue;
+            }
+            modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille]);
+           
         } else {
             etats_vie[i] = false; //moto meurt
+            modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille]); //donne un desadventage au moto mort
             int cause  = cause_mort( grille ,nx, ny) ;
+            if (cause == CELL_PLAYER || cause == CELL_EMPTY){ //si le moto est mort par l'utilisateir ou mur, il ne dépend pas de récompense
+                continue ;
+            }
+            modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille] ) ;
+            //IA reçoit une grande récompense de tuer son adversaire -> le moto sait que tuer le moto est aussi une bonne strategie
             nettoyer_trainee(grille, i);
-            //il faut donner récompense pour les moto tuant un autre moto
+           
         }
     }
 }
 
 
+
+//mj pour le mode d'entrainement de IA
+void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2], int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1], EpisodeMemoire memoires[MAX_MOTOS + 1]) {
+
+    // On boucle sur TOUTES les motos vivantes (Joueur non inclus : de 1 à 4)
+    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) { //Ici, le joueur est remplacé par un agent
+        if (!etats_vie[i]) continue;
+
+        int x = pos_motos[i][0];
+        int y = pos_motos[i][1];
+        Perception perception;
+        calculer_perception(grille, x, y, dir_motos[i], &perception);
+        int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); //venant de "agent.h"
+            
+
+        if (action == ACTION_LEFT) {
+            dir_motos[i] = (dir_motos[i] + 3) % 4; // Rotation -90°
+        } else if (action == ACTION_RIGHT) {
+            dir_motos[i] = (dir_motos[i] + 1) % 4; // Rotation +90°
+        }
+
+        memoires[i].taille++;
+        
+        
+        // --- DEPLACEMENT COMMUN (Agents) ---
+        int dx, dy;
+        obtenir_vecteur(dir_motos[i], &dx, &dy);
+
+        int nx = x + dx;
+        int ny = y + dy;
+
+        // Verification de collision
+        if (nx >= 0 && nx < WIDTH && ny >= 0 && ny < HEIGHT && grille[nx][ny] == CELL_EMPTY) {
+            grille[nx][ny] = i;
+            pos_motos[i][0] = nx;
+            pos_motos[i][1] = ny;
+            if (i == CELL_PLAYER){
+                continue;
+            }
+            modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille]);
+        } 
+        else {
+            etats_vie[i] = false; //moto meurt
+            modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille]); //donne un desadventage au moto mort
+            int cause  = cause_mort( grille ,nx, ny) ;
+            if (cause == CELL_EMPTY){ //si le moto est mort par le mur, il ne dépend pas de récompense
+                continue ;
+            }
+            modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille] ) ;
+            //IA reçoit une grande récompense de tuer son adversaire -> le moto sait que tuer le moto est aussi une bonne strategie
+            nettoyer_trainee(grille, i);
+        }
+           
+    }
+}
