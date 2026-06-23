@@ -11,7 +11,7 @@
 #define ACTIVE_FEATURES 3 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
 
 /* matrice de poids theta partagee par tous les agents en apprentissage */
-float theta[10][3];
+float theta[15][3];
 
 /* retourne un flottant pseudo-aleatoire uniforme entre 0.0 et 1.0 */
 float random_float(void) {
@@ -22,7 +22,7 @@ float random_float(void) {
  * extraction des caracteristiques.
  * traduit la structure logique perception en un vecteur mathematique abstrait phi.
  */
-void generer_phi(Perception p, float phi[10]) {
+void generer_phi(Perception p, float phi[15]) {
     phi[0] = p.distances_murs[0];
     phi[1] = p.distances_murs[1];
     phi[2] = p.distances_murs[2];
@@ -33,13 +33,20 @@ void generer_phi(Perception p, float phi[10]) {
     phi[7] = (float)p.zone_adversaire_1;
     phi[8] = (float)p.zone_adversaire_2;
     phi[9] = (float)p.zone_adversaire_3;
+
+    /* pre-remplissage des futures variables non-lineaires avec 0 */
+    phi[10] = 0.0f;
+    phi[11] = 0.0f;
+    phi[12] = 0.0f;
+    phi[13] = 0.0f;
+    phi[14] = 0.0f;
 }
 
 /* initialise theta avec de petites valeurs asymetriques (-0.01 a 0.01).
  * evite le blocage du gradient avec une matrice remplie de zeros.
  */
 void init_theta(void) {
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 15; i++) {
         for (int j = 0; j < 3; j++) {
             theta[i][j] = (random_float() * 0.02f) - 0.01f;
         }
@@ -50,7 +57,7 @@ void init_theta(void) {
 void sauvegarder_theta(const char *filename) {
     FILE *f = fopen(filename, "wb");
     if (f) {
-        fwrite(theta, sizeof(float), 30, f);
+        fwrite(theta, sizeof(float), 45, f);
         fclose(f);
     }
 }
@@ -59,7 +66,7 @@ void sauvegarder_theta(const char *filename) {
 void charger_theta(const char *filename) {
     FILE *f = fopen(filename, "rb");
     if (f) {
-        fread(theta, sizeof(float), 30, f);
+        fread(theta, sizeof(float), 45, f);
         fclose(f);
     } else {
         init_theta();
@@ -72,7 +79,7 @@ void charger_theta(const char *filename) {
  * l'anti-suicide est retire suite aux erreurs rapportees par le professeur.
  */
 int choisir_action(Perception p, FrameMemoire *mem_frame) {
-    float phi[10];
+    float phi[15];
     generer_phi(p, phi);
 
     /* calcul des scores lineaires z (produit scalaire) */
@@ -118,7 +125,7 @@ int choisir_action(Perception p, FrameMemoire *mem_frame) {
 
     /* sauvegarde de la frame en ram pour la future descente de gradient */
     if (mem_frame) {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 15; i++) {
             mem_frame->phi[i] = phi[i];
         }
         mem_frame->action = action_choisie;

@@ -15,7 +15,7 @@
  * - recompense : retour immediat associe a la frame
  */
 typedef struct {
-    float phi[10];
+    float phi[15];
     int action;
     float probabilites[3];
     float recompense;
@@ -28,7 +28,7 @@ typedef struct {
 } EpisodeMemoire;
 
 /* Construit le vecteur phi a partir de la perception brute. */
-void generer_phi(Perception p, float phi[10]);
+void generer_phi(Perception p, float phi[15]);
 /* Initialise theta avec de petites valeurs aleatoires. */
 void init_theta(void);
 /* Sauvegarde la matrice theta sur disque. */
@@ -39,7 +39,7 @@ void charger_theta(const char *filename);
 float random_float(void);
 /* Choisit une action pendant l'apprentissage et remplit la memoire de frame. */
 int choisir_action(Perception p, FrameMemoire *mem_frame);
-/* Met a jour theta a partir d'un episode complet ET RENVOIS LE SCORE TOTAL */
+/* Met a jour theta a partir d'un episode complet ET RENVOIS LE SCORE TOTAL G_0 */
 float maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
 
 #endif
