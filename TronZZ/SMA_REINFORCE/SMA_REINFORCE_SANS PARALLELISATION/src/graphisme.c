@@ -4,10 +4,10 @@ static SDL_Texture *textures_motos[MAX_MOTOS + 1] = {NULL};
 
 static const char *fichiers_motos[MAX_MOTOS + 1] = {
     NULL,
-    "assets/moto_joueur.png",
-    "assets/moto_ia1.png",
-    "assets/moto_ia2.png",
-    "assets/moto_ia3.png"
+    "assets/moto_joueur.webp",
+    "assets/moto_ia1.webp",
+    "assets/moto_ia2.webp",
+    "assets/moto_ia3.webp"
 };
 /*
  * graphisme.c
