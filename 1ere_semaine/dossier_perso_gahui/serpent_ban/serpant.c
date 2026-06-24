@@ -1,169 +1,150 @@
 #include <SDL2/SDL.h>
+#include <math.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
 
-
-
-#define SIZE 20 
+#define SIZE 20
 #define SEGMENT 20
-#define MAX 50 //le nombre maximale de jointure de serpant
+#define MAX 50 // le nombre maximale de jointure de serpant
 #define LIMIT 0.8
 #define PI 3.14
 #define ECRAN_HAUTEUR 1000
 #define ECRAN_LARGEUR 1000
 
-
-typedef struct { //type de serpant
-    float x[MAX];
-    float y[MAX];
-    int len;
-    float dirX;
-    float dirY;
-    float angle;
+typedef struct { // type de serpant
+  float x[MAX];
+  float y[MAX];
+  int len;
+  float dirX;
+  float dirY;
+  float angle;
 } Snake;
 
-
-void initSnake(Snake *s) //initialisation de serpant et sa position
+void initSnake(Snake *s) // initialisation de serpant et sa position
 {
-    s->len = 40; //le nombre de jointure, doit etre <=MAX
+  s->len = 40; // le nombre de jointure, doit etre <=MAX
 
-    for (int i = 0; i < s->len; i++) {
-        s->x[i] = 200 - i * SEGMENT; // la position initiale de son corps(jointure)
-        s->y[i] = 200;
-    }
+  for (int i = 0; i < s->len; i++) {
+    s->x[i] = 200 - i * SEGMENT; // la position initiale de son corps(jointure)
+    s->y[i] = 200;
+  }
 
-    s->dirX = SEGMENT; // la direction initial de serpant
-    s->dirY = 0;
+  s->dirX = SEGMENT; // la direction initial de serpant
+  s->dirY = 0;
 }
 
-void moveSnake(Snake *s)
-{
-    // 1. tête (mouvement fluide contrôlé)
-    s->angle += (rand() %100 - 50) * 0.005f; //on choisit l'angle de tete
+void moveSnake(Snake *s) {
+  // 1. tête (mouvement fluide contrôlé)
+  s->angle += (rand() % 100 - 50) * 0.005f; // on choisit l'angle de tete
 
-    float speed = 9.0f; //la vitesse de serpent
+  float speed = 9.0f; // la vitesse de serpent
 
-    s->dirX = cos(s->angle) * speed; //direction de serpent
-    s->dirY = sin(s->angle) * speed;
+  s->dirX = cos(s->angle) * speed; // direction de serpent
+  s->dirY = sin(s->angle) * speed;
 
-    s->x[0] += s->dirX; //la position ou la tete de serpent va aller
-    s->y[0] += s->dirY;
+  s->x[0] += s->dirX; // la position ou la tete de serpent va aller
+  s->y[0] += s->dirY;
 
-    //revendiquer si le serpent essaie d'échapper l'écran
+  // revendiquer si le serpent essaie d'échapper l'écran
 
-    if (s->x[0] <0){ 
-        s->x[0] = 0;
-        s->angle = PI - s-> angle ;
+  if (s->x[0] < 0) {
+    s->x[0] = 0;
+    s->angle = PI - s->angle;
+  }
+  if (s->y[0] < 0) {
+    s->y[0] = 0;
+    s->angle = -s->angle;
+  }
+  if (s->x[0] > ECRAN_LARGEUR) {
+    s->x[0] = ECRAN_LARGEUR;
+    s->angle = PI - s->angle;
+  }
+  if (s->y[0] > ECRAN_HAUTEUR) {
+    s->y[0] = ECRAN_HAUTEUR;
+    s->angle = -s->angle;
+  }
+  // 2. corps (follow fluide)
+  for (int i = 1; i < s->len; i++) {
+    // calcul du vecteur de direction entre le segment precedent et l'actuel
+    float dx = s->x[i - 1] - s->x[i];
+    float dy = s->y[i - 1] - s->y[i];
 
+    // calcul de la distance absolue avec le theoreme de pythagore
+    float dist = sqrt(dx * dx + dy * dy);
+
+    // si l'articulation s'eloigne au-dela de l'espacement autorise, on la tire
+    if (dist > 10.0f) {
+      // (dx / dist) et (dy / dist) creent un vecteur normalise (de taille 1)
+      // on multiplie ce vecteur par l'espacement voulu pour placer le segment a
+      // la bonne distance on soustrait ce resultat a la position du segment
+      // precedent
+      s->x[i] = s->x[i - 1] - (dx / dist) * 10.0f;
+      s->y[i] = s->y[i - 1] - (dy / dist) * 10.0f;
     }
-    if (s->y[0] <0){ 
-        s->y[0] = 0;
-        s->angle = - s-> angle ;
-
-    }
-    if (s->x[0] > ECRAN_LARGEUR){
-        s->x[0] = ECRAN_LARGEUR;
-        s->angle = PI- s->angle;
-    }
-    if (s->y[0] > ECRAN_HAUTEUR){ 
-        s->y[0] = ECRAN_HAUTEUR;
-        s->angle = - s-> angle ;
-    
-    }
-    // 2. corps (follow fluide)
-    for(int i = 1; i < s->len; i++) {
-            // calcul du vecteur de direction entre le segment precedent et l'actuel
-            float dx = s->x[i-1] - s->x[i];
-            float dy = s->y[i-1] - s->y[i];
-            
-            // calcul de la distance absolue avec le theoreme de pythagore
-            float dist = sqrt(dx*dx + dy*dy);
-            
-            // si l'articulation s'eloigne au-dela de l'espacement autorise, on la tire
-            if (dist > 10.0f) {
-                // (dx / dist) et (dy / dist) creent un vecteur normalise (de taille 1)
-                // on multiplie ce vecteur par l'espacement voulu pour placer le segment a la bonne distance
-                // on soustrait ce resultat a la position du segment precedent
-                s->x[i] = s->x[i-1] - (dx / dist) * 10.0f;
-                s->y[i] = s->y[i-1] - (dy / dist) * 10.0f;
-            }
-
-    }
+  }
 }
 
-void randomColor(SDL_Renderer *r) //radominize color each secondes
+void randomColor(SDL_Renderer *r) // radominize color each secondes
 {
-    Uint8 red = rand() % 256;//choisir la valeur de RGB au hasard
-    Uint8 green = rand() % 256;
-    Uint8 blue = rand() % 256;
+  Uint8 red = rand() % 256; // choisir la valeur de RGB au hasard
+  Uint8 green = rand() % 256;
+  Uint8 blue = rand() % 256;
 
-    SDL_SetRenderDrawColor(r, red, green, blue, 100);//selectionner le couleur
+  SDL_SetRenderDrawColor(r, red, green, blue, 100); // selectionner le couleur
 }
 
+void drawSnake(SDL_Renderer *r, Snake *s) {
+  for (int i = 0; i < s->len; i++) {
 
+    randomColor(r); // on choisit le couleur au hasard
 
+    SDL_Rect rect = {// jointure de serpant est un modélisé par rectangle
+                     s->x[i], s->y[i], 20, SEGMENT};
 
-void drawSnake(SDL_Renderer *r, Snake *s) 
-{
-    for (int i = 0; i < s->len; i++) {
-
-        randomColor(r); // on choisit le couleur au hasard
-
-        SDL_Rect rect = { // jointure de serpant est un modélisé par rectangle
-            s->x[i],
-            s->y[i],
-            20,
-            SEGMENT
-        };
-
-        SDL_RenderFillRect(r, &rect);//remplir la jointure(rectangle) de serpent avec ce couleur
-    }
+    SDL_RenderFillRect(
+        r, &rect); // remplir la jointure(rectangle) de serpent avec ce couleur
+  }
 }
 
+int main() {
+  SDL_Init(SDL_INIT_VIDEO);
+  srand(time(NULL));
 
-int main()
-{
-    SDL_Init(SDL_INIT_VIDEO);
-    srand(time(NULL));
+  SDL_Window *window = SDL_CreateWindow( // creation et vérification de écran
+      "Snake rectangles", 100, 100, 1000, 1000, 0);
 
-    SDL_Window *window = SDL_CreateWindow( //creation et vérification de écran
-        "Snake rectangles",
-        100, 100,
-        1000, 1000,
-        0
-    );
+  SDL_Renderer *renderer = SDL_CreateRenderer(
+      window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-    SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+  Snake snake;
+  initSnake(&snake);
 
-    Snake snake;
-    initSnake(&snake);
+  int running = 1; // true
+  SDL_Event e;
 
-    int running = 1;//true
-    SDL_Event e;
-
-    while (running) //event loop(mouvement de serpent)
-    {
-        while (SDL_PollEvent(&e)) {
-            if (e.type == SDL_QUIT)
-                running = 0;
-        }
-
-        moveSnake(&snake); //serpent bouge
-
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); 
-        SDL_RenderClear(renderer);
-
-        drawSnake(renderer, &snake);
-
-        SDL_RenderPresent(renderer); // à chaque instant, on redessine le courleur de chaque segment de serpent
-
-        SDL_Delay(100);
+  while (running) // event loop(mouvement de serpent)
+  {
+    while (SDL_PollEvent(&e)) {
+      if (e.type == SDL_QUIT)
+        running = 0;
     }
 
-    SDL_DestroyRenderer(renderer); // fin de jeu
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    moveSnake(&snake); // serpent bouge
 
-    return 0;
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_RenderClear(renderer);
+
+    drawSnake(renderer, &snake);
+
+    SDL_RenderPresent(renderer); // à chaque instant, on redessine le courleur
+                                 // de chaque segment de serpent
+
+    SDL_Delay(100);
+  }
+
+  SDL_DestroyRenderer(renderer); // fin de jeu
+  SDL_DestroyWindow(window);
+  SDL_Quit();
+
+  return 0;
 }

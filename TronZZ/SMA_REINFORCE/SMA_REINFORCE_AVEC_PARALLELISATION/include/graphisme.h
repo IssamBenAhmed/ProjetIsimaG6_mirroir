@@ -1,8 +1,8 @@
 #ifndef GRAPHISME_H
 #define GRAPHISME_H
 
-#include <stdbool.h>
 #include <SDL2/SDL.h>
+#include <stdbool.h>
 
 #include "config.h"
 
@@ -21,7 +21,8 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT]);
 /*
  * Gère les événements clavier du joueur.
  */
-void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running);
+void capturer_evenements(SDL_Event *event, int *direction_joueur,
+                         bool *running);
 
 /*
  * Dessine le panneau final.

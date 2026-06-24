@@ -2,10 +2,10 @@
 #define MJ_H
 
 /* en-tete du maitre du jeu */
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "config.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 /**
  * @brief compte les voisins vivants autour d'une cellule.
@@ -21,6 +21,7 @@ int compter_voisins(int grille[WIDTH][HEIGHT], int x, int y);
  * @param grille_courante matrice source.
  * @param grille_future matrice destination.
  */
-void maj_synchrone(int grille_courante[WIDTH][HEIGHT], int grille_future[WIDTH][HEIGHT]);
+void maj_synchrone(int grille_courante[WIDTH][HEIGHT],
+                   int grille_future[WIDTH][HEIGHT]);
 
 #endif

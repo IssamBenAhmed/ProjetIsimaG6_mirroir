@@ -1,8 +1,8 @@
 #ifndef GRAPHIQUE_H
 #define GRAPHIQUE_H
 
-#include <SDL2/SDL.h>
 #include "config.h"
+#include <SDL2/SDL.h>
 
 /**
  * @brief cree la fenetre principale sdl.
@@ -27,7 +27,8 @@ SDL_Renderer *creer_renderer(SDL_Window *window);
  * @param cam_x decalage horizontal de la camera.
  * @param cam_y decalage vertical de la camera.
  */
-void dessiner_grille(SDL_Renderer *renderer,int grille[WIDTH][HEIGHT],float zoom,int cam_x,int cam_y);
+void dessiner_grille(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT],
+                     float zoom, int cam_x, int cam_y);
 
 /**
  * @brief traite les evenements souris pour l'edition et la navigation.
@@ -39,10 +40,7 @@ void dessiner_grille(SDL_Renderer *renderer,int grille[WIDTH][HEIGHT],float zoom
  * @note le clic gauche simple inverse une cellule et le clic gauche maintenu
  *       permet de deplacer la vue.
  */
-void gerer_interaction(SDL_Event *event,int grille[WIDTH][HEIGHT],float *zoom, int *cam_x, int *cam_y);
+void gerer_interaction(SDL_Event *event, int grille[WIDTH][HEIGHT], float *zoom,
+                       int *cam_x, int *cam_y);
 
 #endif
-
-
-
-
