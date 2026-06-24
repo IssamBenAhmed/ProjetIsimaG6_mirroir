@@ -5,7 +5,7 @@
 #include "../include/config.h"
 
 
-#define ACTIVE_FEATURES 10 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
+#define ACTIVE_FEATURES 15 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
 
 /* matrice de poids theta partagee par tous les agents en apprentissage */
 float theta[15][3];
@@ -32,13 +32,12 @@ void generer_phi(Perception p, float phi[15]) {
     phi[9] = (float)p.zone_adversaire_3;
 
     /* pre-remplissage des futures variables non-lineaires avec 0 */
-    phi[10] = 0.0f;
-    phi[11] = 0.0f;
-    phi[12] = 0.0f;
-    phi[13] = 0.0f;
-    phi[14] = 0.0f;
+    phi[10] = p.densite_obstacles[0] * p.densite_obstacles[1]; // exemple de variable non-lineaire
+    phi[11] = p.distances_murs[0] * p.distances_murs[1]; 
+    phi[12] = p.densite_obstacles[2]* p.densite_obstacles[3]; 
+    phi[13] = p.distances_murs[0] * p.densite_obstacles[1]; 
+    phi[14] = p.distances_murs[2] * p.distances_murs[1]; 
 }
-
 /* initialise theta avec de petites valeurs asymetriques (-0.01 a 0.01).
  * evite le blocage du gradient avec une matrice remplie de zeros.
  */
