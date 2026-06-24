@@ -279,6 +279,7 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             
             int cause  = cause_mort( grille ,nx, ny) ;
             if (cause == CELL_PLAYER || cause == CELL_EMPTY){ /* morte par l'utilisateur ou mur */
+                nettoyer_trainee(grille, i);
                 continue ;
             }
             
