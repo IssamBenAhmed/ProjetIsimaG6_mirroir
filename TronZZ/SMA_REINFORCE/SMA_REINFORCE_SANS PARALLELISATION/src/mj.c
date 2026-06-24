@@ -191,6 +191,10 @@ void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction,
     perception->densite_obstacles[3] = calculer_densite_zone(grille, x, y,-dx, -dy,rdx, rdy);
 
     /* maintenant, on calcule la zone ou l'adversaire existe */
+    /* PURGE DE LA MEMOIRE POUBELLE OBLIGATOIRE */
+    perception->zone_adversaire_1 = -1;
+    perception->zone_adversaire_2 = -1;
+    perception->zone_adversaire_3 = -1 ;
 
     int id; /* id de la moto dans une zone floue */
 
