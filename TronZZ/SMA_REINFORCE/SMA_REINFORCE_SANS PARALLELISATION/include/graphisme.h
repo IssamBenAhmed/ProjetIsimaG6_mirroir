@@ -7,6 +7,16 @@
 #include "config.h"
 
 /*
+ * Charge les images des motos.
+ */
+bool initialiser_textures_motos(SDL_Renderer *renderer);
+
+/*
+ * Libere les textures des motos.
+ */
+void liberer_textures_motos(void);
+
+/*
  * Affiche l'écran titre avant le début du jeu.
  * Retourne true si le joueur appuie sur Entrée ou Espace.
  * Retourne false si le joueur ferme la fenêtre ou appuie sur Échap.
