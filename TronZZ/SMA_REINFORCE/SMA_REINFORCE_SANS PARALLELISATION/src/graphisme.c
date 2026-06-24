@@ -91,6 +91,7 @@ static Couleur couleur_lueur(int cellule)
     return (Couleur){220, 60, 255, 160};
 }
 
+
 bool initialiser_textures_motos(SDL_Renderer *renderer)
 {
     for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
@@ -102,6 +103,13 @@ bool initialiser_textures_motos(SDL_Renderer *renderer)
                     IMG_GetError());
             return false;
         }
+
+        /*
+         * Rend le blanc transparent.
+         * Utile si l'image a encore un fond blanc.
+         */
+        Uint32 blanc = SDL_MapRGB(surface->format, 255, 255, 255);
+        SDL_SetColorKey(surface, SDL_TRUE, blanc);
 
         textures_motos[i] = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
@@ -142,6 +150,19 @@ static double angle_direction(int direction)
     return -90.0;
 }
 
+static double angle_direction(int direction)
+{
+    if (direction == DIR_RIGHT) {
+        return 0.0;
+    } else if (direction == DIR_DOWN) {
+        return 90.0;
+    } else if (direction == DIR_LEFT) {
+        return 180.0;
+    }
+
+    return -90.0;
+}
+
 static void dessiner_tete_moto(SDL_Renderer *renderer,
                                int x,
                                int y,
@@ -153,14 +174,17 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
     }
 
     /*
-     * On dessine la moto plus grande qu'une cellule
-     * pour qu'elle ressemble vraiment a une tete de moto.
+     * Moto plus grande.
+     * Avant : 3 * CELL_SIZE
+     * Maintenant : 5 * CELL_SIZE
      */
+    int taille = CELL_SIZE * 5;
+
     SDL_Rect dest = {
-        x * CELL_SIZE - CELL_SIZE,
-        y * CELL_SIZE - CELL_SIZE,
-        CELL_SIZE * 3,
-        CELL_SIZE * 3
+        x * CELL_SIZE - (taille - CELL_SIZE) / 2,
+        y * CELL_SIZE - (taille - CELL_SIZE) / 2,
+        taille,
+        taille
     };
 
     SDL_RenderCopyEx(renderer,
@@ -171,7 +195,6 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
                      NULL,
                      SDL_FLIP_NONE);
 }
-
 static void dessiner_fond(SDL_Renderer *renderer)
 {
     SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);
