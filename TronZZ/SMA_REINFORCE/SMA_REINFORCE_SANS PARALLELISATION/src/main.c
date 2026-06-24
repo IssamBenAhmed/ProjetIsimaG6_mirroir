@@ -128,6 +128,7 @@ int main(int argc, char *argv[])
             return EXIT_SUCCESS;
         }
         /* * srand initialise la graine (seed) du generateur de nombres pseudo-aleatoires.
+        * LA FONCTION RAND() N'EST PAS THREAD-SAFE, POUR LE PARRALÉLISME IL FAUT UTILISER UN GENERATEUR DE NOMBRES ALEATOIRES DEDIE.
          * sdl_getticks() renvoie les millisecondes depuis l'init de la sdl, 
          * garantissant une graine differente a chaque lancement.
          */
