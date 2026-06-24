@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
                              * parametre 3 (0.99f) = gamma (discount factor) : l'ia considere qu'une recompense dans 100 frames 
                              * vaut presque autant qu'une recompense immediate, l'aidant a anticiper le piege.
                              */
-                            maj_theta(&memoires[i], 0.0001f, 0.99f);
+                            maj_theta(&memoires[i], ALPHA, 0.99f);
                             
                             /* * remise a 0 instantanee de la memoire.
                              * empeche que le cadavre ne continue de recalculer des gradients aux frames suivantes.
@@ -360,7 +360,7 @@ int main(int argc, char *argv[])
                 if (moto_alive[i] && memoires[i].taille > 0) {
                     
                     /* ici, il n'y a pas le malus de -100. on consolide le comportement victorieux */
-                    float g0 = maj_theta(&memoires[i], 0.001f, 0.99f);
+                    float g0 = maj_theta(&memoires[i], ALPHA, 0.99f);
                     if (i == dernier_vainqueur) {
                         somme_g0 += g0;
                     }

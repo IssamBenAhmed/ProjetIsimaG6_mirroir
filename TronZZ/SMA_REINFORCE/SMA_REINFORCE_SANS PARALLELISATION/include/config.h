@@ -43,6 +43,7 @@
 #define MAX_FRAMES_MEMORY 10000
 #define MAX_FRAMES_TOTAL 1000000
 #define TEMPS_ENTRE_RAPPORTS 20
+#define ALPHA 0.0001f
 /*
  * Perception brute fournie a l'agent.
  * Les distances, densites et zones adverses sont les entrees utilisees pour
