@@ -1,5 +1,14 @@
 #include "graphisme.h"
+#include <SDL2/SDL_image.h>
+static SDL_Texture *textures_motos[MAX_MOTOS + 1] = {NULL};
 
+static const char *fichiers_motos[MAX_MOTOS + 1] = {
+    NULL,
+    "assets/moto_joueur.png",
+    "assets/moto_ia1.png",
+    "assets/moto_ia2.png",
+    "assets/moto_ia3.png"
+};
 /*
  * graphisme.c
  * Style Tron :
@@ -80,6 +89,87 @@ static Couleur couleur_lueur(int cellule)
     }
 
     return (Couleur){220, 60, 255, 160};
+}
+
+bool initialiser_textures_motos(SDL_Renderer *renderer)
+{
+    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
+        SDL_Surface *surface = IMG_Load(fichiers_motos[i]);
+
+        if (surface == NULL) {
+            fprintf(stderr, "erreur chargement image %s : %s\n",
+                    fichiers_motos[i],
+                    IMG_GetError());
+            return false;
+        }
+
+        textures_motos[i] = SDL_CreateTextureFromSurface(renderer, surface);
+        SDL_FreeSurface(surface);
+
+        if (textures_motos[i] == NULL) {
+            fprintf(stderr, "erreur creation texture %s : %s\n",
+                    fichiers_motos[i],
+                    SDL_GetError());
+            return false;
+        }
+
+        SDL_SetTextureBlendMode(textures_motos[i], SDL_BLENDMODE_BLEND);
+    }
+
+    return true;
+}
+
+void liberer_textures_motos(void)
+{
+    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
+        if (textures_motos[i] != NULL) {
+            SDL_DestroyTexture(textures_motos[i]);
+            textures_motos[i] = NULL;
+        }
+    }
+}
+
+static double angle_direction(int direction)
+{
+    if (direction == DIR_RIGHT) {
+        return 0.0;
+    } else if (direction == DIR_DOWN) {
+        return 90.0;
+    } else if (direction == DIR_LEFT) {
+        return 180.0;
+    }
+
+    return -90.0;
+}
+
+static void dessiner_tete_moto(SDL_Renderer *renderer,
+                               int x,
+                               int y,
+                               int direction,
+                               int cellule)
+{
+    if (textures_motos[cellule] == NULL) {
+        return;
+    }
+
+    /*
+     * On dessine la moto plus grande qu'une cellule
+     * pour qu'elle ressemble vraiment a une tete de moto.
+     */
+    SDL_Rect dest = {
+        x * CELL_SIZE - CELL_SIZE,
+        y * CELL_SIZE - CELL_SIZE,
+        CELL_SIZE * 3,
+        CELL_SIZE * 3
+    };
+
+    SDL_RenderCopyEx(renderer,
+                     textures_motos[cellule],
+                     NULL,
+                     &dest,
+                     angle_direction(direction),
+                     NULL,
+                     SDL_FLIP_NONE);
 }
 
 static void dessiner_fond(SDL_Renderer *renderer)
@@ -574,15 +664,15 @@ void dessiner_arene(SDL_Renderer *renderer,
     }
 
     /*
-     * Ensuite on dessine les motos au-dessus des traces.
+     * Ensuite on dessine les vraies images des motos sur la tete.
      */
     for (int id = CELL_PLAYER; id <= CELL_AI_3; id++) {
         if (etats_vie[id]) {
-            dessiner_moto(renderer,
-                          pos_motos[id][0],
-                          pos_motos[id][1],
-                          dir_motos[id],
-                          id);
+            dessiner_tete_moto(renderer,
+                               pos_motos[id][0],
+                               pos_motos[id][1],
+                               dir_motos[id],
+                               id);
         }
     }
 
