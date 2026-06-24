@@ -6,9 +6,12 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
+#include <stdint.h>
 
 #include "config.h"
 #include "agent.h"
+
+int random_int_thread(uint32_t *seed, int max) ;
 
 void modifier_recompense (float recompense, FrameMemoire * frame) ;
 
