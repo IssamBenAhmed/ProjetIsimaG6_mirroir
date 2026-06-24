@@ -2,7 +2,7 @@
 #include "../include/agent.h"
 
 /* ---------------------------- initialiser la partie de jeu -----------------------------------*/
-int random_int_thread(uint32_t *seed, int max) {
+int random_int_thread(uint32_t *seed, int max) { // seed aléatoire pour entrainement parallèle 
     if (max <= 0) return 0;
 
     *seed = (*seed) * 1103515245u + 12345u;
