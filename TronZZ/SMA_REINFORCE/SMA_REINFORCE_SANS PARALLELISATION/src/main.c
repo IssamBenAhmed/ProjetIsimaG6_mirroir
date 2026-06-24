@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "erreur sdl init : %s\n", SDL_GetError());
             return EXIT_FAILURE;
         }
-         if ((IMG_Init(IMG_INIT_WEBP) & IMG_INIT_WEBP) == 0) {
+         if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
             fprintf(stderr, "erreur IMG_Init : %s\n", IMG_GetError());
             SDL_Quit();
             return EXIT_FAILURE;
