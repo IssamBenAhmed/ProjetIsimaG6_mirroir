@@ -13,7 +13,7 @@
 #include <string.h>
 #include <time.h>
 #include <SDL2/SDL.h>
-
+#include <SDL2/SDL_image.h>
 #include "../include/config.h"
 #include "../include/graphisme.h"
 #include "../include/mj.h"
@@ -64,6 +64,11 @@ int main(int argc, char *argv[])
             fprintf(stderr, "erreur sdl init : %s\n", SDL_GetError());
             return EXIT_FAILURE;
         }
+         if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
+            fprintf(stderr, "erreur IMG_Init : %s\n", IMG_GetError());
+            SDL_Quit();
+            return EXIT_FAILURE;
+        }
 
         /* * creation de la fenetre au centre de l'ecran. 
          * sdl_window_shown force son affichage immediat.
@@ -106,7 +111,13 @@ int main(int argc, char *argv[])
          * en superposant des couches de couleurs semi-transparentes.
          */
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-
+        if (!initialiser_textures_motos(renderer)) {
+            SDL_DestroyRenderer(renderer);
+            SDL_DestroyWindow(window);
+            IMG_Quit();
+            SDL_Quit();
+            return EXIT_FAILURE;
+        }
         /* * la fonction afficher_ecran_titre bloque l'execution jusqu'a ce que 
          * le joueur appuie sur entree. elle renvoie false s'il ferme la fenetre.
          */
@@ -116,7 +127,6 @@ int main(int argc, char *argv[])
             SDL_Quit();
             return EXIT_SUCCESS;
         }
-
         /* * srand initialise la graine (seed) du generateur de nombres pseudo-aleatoires.
          * sdl_getticks() renvoie les millisecondes depuis l'init de la sdl, 
          * garantissant une graine differente a chaque lancement.
@@ -207,6 +217,11 @@ int main(int argc, char *argv[])
         }
 
         /* liberation rigoureuse de la memoire gpu et destruction des contextes */
+        liberer_textures_motos();
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        IMG_Quit();
+        SDL_Quit();
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         SDL_Quit();
