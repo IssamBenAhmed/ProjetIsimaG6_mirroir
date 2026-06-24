@@ -2,15 +2,6 @@
 #include "../include/agent.h"
 
 /* ---------------------------- initialiser la partie de jeu -----------------------------------*/
-
-int random_int_thread(uint32_t *seed, int max) { //fonction pour la position ne superpose pas pour les threads
-    if (max <= 0) return 0;
-
-    *seed = (*seed) * 1103515245u + 12345u;
-
-    return (int)(((*seed) >> 16) % (uint32_t)max);
-}
-
 void initialiser_grille( int grille[WIDTH][HEIGHT]){
     for (int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
@@ -27,9 +18,8 @@ void initialiser_partie (int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
     int k = 0 ;
 
     while(k<4){
-        unsigned int seed = 123456 ; // la valeur initial de seed 
-        int x = random_int_thread(&seed, WIDTH); //la position aléatoire
-        int y = random_int_thread(&seed, HEIGHT);  
+        int x = rand()%WIDTH; /* la position aleatoire */
+        int y = rand()%HEIGHT ; 
         if (grille[x][y] != CELL_EMPTY){ /* quand la case est deja remplie, on refait son positionnement */
             continue;
         }
@@ -94,10 +84,22 @@ void modifier_recompense (float recompense, FrameMemoire * frame){ /* donner la 
 }
 
 /*---------------------- la partie pour calculer la perception de la moto---------------------------------*/
-static void assigner_zone_adversaire(int id,int zone,int *z1,int *z2,int *z3){
-    if (id == CELL_AI_1){*z1 = zone;}
-    else if (id == CELL_AI_2) {*z2 = zone;}
-    else if (id == CELL_AI_3) {*z3 = zone;}
+static void assigner_zone_adversaire(int id_trouve, int zone, int mon_id, int *z1, int *z2, int *z3) {
+
+    if (id_trouve < CELL_PLAYER || id_trouve > CELL_AI_3) return;
+
+    int slot = 1;
+
+    for (int k = CELL_PLAYER; k <= CELL_AI_3; k++) {
+        if (k == mon_id) continue; /* on ignore sa propre moto */
+        if (k == id_trouve) {
+            if (slot == 1) *z1 = zone;
+            else if (slot == 2) *z2 = zone;
+            else if (slot == 3) *z3 = zone;
+            return;
+        }
+        slot++;
+    }
 }
 
 static void obtenir_vecteur(int direction, int *dx, int *dy) {
@@ -135,90 +137,72 @@ static float calculer_densite_zone( int grille[WIDTH][HEIGHT],int x,int y,int dx
     return (float)obstacles / (float)total;
 }
 
-int existence_adversaire_dans_un_zone ( int grille[WIDTH][HEIGHT],int x,int y,int dx1, int dy1, int dx2,int dy2 ){
-    for (int i = 1; i <= LIMIT_VISION; i++) {
-        for (int j = 1; j <= i; j++) {
-            int nx = x + i * dx1 + j * dx2;
-            int ny = y + i * dy1 + j * dy2;
-
-            if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) { /* si hors de zone, on ignore */
-                continue;
-            }
-
-            int cell = grille[nx][ny];
-
-            if (cell == CELL_AI_1 ||cell == CELL_AI_2 ||cell == CELL_AI_3) {
-                return cell; 
-            }
+int existence_adversaire_dans_un_zone(int grille[WIDTH][HEIGHT], int x, int y, int dx1, int dy1, int dx2, int dy2, int mon_id) {
+ for (int i = 1; i <= LIMIT_VISION; i++) {
+    for (int j = 1; j <= i; j++) {
+        int nx = x + i * dx1 + j * dx2;
+        int ny = y + i * dy1 + j * dy2;
+        if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) {
+            continue;
+        }
+        int cell = grille[nx][ny];
+        /* on detecte n'importe quelle moto (de 1 a 4) sauf soi-meme */
+        if (cell >= CELL_PLAYER && cell <= CELL_AI_3 && cell != mon_id){
+            return cell;
         }
     }
-    return -1; /* non adversaire */
+ }
+ return -1;
 }
 
-void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction, Perception * perception ) {
+void calculer_perception(int grille[WIDTH][HEIGHT], int x, int y, int direction, int mon_id, Perception * perception) {
     int dx, dy;
     obtenir_vecteur(direction, &dx, &dy);
-
     /* rotation matricielle correcte */
-    int ldx = dy;   /* gauche */
+    int ldx = dy; // a gauche
     int ldy = -dx;
-    int rdx = -dy;  /* droite */
+    int rdx = -dy; //droite
     int rdy = dx;
 
     float distances[3] = {0.0, 0.0, 0.0};
     int rayons_dx[3] = {dx, ldx, rdx};
     int rayons_dy[3] = {dy, ldy, rdy};
-
-    /* lancer de rayons factorise */
     for (int r = 0; r < 3; r++) {
         for (int i = 1; i <= LIMIT_VISION; i++) {
             int nx = x + i * rayons_dx[r];
             int ny = y + i * rayons_dy[r];
-
             if (nx < 0 || nx >= WIDTH || ny < 0 || ny >= HEIGHT) break;
             if (grille[nx][ny] != CELL_EMPTY) break;
-
             distances[r]++;
         }
     }
+    perception->distances_murs[0] = distances[0]/LIMIT_VISION;
+    perception->distances_murs[1] = distances[1]/LIMIT_VISION;
+    perception->distances_murs[2] = distances[2]/LIMIT_VISION;
 
-    perception->distances_murs[0] = distances[0]/LIMIT_VISION; /* rayon de vue devant */
-    perception->distances_murs[1] = distances[1]/LIMIT_VISION; /* rayon de vue gauche */
-    perception->distances_murs[2] = distances[2]/LIMIT_VISION; /* rayon de vue droite */
+    perception->densite_obstacles[0] = calculer_densite_zone(grille, x, y,dx, dy, ldx, ldy);
+    perception->densite_obstacles[1] = calculer_densite_zone(grille, x, y,dx, dy, rdx, rdy);
+    perception->densite_obstacles[2] = calculer_densite_zone(grille, x, y, -dx, -dy, ldx, ldy);
+    perception->densite_obstacles[3] = calculer_densite_zone(grille, x, y, -dx, -dy, rdx, rdy);
 
-    /* zone floue */
+ /* purge obligatoire pour ne pas laisser de memoire poubelle non initialisee */
+    perception->zone_adversaire_1 = -1;
+    perception->zone_adversaire_2 = -1;
+    perception->zone_adversaire_3 = -1;
+
+    int id;
+
+    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, ldx, ldy,mon_id);
+    assigner_zone_adversaire(id, 0, mon_id, &perception->zone_adversaire_1, &perception->zone_adversaire_2, &perception->zone_adversaire_3);
+
+    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, rdx, rdy, mon_id);
+    assigner_zone_adversaire(id, 1, mon_id, &perception->zone_adversaire_1, &perception->zone_adversaire_2, &perception->zone_adversaire_3);
+
+    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, ldx, ldy,mon_id);
+    assigner_zone_adversaire(id, 2, mon_id, &perception->zone_adversaire_1, &perception->zone_adversaire_2, &perception->zone_adversaire_3);
     
-    /* avant-gauche */
-    perception->densite_obstacles[0] = calculer_densite_zone(grille, x, y,dx, dy,ldx, ldy);
-
-    /* avant-droite */
-    perception->densite_obstacles[1] = calculer_densite_zone(grille, x, y,dx, dy,rdx, rdy);
-
-    /* arriere-gauche */
-    perception->densite_obstacles[2] = calculer_densite_zone(grille, x, y,-dx, -dy,ldx, ldy);
-
-    /* arriere-droite */
-    perception->densite_obstacles[3] = calculer_densite_zone(grille, x, y,-dx, -dy,rdx, rdy);
-
-    /* maintenant, on calcule la zone ou l'adversaire existe */
-
-    int id; /* id de la moto dans une zone floue */
-
-    /* avant-gauche */
-    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, ldx, ldy);
-    assigner_zone_adversaire(id, 0,&perception->zone_adversaire_1,&perception->zone_adversaire_2, &perception->zone_adversaire_3);
-
-    /* avant-droite */
-    id = existence_adversaire_dans_un_zone(grille, x, y, dx, dy, rdx, rdy);
-    assigner_zone_adversaire(id, 1, &perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
-
-    /* arriere-gauche */
-    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, ldx, ldy);
-    assigner_zone_adversaire(id, 2,&perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
-
-    /* arriere-droite */
-    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, rdx, rdy);
-    assigner_zone_adversaire(id, 3,&perception->zone_adversaire_1,&perception->zone_adversaire_2,&perception->zone_adversaire_3);
+    id = existence_adversaire_dans_un_zone(grille, x, y, -dx, -dy, rdx, rdy,mon_id);
+    assigner_zone_adversaire(id, 3, mon_id, &perception->zone_adversaire_1, &perception->zone_adversaire_2, &perception->zone_adversaire_3);
 }
 /*---------------------- fin de la partie pour calculer la perception de la moto ---------------------------------*/
 
@@ -247,7 +231,7 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
         /* seules les agents (id >= 2) utilisent la perception et ta fonction choisir_action */
         if (i >= CELL_AI_1) {
             Perception perception;
-            calculer_perception(grille, x, y, dir_motos[i], &perception);
+            calculer_perception(grille, x, y, dir_motos[i], i,&perception);
             
             /* correction gahui : ici on pointe vers [taille] (la case vide). pas de -1 sinon crash memoire des la frame 0 ! */
             int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
@@ -314,7 +298,7 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[M
         int x = pos_motos[i][0];
         int y = pos_motos[i][1];
         Perception perception;
-        calculer_perception(grille, x, y, dir_motos[i], &perception);
+        calculer_perception(grille, x, y, dir_motos[i], i,&perception);
         
         /* correction gahui : pointage sur la nouvelle case [taille] */
         int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
