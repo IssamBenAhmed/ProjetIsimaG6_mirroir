@@ -319,7 +319,7 @@ int main(int argc, char *argv[])
                              * parametre 3 (0.99f) = gamma (discount factor) : l'ia considere qu'une recompense dans 100 frames 
                              * vaut presque autant qu'une recompense immediate, l'aidant a anticiper le piege.
                              */
-                            maj_theta(&memoires[i], 0.001f, 0.99f);
+                            maj_theta(&memoires[i], 0.0001f, 0.99f);
                             
                             /* * remise a 0 instantanee de la memoire.
                              * empeche que le cadavre ne continue de recalculer des gradients aux frames suivantes.
