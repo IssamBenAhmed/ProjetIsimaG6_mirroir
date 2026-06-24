@@ -28,4 +28,9 @@
   #### Nabil 
   J'ai commencé par comprendre le principe général de l’apprentissage automatique, en particulier l’idée qu’un agent   peut améliorer son comportement à partir de ses expériences.J'ai ensuite réfléchi à plusieurs façons d’appliquer cette idée à notre jeu TronZZ, notamment en utilisant les actions, les récompenses et les trajectoires des agents. Cette réflexion a permis de préparer les premières idées pour intégrer l’apprentissage par renforcement dans le projet.
 
+
+![Schéma REINFORCE](image/lundi.png)
+  #### Gahui 
+
+  #### Issam
   
