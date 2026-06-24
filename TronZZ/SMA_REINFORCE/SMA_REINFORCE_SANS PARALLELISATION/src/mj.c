@@ -231,7 +231,7 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
         /* seules les agents (id >= 2) utilisent la perception et ta fonction choisir_action */
         if (i >= CELL_AI_1) {
             Perception perception;
-            calculer_perception(grille, x, y, dir_motos[i], &perception);
+            calculer_perception(grille, x, y, dir_motos[i], i,&perception);
             
             /* correction gahui : ici on pointe vers [taille] (la case vide). pas de -1 sinon crash memoire des la frame 0 ! */
             int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
@@ -298,7 +298,7 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[M
         int x = pos_motos[i][0];
         int y = pos_motos[i][1];
         Perception perception;
-        calculer_perception(grille, x, y, dir_motos[i], &perception);
+        calculer_perception(grille, x, y, dir_motos[i], i,&perception);
         
         /* correction gahui : pointage sur la nouvelle case [taille] */
         int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
