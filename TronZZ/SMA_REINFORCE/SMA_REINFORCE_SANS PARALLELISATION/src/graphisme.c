@@ -212,7 +212,160 @@ static void dessiner_cellule(SDL_Renderer *renderer, int x, int y, int cellule)
                         CELL_SIZE / 2,
                         CELL_SIZE / 2);
 }
+static void dessiner_moto(SDL_Renderer *renderer,
+                          int x,
+                          int y,
+                          int direction,
+                          int cellule)
+{
+    int cx = x * CELL_SIZE + CELL_SIZE / 2;
+    int cy = y * CELL_SIZE + CELL_SIZE / 2;
 
+    int longueur = CELL_SIZE * 4;
+    int largeur = CELL_SIZE * 2;
+
+    Couleur principale = couleur_principale(cellule);
+    Couleur lueur = couleur_lueur(cellule);
+
+    /*
+     * Grande lueur autour de la moto.
+     */
+    set_couleur(renderer, lueur);
+
+    if (direction == DIR_LEFT || direction == DIR_RIGHT) {
+        remplir_rect_limite(renderer,
+                            cx - longueur / 2 - 4,
+                            cy - largeur / 2 - 4,
+                            longueur + 8,
+                            largeur + 8);
+    } else {
+        remplir_rect_limite(renderer,
+                            cx - largeur / 2 - 4,
+                            cy - longueur / 2 - 4,
+                            largeur + 8,
+                            longueur + 8);
+    }
+
+    /*
+     * Corps principal de la moto.
+     */
+    set_couleur(renderer, principale);
+
+    if (direction == DIR_LEFT || direction == DIR_RIGHT) {
+        remplir_rect_limite(renderer,
+                            cx - longueur / 2,
+                            cy - largeur / 2,
+                            longueur,
+                            largeur);
+    } else {
+        remplir_rect_limite(renderer,
+                            cx - largeur / 2,
+                            cy - longueur / 2,
+                            largeur,
+                            longueur);
+    }
+
+    /*
+     * Partie sombre au centre pour donner une forme de moto.
+     */
+    SDL_SetRenderDrawColor(renderer, 2, 6, 15, 230);
+
+    if (direction == DIR_LEFT || direction == DIR_RIGHT) {
+        remplir_rect_limite(renderer,
+                            cx - CELL_SIZE,
+                            cy - largeur / 4,
+                            CELL_SIZE * 2,
+                            largeur / 2);
+    } else {
+        remplir_rect_limite(renderer,
+                            cx - largeur / 4,
+                            cy - CELL_SIZE,
+                            largeur / 2,
+                            CELL_SIZE * 2);
+    }
+
+    /*
+     * Phare blanc à l'avant de la moto.
+     */
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+
+    if (direction == DIR_RIGHT) {
+        remplir_rect_limite(renderer,
+                            cx + longueur / 2 - 3,
+                            cy - 2,
+                            4,
+                            4);
+    } else if (direction == DIR_LEFT) {
+        remplir_rect_limite(renderer,
+                            cx - longueur / 2 - 1,
+                            cy - 2,
+                            4,
+                            4);
+    } else if (direction == DIR_UP) {
+        remplir_rect_limite(renderer,
+                            cx - 2,
+                            cy - longueur / 2 - 1,
+                            4,
+                            4);
+    } else if (direction == DIR_DOWN) {
+        remplir_rect_limite(renderer,
+                            cx - 2,
+                            cy + longueur / 2 - 3,
+                            4,
+                            4);
+    }
+
+    /*
+     * Deux petites roues / extrémités sombres.
+     */
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+
+    if (direction == DIR_LEFT || direction == DIR_RIGHT) {
+        remplir_rect_limite(renderer,
+                            cx - longueur / 3,
+                            cy - largeur / 2 - 2,
+                            CELL_SIZE,
+                            3);
+        remplir_rect_limite(renderer,
+                            cx + longueur / 6,
+                            cy - largeur / 2 - 2,
+                            CELL_SIZE,
+                            3);
+
+        remplir_rect_limite(renderer,
+                            cx - longueur / 3,
+                            cy + largeur / 2 - 1,
+                            CELL_SIZE,
+                            3);
+        remplir_rect_limite(renderer,
+                            cx + longueur / 6,
+                            cy + largeur / 2 - 1,
+                            CELL_SIZE,
+                            3);
+    } else {
+        remplir_rect_limite(renderer,
+                            cx - largeur / 2 - 2,
+                            cy - longueur / 3,
+                            3,
+                            CELL_SIZE);
+        remplir_rect_limite(renderer,
+                            cx - largeur / 2 - 2,
+                            cy + longueur / 6,
+                            3,
+                            CELL_SIZE);
+
+        remplir_rect_limite(renderer,
+                            cx + largeur / 2 - 1,
+                            cy - longueur / 3,
+                            3,
+                            CELL_SIZE);
+        remplir_rect_limite(renderer,
+                            cx + largeur / 2 - 1,
+                            cy + longueur / 6,
+                            3,
+                            CELL_SIZE);
+    }
+}
 /*
  * Dessine le mot TRON avec des rectangles.
  * On évite SDL_ttf et les images.
@@ -398,13 +551,20 @@ bool afficher_ecran_titre(SDL_Window *window, SDL_Renderer *renderer)
     return true;
 }
 
-void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
+void dessiner_arene(SDL_Renderer *renderer,
+                    int grille[WIDTH][HEIGHT],
+                    int pos_motos[MAX_MOTOS + 1][2],
+                    int dir_motos[MAX_MOTOS + 1],
+                    bool etats_vie[MAX_MOTOS + 1])
 {
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 
     dessiner_fond(renderer);
     dessiner_grille(renderer);
 
+    /*
+     * On dessine d'abord les traces.
+     */
     for (int x = 0; x < WIDTH; x++) {
         for (int y = 0; y < HEIGHT; y++) {
             if (grille[x][y] != CELL_EMPTY) {
@@ -413,11 +573,23 @@ void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT])
         }
     }
 
+    /*
+     * Ensuite on dessine les motos au-dessus des traces.
+     */
+    for (int id = CELL_PLAYER; id <= CELL_AI_3; id++) {
+        if (etats_vie[id]) {
+            dessiner_moto(renderer,
+                          pos_motos[id][0],
+                          pos_motos[id][1],
+                          dir_motos[id],
+                          id);
+        }
+    }
+
     dessiner_bordure(renderer);
 
     SDL_RenderPresent(renderer);
 }
-
 void capturer_evenements(SDL_Event *event, int *direction_joueur, bool *running)
 {
     if (event->type == SDL_QUIT) {
