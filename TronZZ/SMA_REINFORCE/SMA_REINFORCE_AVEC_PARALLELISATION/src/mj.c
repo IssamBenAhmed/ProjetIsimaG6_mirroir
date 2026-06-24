@@ -2,6 +2,15 @@
 #include "../include/agent.h"
 
 /* ---------------------------- initialiser la partie de jeu -----------------------------------*/
+
+int random_int_thread(uint32_t *seed, int max) { //fonction pour la position ne superpose pas pour les threads
+    if (max <= 0) return 0;
+
+    *seed = (*seed) * 1103515245u + 12345u;
+
+    return (int)(((*seed) >> 16) % (uint32_t)max);
+}
+
 void initialiser_grille( int grille[WIDTH][HEIGHT]){
     for (int i = 0 ; i < WIDTH ; i++){
         for(int j = 0 ; j < HEIGHT ; j++){
@@ -18,8 +27,9 @@ void initialiser_partie (int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
     int k = 0 ;
 
     while(k<4){
-        int x = rand()%WIDTH; /* la position aleatoire */
-        int y = rand()%HEIGHT ; 
+        unsigned int seed = 123456 ; // la valeur initial de seed 
+        int x = random_int_thread(&seed, WIDTH); //la position aléatoire
+        int y = random_int_thread(&seed, HEIGHT);  
         if (grille[x][y] != CELL_EMPTY){ /* quand la case est deja remplie, on refait son positionnement */
             continue;
         }
