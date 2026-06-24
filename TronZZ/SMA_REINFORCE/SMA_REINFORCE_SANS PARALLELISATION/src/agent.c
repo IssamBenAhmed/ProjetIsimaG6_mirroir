@@ -31,7 +31,7 @@ void generer_phi(Perception p, float phi[15]) {
     phi[8] = (float)p.zone_adversaire_2;
     phi[9] = (float)p.zone_adversaire_3;
 
-    /* pre-remplissage des futures variables non-lineaires avec 0 */
+    //varaiables non-lineaires pour enrichir l'apprentissage. 
     phi[10] = p.densite_obstacles[0] * p.densite_obstacles[1]; // exemple de variable non-lineaire
     phi[11] = p.distances_murs[0] * p.distances_murs[1]; 
     phi[12] = p.densite_obstacles[2]* p.densite_obstacles[3]; 
