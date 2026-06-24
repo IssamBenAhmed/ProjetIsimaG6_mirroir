@@ -16,7 +16,11 @@ bool afficher_ecran_titre(SDL_Window *window, SDL_Renderer *renderer);
 /*
  * Dessine l'arène du jeu.
  */
-void dessiner_arene(SDL_Renderer *renderer, int grille[WIDTH][HEIGHT]);
+void dessiner_arene(SDL_Renderer *renderer,
+                    int grille[WIDTH][HEIGHT],
+                    int pos_motos[MAX_MOTOS + 1][2],
+                    int dir_motos[MAX_MOTOS + 1],
+                    bool etats_vie[MAX_MOTOS + 1]);
 
 /*
  * Gère les événements clavier du joueur.
