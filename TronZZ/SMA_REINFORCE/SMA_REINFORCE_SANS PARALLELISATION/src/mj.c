@@ -278,7 +278,10 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille - 1]); 
             
             int cause  = cause_mort( grille ,nx, ny) ;
-            if (cause == CELL_PLAYER || cause == CELL_EMPTY){ /* morte par l'utilisateur ou mur */
+            if (cause == CELL_EMPTY){ //si le moto est mort par le mur, il ne dépend pas de récompense
+                continue ;
+            }
+            if (cause == CELL_PLAYER){ //cas exception si le joueur est mort par lui-meme
                 nettoyer_trainee(grille, i);
                 continue ;
             }
