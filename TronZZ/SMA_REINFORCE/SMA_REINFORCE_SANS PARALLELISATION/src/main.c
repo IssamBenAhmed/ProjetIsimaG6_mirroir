@@ -189,7 +189,7 @@ int main(int argc, char *argv[])
                     bool joueur_gagne = moto_alive[CELL_PLAYER];
 
                     /* rendu du dernier etat (le crash visuel) et du texte win/lose */
-                    dessiner_arene(renderer, grid);
+                    dessiner_arene(renderer, grid, pos_motos, dir_motos, moto_alive);
                     dessiner_panneau_fin(renderer, joueur_gagne);
                     SDL_RenderPresent(renderer);
 
@@ -202,7 +202,7 @@ int main(int argc, char *argv[])
             }
 
             /* rendu visuel a chaque frame (meme si la position n'a pas change) */
-            dessiner_arene(renderer, grid);
+            dessiner_arene(renderer, grid, pos_motos, dir_motos, moto_alive);
             SDL_Delay(16); /* ~60 images par secondes (1000ms / 60 = 16.6) */
         }
 
