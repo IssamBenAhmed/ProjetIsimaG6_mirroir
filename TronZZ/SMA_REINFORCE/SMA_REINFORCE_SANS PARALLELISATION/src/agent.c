@@ -5,7 +5,7 @@
 #include "../include/config.h"
 
 
-#define ACTIVE_FEATURES 10 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
+#define ACTIVE_FEATURES 3 // il suffira de changer cette valeur pour activer les autres capteurs (densite et zones adversaires)
 
 /* matrice de poids theta partagee par tous les agents en apprentissage */
 float theta[15][3];
