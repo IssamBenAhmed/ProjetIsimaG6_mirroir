@@ -46,13 +46,13 @@
 
 ### Déboguage, Résolution des Divergences et Parallélisation (Mercredi 24 Juin)
 *   **Réalisations du groupe :**
-    *   **Curriculum Learning - Phase 2 (100 000 épisodes) :** Extension de la perception à 10 variables (3 rayons directionnels + 4 zones de radar de détection + 3 densités locales d'obstacles).
+    *   **Curriculum Learning - Phase 2 (100 000 épisodes) :** Extension de la perception à 10 variables (3 rayons directionnels + 4 zones de radar de détection + 3 densités locales d'obstacles). 
     *   **Résolution des anomalies mathématiques (Explosion du Gradient) :**
         *   *Bug de mémoire non-initialisée :* Découverte d'une faille dans l'initialisation de la structure de perception qui polluait le gradient d'apprentissage avec des valeurs mémoires résiduelles aberrantes, entraînant la divergence de la matrice de poids ($\theta$ remplie de `NaN` à l'épisode 67 000). Correction par une purge et initialisation stricte des variables de perception.
         *   *Réduction de variance :* Réduction du taux d'apprentissage $\alpha$ de $0.001$ à $0.0001$ pour stabiliser le comportement probabiliste à long terme.
         *   *Correction du radar :* Correction de la fonction d'assignation du radar de zone pour y inclure le joueur humain et en filtrer l'auto-collision de l'agent (qui scannait sa propre traînée).
     *   **Curriculum Learning - Phase 3 (100 000 épisodes) :** Transition vers 15 variables (activation du croisement non linéaire de capteurs) pour permettre le traitement de scénarios complexes de type couloir ou entonnoir.
-    *   **Analyse de convergence et d'exploration :** La survie moyenne s'est stabilisée à près de 1700 frames, atteignant régulièrement la limite maximale (timeout de 2000 frames). Observation d'un creux temporaire d'exploration aux alentours de l'épisode 90 000, illustrant l'autorégulation stochastique de la politique Softmax face à des tests de stratégies alternatives négatives avant de revenir à la convergence.
+    *   **Analyse de convergence et d'exploration :** La survie moyenne s'est stabilisée à près de 1700 frames, atteignant régulièrement la limite maximale (timeout de 2000 frames). Observation d'un creux temporaire d'exploration aux alentours de l'épisode 90 000, illustrant l'autorégulation stochastique de la politique Softmax face à des tests de stratégies alternatives négatives avant de revenir à la convergence. ![Schéma REINFORCE](image/curriculum.png)
     *   **Sécurisation mémoire et qualité du code :**
         *   *Résolution de Stack Overflow :* Migration de la structure d'historique de frames (`EpisodeMemoire`) d'une allocation sur la pile (4 Mo, causant des plantages mémoire) vers une allocation dynamique sur le tas (`calloc`).
         *   *Correction d'accès hors-limites :* Sécurisation des accès mémoires de frame (indices négatifs en cas de mort précoce du joueur).
