@@ -120,6 +120,7 @@ int main(int argc, char *argv[])
          */
         SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
         if (!initialiser_textures_motos(renderer)) {
+            liberer_textures_motos();
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
             IMG_Quit();
@@ -131,8 +132,10 @@ int main(int argc, char *argv[])
          * le joueur appuie sur entree. elle renvoie false s'il ferme la fenetre.
          */
         if (!afficher_ecran_titre(window, renderer)) {
+            liberer_textures_motos();
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
+            IMG_Quit();
             SDL_Quit();
             free(memoires);
             return EXIT_SUCCESS;
@@ -232,9 +235,6 @@ int main(int argc, char *argv[])
         SDL_DestroyRenderer(renderer);
         SDL_DestroyWindow(window);
         IMG_Quit();
-        SDL_Quit();
-        SDL_DestroyRenderer(renderer);
-        SDL_DestroyWindow(window);
         SDL_Quit();
 
         free(memoires);
