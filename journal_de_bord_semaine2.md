@@ -31,15 +31,51 @@
 
 ![Schéma REINFORCE](image/lundi.png.jpeg)
   #### Gahui 
+  -Initialisation automatique d’une nouvelle partie lorsque la précédente est terminée ; 
+
+ -Reprogrammation du calcul de la perception en l’adaptant à la nouvelle structure de perception (insérer une image pour illustrer la différence entre l’ancienne et la nouvelle version) ; 
+
+ -Ajout de nouvelles fonctions permettant de déterminer l’état de la partie (victoire, etc.). 
 
   #### Issam
 
   ### Mardi 23 juin
   On a fini l'écriture du code du REINFORCE, on a corrigé des erreurs de compilation et on a lancé le trainage dans le soir.
+ #### gahui Ban 
+  -Réflexion sur le système de récompense et son implémentation en fonction des actions de l’agent et de leurs conséquences ; 
 
+  -Séparation des modes « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan ; 
+
+  -Restructuration de la perception de l’agent et amélioration de l’algorithme pour tirer parti de cette nouvelle structure ; 
+
+  -Recherche d’informations complémentaires sur l’apprentissage parallèle afin de mieux comprendre cette approche et de préparer son implémentation;
   #### Nabil
   J'ai intégré le principe de l’effet néon dans l’interface graphique du jeu afin de donner un style plus proche de l’univers Tron. J'ai également ajouté un écran d’entrée permettant de démarrer la partie avec la touche **Espace** ou **Entrée**. Enfin, J'ai mis en place un écran de fin qui affiche le résultat de la partie avec un message **WIN** ou **LOSE**.J'ai également amélioré l’affichage des cellules pleines en ajoutant deux couches de lueur autour de chaque cellule ainsi qu’un point blanc au centre.
 ![Schéma REINFORCE](image/Présentation_sans_titre.png)
 
 ![Schéma REINFORCE](image/mardi.jpeg)
   
+
+  ### Mecredi 25 juin
+
+
+  ##### gahui Ban
+  -Correction de plusieurs problèmes algorithmiques dans le moteur de jeu afin d’assurer son bon fonctionnement. 
+
+  -Poursuite des recherches sur l’apprentissage avec parallélisme pour mieux comprendre son fonctionnement et préparer son implémentation. 
+
+  -Découverte et apprentissage de l’utilisation de la bibliothèque thread.h en langage C. 
+
+  -Amélioration de l’initialisation des parties dans le moteur de jeu afin d’éviter les collisions entre les positions initiales des différents threads. 
+
+  -Difficultés : 
+
+Identification et correction des erreurs algorithmiques affectant le comportement du moteur de jeu. 
+
+Compréhension des mécanismes de parallélisme et de synchronisation entre les threads ;
+
+Gestion de l’initialisation simultanée des agents sans provoquer de conflits de position ; 
+
+Problème de parallélisme sur la fonction “rand” : résolu en créant une version utilisant une graine locale pour chaque thread  ; 
+
+ 
