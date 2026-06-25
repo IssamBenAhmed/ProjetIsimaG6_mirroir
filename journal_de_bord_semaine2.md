@@ -50,8 +50,8 @@
     *   **L’amélioration d’interface :** l’ajout d'un écran d’entrée permettant de démarrer la partie avec la touche Espace ou Entrée.
 *   **Rendu visuel :**
   ![Interface graphique du jeu TronZZ](file:///home/issam/Documents/Obsidian Vault/Pasted image 20260624093702.png)
-    * ** le jeu sans l'apprentissage par renforcement **   ![Schéma REINFORCE](image/jeu_sans_entrainement.png )
-    * ** le jeu avec l'apprentissage par renforcement **
+    *   **le jeu sans l'apprentissage par renforcement**   ![Schéma REINFORCE](image/jeu_sans_entrainement.png )
+    *   **le jeu avec l'apprentissage par renforcement**
 ### Déboguage, Résolution des Divergences et Parallélisation (Mercredi 24 Juin)
 *   **Réalisations du groupe :**
     *   **Curriculum Learning - Phase 2 (100 000 épisodes) :** Extension de la perception à 10 variables (3 rayons directionnels + 4 zones de radar de détection + 3 densités locales d'obstacles). 
