@@ -72,8 +72,8 @@
 
     *  **Mise en pratique du parallélisme** ;
     * **Résolution d’un problème lié à l’initialisation du jeu lors de l’exécution parallèle:** Le conflit provenait du partage d’un espace global entre les threads. Une solution a été mise en place en utilisant une graine aléatoire locale à chaque thread afin d’éviter les interférences ;
-*   **Comparaison des temps d’exécution entre les versions parallélisée et non parallélisée du jeu**
-*   **Préparation de la soutenance :** réalisation des diapositives, création des schémas et élaboration du support de présentation ;
+    *   **Comparaison des temps d’exécution entre les versions parallélisée et non parallélisée du jeu**
+    *   **Préparation de la soutenance :** réalisation des diapositives, création des schémas et élaboration du support de présentation ;
 
 
 
