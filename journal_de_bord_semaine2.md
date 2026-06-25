@@ -67,7 +67,7 @@
         *   *Intégration d'outils d'analyse dynamique :* Validation avec les compilateurs de Sanitizers (ASan, UBSan) et profilage sous Valgrind garantissant un moteur robuste à fuite mémoire nulle.
     *   **Ajout des vraies images des moto:**
          Nous avons ajouté de vraies images de motos pour représenter les joueurs, au lieu d’utiliser uniquement des traces colorées. Cela améliore l’aspect visuel du jeu et permet de mieux identifier la position actuelle de chaque moto.
-  ![Schéma REINFORCE](image/Mercredi1.png )       ![Schéma REINFORCE](image/Mercredi2.png )
+  ![Schéma REINFORCE](image/mercredi1.png )       ![Schéma REINFORCE](image/mercredi2.png )
 
 ### Mettre en pratique le parallélisme et comparaison de résultat puis préparation de soutenance (Jeudi 25 juin )
 *   **Réalisations du groupe :**
