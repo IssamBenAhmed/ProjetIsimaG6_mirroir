@@ -65,8 +65,9 @@
         *   *Résolution de Stack Overflow :* Migration de la structure d'historique de frames (`EpisodeMemoire`) d'une allocation sur la pile (4 Mo, causant des plantages mémoire) vers une allocation dynamique sur le tas (`calloc`).
         *   *Correction d'accès hors-limites :* Sécurisation des accès mémoires de frame (indices négatifs en cas de mort précoce du joueur).
         *   *Intégration d'outils d'analyse dynamique :* Validation avec les compilateurs de Sanitizers (ASan, UBSan) et profilage sous Valgrind garantissant un moteur robuste à fuite mémoire nulle.
-
-
+    *   **Ajout des vraies images des moto:**
+         Nous avons ajouté de vraies images de motos pour représenter les joueurs, au lieu d’utiliser uniquement des traces colorées. Cela améliore l’aspect visuel du jeu et permet de mieux identifier la position actuelle de chaque moto.
+  ![Schéma REINFORCE](image/Mercredi1.png )       ![Schéma REINFORCE](image/Mercredi2.png )
 
 ### Mettre en pratique le parallélisme et comparaison de résultat puis préparation de soutenance (Jeudi 25 juin )
 *   **Réalisations du groupe :**
