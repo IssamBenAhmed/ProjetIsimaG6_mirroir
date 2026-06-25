@@ -21,6 +21,7 @@
 #include "../include/agent.h"
 
 typedef struct {
+    int id_thread;
     long nb_episodes;
     unsigned int seed;
 
@@ -142,6 +143,13 @@ static int entrainer_thread(void *arg)
                                  0.99f,
                                  p->theta_local);
             }
+        }
+        if ((episode + 1) % 1000 == 0 || episode + 1 == p->nb_episodes) {
+            printf("[thread %d] episode %ld / %ld termine\n",
+                   p->id_thread,
+                   episode + 1,
+                   p->nb_episodes);
+            fflush(stdout);
         }
     }
 
@@ -622,7 +630,7 @@ int main(int argc, char *argv[])
             if (t < reste) { // les restes premiers threads prennent un thread en plus.
                 nb_ep++;
             }
-
+            params[t].id_thread = t;
             params[t].nb_episodes = nb_ep;
             params[t].seed = (unsigned int)time(NULL) + (unsigned int)((t + 1) * 100);
 
