@@ -6,9 +6,10 @@
   ## Contexte
   Ce journal de bord retrace l’avancement de notre projet TronZZ, qui consiste à développer un jeu de motos lumineuses en C/SDL2, en passant d’une intelligence artificielle réactive à une version améliorée utilisant l’apprentissage par renforcement avec REINFORCE. 
 ![Schéma REINFORCE](image/image.webp)
+![Schéma REINFORCE](image/lundi.png.jpeg)
+
   ## Objectifs
 
-  
 * Comprendre le principe de l’apprentissage par renforcement.
 * Étudier la méthode REINFORCE et son fonctionnement.
 * Appliquer la méthode REINFORCE à notre jeu TronZZ afin d’améliorer le comportement des agents.
@@ -36,7 +37,7 @@
     *   **Amélioration de l'interface :** Effets de halo néon cyberpunk, écrans d'accueil et de fin (Victoire/Défaite).
   ![Schéma REINFORCE](image/Présentation_sans_titre.png)
 
-![Schéma REINFORCE](image/mardi.jpeg)
+  ![Schéma REINFORCE](image/mardi.jpeg)
   
 
 
