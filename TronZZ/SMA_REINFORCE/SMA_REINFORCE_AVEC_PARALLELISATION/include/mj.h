@@ -51,4 +51,20 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT],
 
 void nettoyer_trainee(int grille[WIDTH][HEIGHT], int id_moto);
 
+int random_int_thread(unsigned int *seed, int max);
+
+void initialiser_partie_thread(int grille[WIDTH][HEIGHT],
+                               int pos_motos[MAX_MOTOS + 1][2],
+                               int dir_motos[MAX_MOTOS + 1],
+                               bool etats_vie[MAX_MOTOS + 1],
+                               unsigned int *seed);
+
+void mettre_a_jour_monde_entrainement_thread(int grille[WIDTH][HEIGHT],
+                                             int pos_motos[MAX_MOTOS + 1][2],
+                                             int dir_motos[MAX_MOTOS + 1],
+                                             bool etats_vie[MAX_MOTOS + 1],
+                                             EpisodeMemoire memoires[MAX_MOTOS + 1],
+                                             float theta_local[15][3],
+                                             unsigned int *seed);
+
 #endif
