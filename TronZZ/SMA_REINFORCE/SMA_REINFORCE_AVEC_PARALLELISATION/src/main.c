@@ -12,12 +12,144 @@
 #include <stdbool.h>
 #include <string.h>
 #include <time.h>
+#include <threads.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include "../include/config.h"
 #include "../include/graphisme.h"
 #include "../include/mj.h"
 #include "../include/agent.h"
+
+typedef struct {
+    long nb_episodes;
+    unsigned int seed;
+
+    float theta_local[15][3];
+
+    long somme_frames;
+    int max_frames;
+    long victoires;
+} ParamThread;
+
+static void copier_theta(float source[15][3], float destination[15][3])
+{
+    for (int i = 0; i < 15; i++) {
+        for (int j = 0; j < 3; j++) {
+            destination[i][j] = source[i][j];
+        }
+    }
+}
+
+
+static int entrainer_thread(void *arg)
+{
+    ParamThread *p = (ParamThread *)arg;
+
+    int grid_local[WIDTH][HEIGHT];
+    int pos_motos_local[MAX_MOTOS + 1][2];
+    int dir_motos_local[MAX_MOTOS + 1];
+    bool moto_alive_local[MAX_MOTOS + 1];
+
+    EpisodeMemoire *memoires_local =
+        calloc(MAX_MOTOS + 1, sizeof(EpisodeMemoire));
+
+    if (memoires_local == NULL) {
+        return 1;
+    }
+
+    p->somme_frames = 0;
+    p->max_frames = 0;
+    p->victoires = 0;
+
+    for (long episode = 0; episode < p->nb_episodes; episode++) {
+
+        initialiser_partie_thread(grid_local,
+                                  pos_motos_local,
+                                  dir_motos_local,
+                                  moto_alive_local,
+                                  &p->seed);
+
+        for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
+            memoires_local[i].taille = 0;
+        }
+
+        bool partie_continue = true;
+        int frames = 0;
+        int dernier_vivant = 0;
+
+        while (partie_continue) {
+
+            bool vie_avant[MAX_MOTOS + 1];
+
+            for (int i = 0; i <= MAX_MOTOS; i++) {
+                vie_avant[i] = moto_alive_local[i];
+            }
+
+            mettre_a_jour_monde_entrainement_thread(grid_local,
+                                                    pos_motos_local,
+                                                    dir_motos_local,
+                                                    moto_alive_local,
+                                                    memoires_local,
+                                                    p->theta_local,
+                                                    &p->seed);
+
+            frames++;
+
+            int nb_vivants = 0;
+            dernier_vivant = 0;
+
+            for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
+
+                if (vie_avant[i] && !moto_alive_local[i]) {
+
+                    if (memoires_local[i].taille > 0) {
+                        memoires_local[i].frames[memoires_local[i].taille - 1].recompense = -100.0f;
+
+                        maj_theta_thread(&memoires_local[i],
+                                         ALPHA,
+                                         0.99f,
+                                         p->theta_local);
+
+                        memoires_local[i].taille = 0;
+                    }
+                }
+
+                if (moto_alive_local[i]) {
+                    nb_vivants++;
+                    dernier_vivant = i;
+                }
+            }
+
+            if (nb_vivants <= 1 || frames >= 2000) {
+                partie_continue = false;
+            }
+        }
+
+        p->somme_frames += frames;
+
+        if (frames > p->max_frames) {
+            p->max_frames = frames;
+        }
+
+        if (dernier_vivant >= CELL_PLAYER && dernier_vivant <= CELL_AI_3) {
+            p->victoires++;
+        }
+
+        for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
+            if (moto_alive_local[i] && memoires_local[i].taille > 0) {
+                maj_theta_thread(&memoires_local[i],
+                                 ALPHA,
+                                 0.99f,
+                                 p->theta_local);
+            }
+        }
+    }
+
+    free(memoires_local);
+
+    return 0;
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -443,14 +575,103 @@ int main(int argc, char *argv[])
 
         /* proprete de sortie : fermeture du fichier et sauvegarde ultime des matrices theta */
         if (f_log) fclose(f_log);
-        printf("entrainement termine avec succes.\n");
+                printf("entrainement termine avec succes.\n");
         sauvegarder_theta(filename_theta);
 
         return EXIT_SUCCESS;
 
-    
+    } else if (strcmp(argv[1], "trainp") == 0) {
+
+        charger_theta(filename_theta);
+
+        long episodes_totaux = 10000;
+        int nb_threads = 4;
+
+        if (argc >= 3) {
+            // strtol pour un long 
+            episodes_totaux = strtol(argv[2], NULL, 10);// transfomer l'argument arg[2]="20000" en nombre 20000;
+        }
+
+        if (argc >= 4) {
+            // atoi pour un int
+            nb_threads = atoi(argv[3]);// on transforme le nombre de threads en chiffre;
+        }
+
+        if (nb_threads <= 0) {
+            // on corrige automatiquement l'erreur écrit dans le repertoire;
+            nb_threads = 1;
+        }
+
+        if (nb_threads > 8) {
+            nb_threads = 8;
+        }
+
+        printf("entrainement parallele : %ld episodes avec %d threads\n",
+               episodes_totaux,
+               nb_threads);
+
+        thrd_t threads[8];// creer un tableau qui peut contenir 8 threads;
+        ParamThread params[8];
+
+        long episodes_par_thread = episodes_totaux / nb_threads;
+        long reste = episodes_totaux % nb_threads;
+
+        for (int t = 0; t < nb_threads; t++) {
+            long nb_ep = episodes_par_thread;
+
+            if (t < reste) { // les restes premiers threads prennent un thread en plus.
+                nb_ep++;
+            }
+
+            params[t].nb_episodes = nb_ep;
+            params[t].seed = (unsigned int)time(NULL) + (unsigned int)((t + 1) * 100);
+
+            copier_theta(theta, params[t].theta_local);
+
+            thrd_create(&threads[t], entrainer_thread, &params[t]);
+        }
+
+        for (int t = 0; t < nb_threads; t++) {
+            thrd_join(threads[t], NULL);
+        }
+
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 3; j++) {
+                float somme = 0.0f;
+
+                for (int t = 0; t < nb_threads; t++) {
+                    somme += params[t].theta_local[i][j];
+                }
+
+                theta[i][j] = somme / (float)nb_threads;
+            }
+        }
+
+        long somme_frames = 0;
+        int max_frames = 0;
+        long victoires = 0;
+
+        for (int t = 0; t < nb_threads; t++) {
+            somme_frames += params[t].somme_frames;
+            victoires += params[t].victoires;
+
+            if (params[t].max_frames > max_frames) {
+                max_frames = params[t].max_frames;
+            }
+        }
+
+        printf("entrainement parallele termine\n");
+        printf("survie moyenne : %.2f frames\n",
+               (float)somme_frames / (float)episodes_totaux);
+        printf("survie max     : %d frames\n", max_frames);
+        printf("victoires      : %.2f %%\n",
+               ((float)victoires / (float)episodes_totaux) * 100.0f);
+
+        sauvegarder_theta(filename_theta);
+
+        return EXIT_SUCCESS;
+
     } else {
-        /* le programme se referme net si l'argument ne correspond ni a play ni a train */
         fprintf(stderr, "mode inconnu: %s\n", argv[1]);
         fprintf(stderr, "modes: %s, %s\n", ENTRAINEMENT, JOUEUR);
         return EXIT_FAILURE;
