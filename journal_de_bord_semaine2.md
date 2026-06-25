@@ -74,9 +74,11 @@
 
     *  **Mise en pratique du parallélisme** ;
     * **Résolution d’un problème lié à l’initialisation du jeu lors de l’exécution parallèle:** Le conflit provenait du partage d’un espace global entre les threads. Une solution a été mise en place en utilisant une graine aléatoire locale à chaque thread afin d’éviter les interférences ;![Schéma REINFORCE](image/jiji.webp)
-    *   **Comparaison des temps d’exécution entre les versions parallélisée et non parallélisée du jeu : l'ajout du profileur qui calcule le temps passé dans chaque fonction**
+    *   **Comparaison des temps d’exécution entre les versions parallélisée et non parallélisée du jeu : l'ajout du profileur qui calcule le temps passé dans chaque fonction** ![Schéma REINFORCE](image/profileur.png)
     *   **Préparation de la soutenance :** réalisation des diapositives, création des schémas et élaboration du support de présentation ;
-
+*   **Rendu visuel :**
+    *  **temps d'exécution de l'entrainement sans parallélisation :** ![Schéma REINFORCE](image/sans_parallelisme.png)
+    *  **temps d'exécution de l'entrainement avec parallélisation :** ![Schéma REINFORCE](image/avec_parallelisation.png)
 
 
 
