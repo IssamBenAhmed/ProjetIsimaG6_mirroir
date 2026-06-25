@@ -42,4 +42,18 @@ int choisir_action(Perception p, FrameMemoire *mem_frame);
 /* Met a jour theta a partir d'un episode complet ET RENVOIS LE SCORE TOTAL G_0 */
 float maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
 
+
+extern float theta[15][3];
+
+float random_float_thread(unsigned int *seed);
+
+int choisir_action_thread(Perception p,
+                          FrameMemoire *mem_frame,
+                          float theta_local[15][3],
+                          unsigned int *seed);
+
+float maj_theta_thread(EpisodeMemoire *ep,
+                       float alpha,
+                       float gamma,
+                       float theta_local[15][3]);
 #endif
