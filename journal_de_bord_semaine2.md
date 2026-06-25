@@ -30,7 +30,7 @@
         $$\pi_j = \frac{e^{Z_j}}{\sum_{k} e^{Z_k}}$$
         Les gradients d'erreur de politique sont rétropropagés en fin d'épisode pour chaque étape temporelle $t$ en fonction du retour cumulé actualisé $G_t$ ($\gamma = 0.99$) :
         $$\theta_{i,j} \leftarrow \theta_{i,j} + \alpha \cdot \Phi(s)_i \cdot (y_j - \pi_j) \cdot G_t$$
-    *   **Amélioration de Système de perception local :** dans la Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale, l'ajout de connaissance de radar floue(le taux de zone libre, existence d'enermie) autour de l'agent . ![Schéma REINFORCE](image/perception.png)
+    *   **Amélioration de Système de perception local :** dans la Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale, l'ajout de connaissance de radar floue autour de l'agent . ![Schéma REINFORCE](image/perception.png)
     *   **Amélioration de déroulement de jeu :** l'existence d'un gagnant(dernier survivant), initialisation de jeu, etc.
      ![Schéma REINFORCE](image/mj_schema.jpg)
     *   **Amélioration de l'interface :** Effets de halo néon cyberpunk, écrans d'accueil et de fin (Victoire/Défaite).
