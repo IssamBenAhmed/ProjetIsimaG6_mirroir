@@ -164,3 +164,100 @@ float maj_theta(EpisodeMemoire *ep, float alpha, float gamma) {
     /* retourne l'evaluation globale de la partie (g a t=0) */
     return G;
 }
+
+
+float random_float_thread(unsigned int *seed)
+{
+    *seed = (*seed) * 1103515245u + 12345u;
+    return (float)((*seed >> 8) % 1000000) / 1000000.0f;
+}
+
+int choisir_action_thread(Perception p,
+                          FrameMemoire *mem_frame,
+                          float theta_local[15][3],
+                          unsigned int *seed)
+{
+    float phi[15];
+    generer_phi(p, phi);
+
+    float z[3] = {0};
+
+    for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < ACTIVE_FEATURES; i++) {
+            z[j] += phi[i] * theta_local[i][j];
+        }
+    }
+
+    float max_z = z[0];
+
+    for (int j = 1; j < 3; j++) {
+        if (z[j] > max_z) {
+            max_z = z[j];
+        }
+    }
+
+    float exp_z[3];
+    float somme_exp = 0.0f;
+
+    for (int j = 0; j < 3; j++) {
+        exp_z[j] = expf(z[j] - max_z);
+        somme_exp += exp_z[j];
+    }
+
+    float pi[3];
+
+    for (int j = 0; j < 3; j++) {
+        pi[j] = exp_z[j] / somme_exp;
+
+        if (mem_frame != NULL) {
+            mem_frame->probabilites[j] = pi[j];
+        }
+    }
+
+    float tirage = random_float_thread(seed);
+    float proba_cumul = 0.0f;
+    int action_choisie = ACTION_FORWARD;
+
+    for (int j = 0; j < 3; j++) {
+        proba_cumul += pi[j];
+
+        if (tirage <= proba_cumul) {
+            action_choisie = j;
+            break;
+        }
+    }
+
+    if (mem_frame != NULL) {
+        for (int i = 0; i < 15; i++) {
+            mem_frame->phi[i] = phi[i];
+        }
+
+        mem_frame->action = action_choisie;
+        mem_frame->recompense = 1.0f;
+    }
+
+    return action_choisie;
+}
+
+float maj_theta_thread(EpisodeMemoire *ep,
+                       float alpha,
+                       float gamma,
+                       float theta_local[15][3])
+{
+    float G = 0.0f;
+
+    for (int t = ep->taille - 1; t >= 0; t--) {
+        G = ep->frames[t].recompense + gamma * G;
+
+        for (int i = 0; i < ACTIVE_FEATURES; i++) {
+            for (int j = 0; j < 3; j++) {
+                float y_j = (ep->frames[t].action == j) ? 1.0f : 0.0f;
+                float erreur = y_j - ep->frames[t].probabilites[j];
+
+                theta_local[i][j] += alpha * ep->frames[t].phi[i] * erreur * G;
+            }
+        }
+    }
+
+    return G;
+}
