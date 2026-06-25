@@ -45,7 +45,7 @@
   On a fini l'écriture du code du REINFORCE, on a corrigé des erreurs de compilation et on a lancé le trainage dans le soir.
  #### gahui Ban 
   -Réflexion sur le système de récompense et son implémentation en fonction des actions de l’agent et de leurs conséquences ; 
-  ![Schéma REINFORCE](image/actionetrecompense.jpeg)
+  ![Schéma REINFORCE](image/actionetrecompense.jpg)
 
   -Séparation des modes « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan ; 
 
