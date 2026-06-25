@@ -33,7 +33,9 @@
   #### Gahui 
   -Initialisation automatique d’une nouvelle partie lorsque la précédente est terminée ; 
 
- -Reprogrammation du calcul de la perception en l’adaptant à la nouvelle structure de perception (insérer une image pour illustrer la différence entre l’ancienne et la nouvelle version) ; 
+ -Reprogrammation du calcul de la perception en l’adaptant à la nouvelle structure de perception (avec le schéma de perception amélioré ci-dessous) :
+ ![Schéma REINFORCE](image/perception.png)
+
 
  -Ajout de nouvelles fonctions permettant de déterminer l’état de la partie (victoire, etc.). 
 
@@ -43,6 +45,7 @@
   On a fini l'écriture du code du REINFORCE, on a corrigé des erreurs de compilation et on a lancé le trainage dans le soir.
  #### gahui Ban 
   -Réflexion sur le système de récompense et son implémentation en fonction des actions de l’agent et de leurs conséquences ; 
+  ![Schéma REINFORCE](image/actionetrecompense.jpeg)
 
   -Séparation des modes « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan ; 
 
