@@ -30,12 +30,15 @@
         $$\pi_j = \frac{e^{Z_j}}{\sum_{k} e^{Z_k}}$$
         Les gradients d'erreur de politique sont rétropropagés en fin d'épisode pour chaque étape temporelle $t$ en fonction du retour cumulé actualisé $G_t$ ($\gamma = 0.99$) :
         $$\theta_{i,j} \leftarrow \theta_{i,j} + \alpha \cdot \Phi(s)_i \cdot (y_j - \pi_j) \cdot G_t$$
-    *   **Système de perception local :** Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale.
+    *   ** amélioration de Système de perception local :** dans la Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale, l'ajout de connaissance de radar floue(le taux de zone libre, existence d'enermie) autour de l'agent . ![Schéma REINFORCE](image/perception.png)
+    *   ** amélioration de déroulement de jeu : l'existence d'un gagnant(dernier survivant), initialisation de jeu, etc.
+     ![Schéma REINFORCE](image/mj_schema.jpg)
     *   **Amélioration de l'interface :** Effets de halo néon cyberpunk, écrans d'accueil et de fin (Victoire/Défaite).
 
 ### Implémentation du REINFORCE & Curriculum Learning (Mardi 23 Juin)
 *   **Réalisations du groupe :**
-    *   **Système de récompense :** Implémentation de la fonction de récompense globale (+1 point par frame de survie, -100 points en cas de collision, +50 points en cas d'élimination d'un concurrent).
+    *   **Système de récompense :** Implémentation de la fonction de récompense globale (+1 point par frame de survie, -100 points en cas de collision, +50 points en cas d'élimination d'un concurrent). ![Schéma REINFORCE](image/actionetrecompense.jpg)
+    *   ** séparation de mode de jeu : le mode « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan.
     *   **Curriculum Learning - Phase 1 (10 000 épisodes) :** Apprentissage initial restreint à 3 capteurs frontaux ($\Phi(s)$ à 3 dimensions). Ce bridage évite la divergence rapide et permet à l'IA d'apprendre les réflexes de survie primaires (évitement frontal des obstacles).
     *   **Analyse de comportement (Le minimum local de « l'escargot ») :** Sans perception globale ou de zone, l'IA a tendance à converger vers une stratégie pacifiste consistant à s'enrouler sur elle-même (spirale serrée) pour maximiser sa survie dans un coin libre de l'arène. La survie moyenne a triplé (de 60 à ~1300 frames) avec une action linéaire dominante vers l'avant (95%).
 *   **Rendu visuel :**
@@ -95,28 +98,14 @@
 
 
 ![Schéma REINFORCE](image/lundi.png.jpeg)
-  #### Gahui 
-  -Initialisation automatique d’une nouvelle partie lorsque la précédente est terminée ; 
-
- -Reprogrammation du calcul de la perception en l’adaptant à la nouvelle structure de perception (avec le schéma de perception amélioré ci-dessous) :
- ![Schéma REINFORCE](image/perception.png)
-
-
- -Ajout de nouvelles fonctions permettant de déterminer l’état de la partie (victoire, etc.). 
+   
 
   #### Issam
 
   ### Mardi 23 juin
   On a fini l'écriture du code du REINFORCE, on a corrigé des erreurs de compilation et on a lancé le trainage dans le soir.
- #### gahui Ban 
-  -Réflexion sur le système de récompense et son implémentation en fonction des actions de l’agent et de leurs conséquences ; 
-  ![Schéma REINFORCE](image/actionetrecompense.jpg)
 
-  -Séparation des modes « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan ; 
 
-  -Restructuration de la perception de l’agent et amélioration de l’algorithme pour tirer parti de cette nouvelle structure ; 
-
-  -Recherche d’informations complémentaires sur l’apprentissage parallèle afin de mieux comprendre cette approche et de préparer son implémentation;
   #### Nabil
   J'ai intégré le principe de l’effet néon dans l’interface graphique du jeu afin de donner un style plus proche de l’univers Tron. J'ai également ajouté un écran d’entrée permettant de démarrer la partie avec la touche **Espace** ou **Entrée**. Enfin, J'ai mis en place un écran de fin qui affiche le résultat de la partie avec un message **WIN** ou **LOSE**.J'ai également amélioré l’affichage des cellules pleines en ajoutant deux couches de lueur autour de chaque cellule ainsi qu’un point blanc au centre.
 ![Schéma REINFORCE](image/Présentation_sans_titre.png)
@@ -127,22 +116,6 @@
   ### Mecredi 25 juin
 
 
-  ##### gahui Ban
-  -Correction de plusieurs problèmes algorithmiques dans le moteur de jeu afin d’assurer son bon fonctionnement. 
-
-  -Poursuite des recherches sur l’apprentissage avec parallélisme pour mieux comprendre son fonctionnement et préparer son implémentation. 
-
-  -Découverte et apprentissage de l’utilisation de la bibliothèque thread.h en langage C. 
-
-  -Amélioration de l’initialisation des parties dans le moteur de jeu afin d’éviter les collisions entre les positions initiales des différents threads. 
-
-  -Difficultés : 
-
-Identification et correction des erreurs algorithmiques affectant le comportement du moteur de jeu. 
-
-Compréhension des mécanismes de parallélisme et de synchronisation entre les threads ;
-
-Gestion de l’initialisation simultanée des agents sans provoquer de conflits de position ; 
 
 Problème de parallélisme sur la fonction “rand” : résolu en créant une version utilisant une graine locale pour chaque thread  ; 
 
