@@ -30,15 +30,15 @@
         $$\pi_j = \frac{e^{Z_j}}{\sum_{k} e^{Z_k}}$$
         Les gradients d'erreur de politique sont rétropropagés en fin d'épisode pour chaque étape temporelle $t$ en fonction du retour cumulé actualisé $G_t$ ($\gamma = 0.99$) :
         $$\theta_{i,j} \leftarrow \theta_{i,j} + \alpha \cdot \Phi(s)_i \cdot (y_j - \pi_j) \cdot G_t$$
-    *   ** amélioration de Système de perception local :** dans la Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale, l'ajout de connaissance de radar floue(le taux de zone libre, existence d'enermie) autour de l'agent . ![Schéma REINFORCE](image/perception.png)
-    *   ** amélioration de déroulement de jeu : l'existence d'un gagnant(dernier survivant), initialisation de jeu, etc.
+    *   **Amélioration de Système de perception local :** dans la Conception d'un système de capteurs embarqués (lancers de rayons directionnels locaux) simulant la vision linéaire des agents à 180 degrés sans connaissance de la grille globale, l'ajout de connaissance de radar floue(le taux de zone libre, existence d'enermie) autour de l'agent . ![Schéma REINFORCE](image/perception.png)
+    *   **Amélioration de déroulement de jeu :** l'existence d'un gagnant(dernier survivant), initialisation de jeu, etc.
      ![Schéma REINFORCE](image/mj_schema.jpg)
     *   **Amélioration de l'interface :** Effets de halo néon cyberpunk, écrans d'accueil et de fin (Victoire/Défaite).
 
 ### Implémentation du REINFORCE & Curriculum Learning (Mardi 23 Juin)
 *   **Réalisations du groupe :**
     *   **Système de récompense :** Implémentation de la fonction de récompense globale (+1 point par frame de survie, -100 points en cas de collision, +50 points en cas d'élimination d'un concurrent). ![Schéma REINFORCE](image/actionetrecompense.jpg)
-    *   ** séparation de mode de jeu : le mode « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan.
+    *   **Séparation de mode de jeu :** le mode « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan.
     *   **Curriculum Learning - Phase 1 (10 000 épisodes) :** Apprentissage initial restreint à 3 capteurs frontaux ($\Phi(s)$ à 3 dimensions). Ce bridage évite la divergence rapide et permet à l'IA d'apprendre les réflexes de survie primaires (évitement frontal des obstacles).
     *   **Analyse de comportement (Le minimum local de « l'escargot ») :** Sans perception globale ou de zone, l'IA a tendance à converger vers une stratégie pacifiste consistant à s'enrouler sur elle-même (spirale serrée) pour maximiser sa survie dans un coin libre de l'arène. La survie moyenne a triplé (de 60 à ~1300 frames) avec une action linéaire dominante vers l'avant (95%).
 *   **Rendu visuel :**
