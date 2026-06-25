@@ -34,6 +34,11 @@
     *   **Amélioration de déroulement de jeu :** l'existence d'un gagnant(dernier survivant), initialisation de jeu, etc.
      ![Schéma REINFORCE](image/mj_schema.jpg)
     *   **Amélioration de l'interface :** Effets de halo néon cyberpunk, écrans d'accueil et de fin (Victoire/Défaite).
+  ![Schéma REINFORCE](image/Présentation_sans_titre.png)
+
+![Schéma REINFORCE](image/mardi.jpeg)
+  
+
 
 ### Implémentation du REINFORCE & Curriculum Learning (Mardi 23 Juin)
 *   **Réalisations du groupe :**
@@ -41,8 +46,9 @@
     *   **Séparation de mode de jeu :** le mode « jeu » (avec l’utilisateur) et « entraînement » (sans utilisateur) afin de permettre un apprentissage par renforcement en arrière-plan.
     *   **Curriculum Learning - Phase 1 (10 000 épisodes) :** Apprentissage initial restreint à 3 capteurs frontaux ($\Phi(s)$ à 3 dimensions). Ce bridage évite la divergence rapide et permet à l'IA d'apprendre les réflexes de survie primaires (évitement frontal des obstacles).
     *   **Analyse de comportement (Le minimum local de « l'escargot ») :** Sans perception globale ou de zone, l'IA a tendance à converger vers une stratégie pacifiste consistant à s'enrouler sur elle-même (spirale serrée) pour maximiser sa survie dans un coin libre de l'arène. La survie moyenne a triplé (de 60 à ~1300 frames) avec une action linéaire dominante vers l'avant (95%).
+    *   **L’amélioration d’interface :** l’ajout d'un écran d’entrée permettant de démarrer la partie avec la touche Espace ou Entrée.
 *   **Rendu visuel :**
-    ![Interface graphique du jeu TronZZ](file:///home/issam/Documents/Obsidian Vault/Pasted image 20260624093702.png)
+  ![Interface graphique du jeu TronZZ](file:///home/issam/Documents/Obsidian Vault/Pasted image 20260624093702.png)
 
 ### Déboguage, Résolution des Divergences et Parallélisation (Mercredi 24 Juin)
 *   **Réalisations du groupe :**
@@ -89,30 +95,7 @@
 
 
  
-  #### Nabil 
-  J'ai commencé par comprendre le principe général de l’apprentissage automatique, en particulier l’idée qu’un agent   peut améliorer son comportement à partir de ses expériences.J'ai ensuite réfléchi à plusieurs façons d’appliquer cette idée à notre jeu TronZZ, notamment en utilisant les actions, les récompenses et les trajectoires des agents. Cette réflexion a permis de préparer les premières idées pour intégrer l’apprentissage par renforcement dans le projet.
 
 
-![Schéma REINFORCE](image/lundi.png.jpeg)
-   
-
-  #### Issam
-
-  ### Mardi 23 juin
-  On a fini l'écriture du code du REINFORCE, on a corrigé des erreurs de compilation et on a lancé le trainage dans le soir.
-
-
-  #### Nabil
-  J'ai intégré le principe de l’effet néon dans l’interface graphique du jeu afin de donner un style plus proche de l’univers Tron. J'ai également ajouté un écran d’entrée permettant de démarrer la partie avec la touche **Espace** ou **Entrée**. Enfin, J'ai mis en place un écran de fin qui affiche le résultat de la partie avec un message **WIN** ou **LOSE**.J'ai également amélioré l’affichage des cellules pleines en ajoutant deux couches de lueur autour de chaque cellule ainsi qu’un point blanc au centre.
-![Schéma REINFORCE](image/Présentation_sans_titre.png)
-
-![Schéma REINFORCE](image/mardi.jpeg)
-  
-
-  ### Mecredi 25 juin
-
-
-
-Problème de parallélisme sur la fonction “rand” : résolu en créant une version utilisant une graine locale pour chaque thread  ; 
 
  
