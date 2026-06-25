@@ -57,8 +57,6 @@
         *   *Résolution de Stack Overflow :* Migration de la structure d'historique de frames (`EpisodeMemoire`) d'une allocation sur la pile (4 Mo, causant des plantages mémoire) vers une allocation dynamique sur le tas (`calloc`).
         *   *Correction d'accès hors-limites :* Sécurisation des accès mémoires de frame (indices négatifs en cas de mort précoce du joueur).
         *   *Intégration d'outils d'analyse dynamique :* Validation avec les compilateurs de Sanitizers (ASan, UBSan) et profilage sous Valgrind garantissant un moteur robuste à fuite mémoire nulle.
-*   **Rendu visuel :**
-    ![Courbe finale de moyenne dynamique m - Convergence](file:///home/issam/Bureau/projet_bis_noupload/python&analyse/learning_curves_m.png)
 
 
 
@@ -90,9 +88,7 @@
 
 
 
-
-  ### Lundi 22 juin
-  Tous le groupe a compris le principe du REINFORCE et on a commencé de l'implémenter. 
+ 
   #### Nabil 
   J'ai commencé par comprendre le principe général de l’apprentissage automatique, en particulier l’idée qu’un agent   peut améliorer son comportement à partir de ses expériences.J'ai ensuite réfléchi à plusieurs façons d’appliquer cette idée à notre jeu TronZZ, notamment en utilisant les actions, les récompenses et les trajectoires des agents. Cette réflexion a permis de préparer les premières idées pour intégrer l’apprentissage par renforcement dans le projet.
 
