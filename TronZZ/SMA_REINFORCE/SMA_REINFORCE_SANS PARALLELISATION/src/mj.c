@@ -233,8 +233,9 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
             Perception perception;
             calculer_perception(grille, x, y, dir_motos[i], i,&perception);
             
-            /* correction gahui : ici on pointe vers [taille] (la case vide). pas de -1 sinon crash memoire des la frame 0 ! */
-            int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
+            /* securite anti-depassement : ne pas enregistrer si la memoire est pleine */
+            FrameMemoire *frame_ptr = (memoires[i].taille < MAX_FRAMES_EPISODE) ? &memoires[i].frames[memoires[i].taille] : NULL;
+            int action = choisir_action(perception, frame_ptr); 
             
             if (action == ACTION_LEFT) {
                 dir_motos[i] = (dir_motos[i] + 3) % 4; /* rotation -90 degres */
@@ -242,7 +243,9 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
                 dir_motos[i] = (dir_motos[i] + 1) % 4; /* rotation +90 degres */
             }
 
-            memoires[i].taille++; /* l'enregistrement est termine, on deplace le pointeur de taille */
+            if (memoires[i].taille < MAX_FRAMES_EPISODE) {
+                memoires[i].taille++; /* l'enregistrement est termine, on deplace le pointeur de taille */
+            }
         }
         /* le joueur (i == 1) ignore ce bloc. sa direction est geree par clavier. */
 
@@ -262,14 +265,18 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
                 continue;
             }
             
-            /* correction gahui : on utilise taille - 1 pour modifier la frame qu'on a valide juste au dessus */
-            modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille - 1]);
+            /* securite : modifier uniquement si c'est un agent IA et si la taille est > 0 */
+            if (i >= CELL_AI_1 && memoires[i].taille > 0) {
+                modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille - 1]);
+            }
            
         } else {
             etats_vie[i] = false; /* la moto meurt */
             
-            /* correction gahui : on utilise taille - 1 ici aussi */
-            modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille - 1]); 
+            /* securite : modifier uniquement si c'est un agent IA et si la taille est > 0 */
+            if (i >= CELL_AI_1 && memoires[i].taille > 0) {
+                modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille - 1]); 
+            }
             
             int cause  = cause_mort( grille ,nx, ny) ;
             if (cause == CELL_EMPTY){ //si le moto est mort par le mur, il ne dépend pas de récompense
@@ -280,8 +287,10 @@ void mettre_a_jour_monde(int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1]
                 continue ;
             }
             
-            /* correction gahui : on utilise taille - 1 */
-            modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille - 1] ) ;
+            /* securite : modifier uniquement si c'est un agent IA et si la taille est > 0 */
+            if (i >= CELL_AI_1 && memoires[i].taille > 0) {
+                modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille - 1] ) ;
+            }
             /* l'ia recoit une grande recompense pour tuer son adversaire */
             nettoyer_trainee(grille, i);
         }
@@ -300,8 +309,9 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[M
         Perception perception;
         calculer_perception(grille, x, y, dir_motos[i], i,&perception);
         
-        /* correction gahui : pointage sur la nouvelle case [taille] */
-        int action = choisir_action(perception, &memoires[i].frames[memoires[i].taille]); 
+        /* securite anti-depassement */
+        FrameMemoire *frame_ptr = (memoires[i].taille < MAX_FRAMES_EPISODE) ? &memoires[i].frames[memoires[i].taille] : NULL;
+        int action = choisir_action(perception, frame_ptr); 
             
         if (action == ACTION_LEFT) {
             dir_motos[i] = (dir_motos[i] + 3) % 4; /* rotation -90 degres */
@@ -309,7 +319,9 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[M
             dir_motos[i] = (dir_motos[i] + 1) % 4; /* rotation +90 degres */
         }
 
-        memoires[i].taille++; /* validation */
+        if (memoires[i].taille < MAX_FRAMES_EPISODE) {
+            memoires[i].taille++; /* validation */
+        }
         
         /* --- deplacement commun (agents) --- */
         int dx, dy;
@@ -327,22 +339,25 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT], int pos_motos[M
                 continue;
             }
             
-            /* correction gahui : index de modification a taille - 1 */
-            modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille - 1]);
+            if (memoires[i].taille > 0) {
+                modifier_recompense(1.0f, &memoires[i].frames[memoires[i].taille - 1]);
+            }
         } 
         else {
             etats_vie[i] = false; /* la moto meurt */
             
-            /* correction gahui : index de modification a taille - 1 */
-            modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille - 1]); 
+            if (memoires[i].taille > 0) {
+                modifier_recompense(-100.0f, &memoires[i].frames[memoires[i].taille - 1]); 
+            }
             
             int cause  = cause_mort( grille ,nx, ny) ;
             if (cause == CELL_EMPTY){ /* morte par le mur */
                 continue ;
             }
             
-            /* correction gahui : index de modification a taille - 1 */
-            modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille - 1] ) ;
+            if (memoires[i].taille > 0) {
+                modifier_recompense(50.0f, &memoires[i].frames[memoires[i].taille - 1] ) ;
+            }
             /* l'ia recoit une recompense pour tuer l'adversaire */
             nettoyer_trainee(grille, i);
         }

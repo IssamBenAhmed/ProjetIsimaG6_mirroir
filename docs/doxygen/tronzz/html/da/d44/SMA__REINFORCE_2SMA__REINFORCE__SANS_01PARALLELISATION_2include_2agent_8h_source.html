@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement:  Fichier source de TronZZ/SMA_REINFORCE/SMA_REINFORCE_SANS PARALLELISATION/include/agent.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(1); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_source.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">agent.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#ifndef AGENT_H</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#define AGENT_H</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;<a class="code" href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h.html">config.h</a>&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a352b61e001b6682cfe745eb5cde2bec3">   14</a></span><span class="preprocessor">#define MAX_FRAMES_EPISODE 10000</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="../../d3/d8e/structFrameMemoire.html">   20</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d3/d8e/structFrameMemoire.html#a0e621f411ec2465910fb152e6d99ef24">   21</a></span>    <span class="keywordtype">float</span> phi[15];          </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="../../d3/d8e/structFrameMemoire.html#abb8442583171df6dcdaebc6d292c1b63">   22</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d3/d8e/structFrameMemoire.html#abb8442583171df6dcdaebc6d292c1b63">action</a>;             </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="../../d3/d8e/structFrameMemoire.html#a579c1d498f69fd16ca0830acb0ca6270">   23</a></span>    <span class="keywordtype">float</span> probabilites[3];  </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="../../d3/d8e/structFrameMemoire.html#a2eedb116e935255fc475c17aaa33fd38">   24</a></span>    <span class="keywordtype">float</span> <a class="code hl_variable" href="../../d3/d8e/structFrameMemoire.html#a2eedb116e935255fc475c17aaa33fd38">recompense</a>;       </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>} <a class="code hl_struct" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a>;</div>
+</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="../../d6/d4f/structEpisodeMemoire.html">   31</a></span><span class="keyword">typedef</span> <span class="keyword">struct </span>{</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="../../d6/d4f/structEpisodeMemoire.html#a1276861871c8e0df5b4c69668095d22d">   32</a></span>    <a class="code hl_struct" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> frames[<a class="code hl_define" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a352b61e001b6682cfe745eb5cde2bec3">MAX_FRAMES_EPISODE</a>]; </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="../../d6/d4f/structEpisodeMemoire.html#a18924e0bf6b49ada1895850bf1e05d10">   33</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d6/d4f/structEpisodeMemoire.html#a18924e0bf6b49ada1895850bf1e05d10">taille</a>;                              </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>} <a class="code hl_struct" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a>;</div>
+</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#aaef1cafdeb174aaaa9d323eba0aa6f5b">generer_phi</a>(<a class="code hl_struct" href="../../d5/d57/structPerception.html">Perception</a> p, <span class="keywordtype">float</span> phi[15]);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a07c0dbcd873400e60e183ddad2fb864a">init_theta</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a0bc2cfbb330275a6026d7551bccf0718">sauvegarder_theta</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#af27232a9b660921713c732a42f6fce12">charger_theta</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keywordtype">float</span> <a class="code hl_function" href="../../d6/d8a/SMA__NO__REINFORCE_2include_2agent_8h.html#a6b4219e00e6d6f9da316ea961c657e04">random_float</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keywordtype">int</span> <a class="code hl_function" href="../../d6/d8a/SMA__NO__REINFORCE_2include_2agent_8h.html#a80c8478dfdc4ea46641866056954b1e0">choisir_action</a>(<a class="code hl_struct" href="../../d5/d57/structPerception.html">Perception</a> p, <a class="code hl_struct" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> *mem_frame);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keywordtype">float</span> <a class="code hl_function" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a524603891c9a4d973574ef677ef69468">maj_theta</a>(<a class="code hl_struct" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a> *ep, <span class="keywordtype">float</span> alpha, <span class="keywordtype">float</span> gamma);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aSMA__NO__REINFORCE_2include_2agent_8h_html_a6b4219e00e6d6f9da316ea961c657e04"><div class="ttname"><a href="../../d6/d8a/SMA__NO__REINFORCE_2include_2agent_8h.html#a6b4219e00e6d6f9da316ea961c657e04">random_float</a></div><div class="ttdeci">float random_float(void)</div><div class="ttdef"><b>Definition</b> agent.c:6</div></div>
+<div class="ttc" id="aSMA__NO__REINFORCE_2include_2agent_8h_html_a80c8478dfdc4ea46641866056954b1e0"><div class="ttname"><a href="../../d6/d8a/SMA__NO__REINFORCE_2include_2agent_8h.html#a80c8478dfdc4ea46641866056954b1e0">choisir_action</a></div><div class="ttdeci">int choisir_action(float perception[PERCEPTION_SIZE])</div><div class="ttdef"><b>Definition</b> agent.c:8</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_a07c0dbcd873400e60e183ddad2fb864a"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a07c0dbcd873400e60e183ddad2fb864a">init_theta</a></div><div class="ttdeci">void init_theta(void)</div><div class="ttdoc">Initialise la matrice de poids theta avec de petites valeurs aleatoires et asymetriques.</div><div class="ttdef"><b>Definition</b> agent.c:44</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_a0bc2cfbb330275a6026d7551bccf0718"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a0bc2cfbb330275a6026d7551bccf0718">sauvegarder_theta</a></div><div class="ttdeci">void sauvegarder_theta(const char *filename)</div><div class="ttdoc">Sauvegarde la matrice theta courante sur le disque dur.</div><div class="ttdef"><b>Definition</b> agent.c:53</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_a352b61e001b6682cfe745eb5cde2bec3"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a352b61e001b6682cfe745eb5cde2bec3">MAX_FRAMES_EPISODE</a></div><div class="ttdeci">#define MAX_FRAMES_EPISODE</div><div class="ttdoc">Taille fixe de l'historique d'un episode pour l'apprentissage REINFORCE.</div><div class="ttdef"><b>Definition</b> agent.h:14</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_a524603891c9a4d973574ef677ef69468"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a524603891c9a4d973574ef677ef69468">maj_theta</a></div><div class="ttdeci">float maj_theta(EpisodeMemoire *ep, float alpha, float gamma)</div><div class="ttdoc">Applique la descente de gradient de politique (REINFORCE) a la fin d'un episode.</div><div class="ttdef"><b>Definition</b> agent.c:139</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_aaef1cafdeb174aaaa9d323eba0aa6f5b"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#aaef1cafdeb174aaaa9d323eba0aa6f5b">generer_phi</a></div><div class="ttdeci">void generer_phi(Perception p, float phi[15])</div><div class="ttdoc">Traduit la structure logique de perception en un vecteur mathematique abstrait phi.</div><div class="ttdef"><b>Definition</b> agent.c:22</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_html_af27232a9b660921713c732a42f6fce12"><div class="ttname"><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#af27232a9b660921713c732a42f6fce12">charger_theta</a></div><div class="ttdeci">void charger_theta(const char *filename)</div><div class="ttdoc">Charge la matrice theta depuis le disque, ou l'initialise si absente.</div><div class="ttdef"><b>Definition</b> agent.c:62</div></div>
+<div class="ttc" id="aSMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h_html"><div class="ttname"><a href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h.html">config.h</a></div><div class="ttdoc">Constantes de configuration globale, reglages et structures de perception pour TronZZ.</div></div>
+<div class="ttc" id="astructEpisodeMemoire_html"><div class="ttname"><a href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a></div><div class="ttdoc">Historique complet d'un episode utilise pour la propagation arriere du gradient.</div><div class="ttdef"><b>Definition</b> agent.h:31</div></div>
+<div class="ttc" id="astructEpisodeMemoire_html_a18924e0bf6b49ada1895850bf1e05d10"><div class="ttname"><a href="../../d6/d4f/structEpisodeMemoire.html#a18924e0bf6b49ada1895850bf1e05d10">EpisodeMemoire::taille</a></div><div class="ttdeci">int taille</div><div class="ttdef"><b>Definition</b> agent.h:33</div></div>
+<div class="ttc" id="astructFrameMemoire_html"><div class="ttname"><a href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a></div><div class="ttdoc">Representation de l'historique d'une etape (frame) de jeu.</div><div class="ttdef"><b>Definition</b> agent.h:20</div></div>
+<div class="ttc" id="astructFrameMemoire_html_a2eedb116e935255fc475c17aaa33fd38"><div class="ttname"><a href="../../d3/d8e/structFrameMemoire.html#a2eedb116e935255fc475c17aaa33fd38">FrameMemoire::recompense</a></div><div class="ttdeci">float recompense</div><div class="ttdef"><b>Definition</b> agent.h:24</div></div>
+<div class="ttc" id="astructFrameMemoire_html_abb8442583171df6dcdaebc6d292c1b63"><div class="ttname"><a href="../../d3/d8e/structFrameMemoire.html#abb8442583171df6dcdaebc6d292c1b63">FrameMemoire::action</a></div><div class="ttdeci">int action</div><div class="ttdef"><b>Definition</b> agent.h:22</div></div>
+<div class="ttc" id="astructPerception_html"><div class="ttname"><a href="../../d5/d57/structPerception.html">Perception</a></div><div class="ttdoc">Structure de donnees regroupant les perceptions directionnelles et floues.</div><div class="ttdef"><b>Definition</b> config.h:98</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_a357ef18bcbeaa7064e8857fcf3698ce.html">TronZZ</a></li><li class="navelem"><a class="el" href="../../dir_a9e535612e7dd3fa8a33298d8ddfdaf1.html">SMA_REINFORCE</a></li><li class="navelem"><a class="el" href="../../dir_9b00e37618787c4f60b62a12a7cd4598.html">SMA_REINFORCE_SANS PARALLELISATION</a></li><li class="navelem"><a class="el" href="../../dir_b0649085caa73865cd9441879853331d.html">include</a></li><li class="navelem"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html">agent.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

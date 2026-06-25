@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement: Référence du fichier TronZZ/SMA_REINFORCE/SMA_REINFORCE_SANS PARALLELISATION/src/main.c</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('d0/dbc/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier main.c</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+<code>#include &lt;time.h&gt;</code><br />
+<code>#include &lt;SDL2/SDL.h&gt;</code><br />
+<code>#include &lt;SDL2/SDL_image.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h_source.html">../include/config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../df/dbf/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2graphisme_8h_source.html">../include/graphisme.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../d8/d08/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2mj_8h_source.html">../include/mj.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_source.html">../include/agent.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de main.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/d0f/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c__incl.png" border="0" usemap="#aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c" alt=""/></div>
+<map name="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c" id="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c">
+<area shape="rect" title=" " alt="" coords="357,5,657,60"/>
+<area shape="rect" title=" " alt="" coords="379,181,445,207"/>
+<area shape="poly" title=" " alt="" coords="478,62,458,84,440,109,427,139,419,168,414,167,422,137,435,107,453,81,474,58"/>
+<area shape="rect" title=" " alt="" coords="614,181,685,207"/>
+<area shape="poly" title=" " alt="" coords="534,58,578,106,632,169,628,172,574,110,530,62"/>
+<area shape="rect" title=" " alt="" coords="176,181,259,207"/>
+<area shape="poly" title=" " alt="" coords="460,63,251,177,249,172,458,58"/>
+<area shape="rect" title=" " alt="" coords="709,181,779,207"/>
+<area shape="poly" title=" " alt="" coords="547,58,717,171,714,176,544,62"/>
+<area shape="rect" title=" " alt="" coords="855,108,919,133"/>
+<area shape="poly" title=" " alt="" coords="623,57,842,107,841,112,622,63"/>
+<area shape="rect" title=" " alt="" coords="5,181,101,207"/>
+<area shape="poly" title=" " alt="" coords="357,48,277,57,199,71,132,88,107,99,88,110,77,122,69,137,59,168,54,167,64,135,73,119,85,106,105,94,131,83,198,65,276,52,356,42"/>
+<area shape="rect" title=" " alt="" coords="943,108,1087,133"/>
+<area shape="poly" title=" " alt="" coords="657,57,934,103,933,108,656,62"/>
+<area shape="rect" href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h.html" title="Constantes de configuration globale, reglages et structures de perception pour TronZZ." alt="" coords="379,255,515,280"/>
+<area shape="poly" title=" " alt="" coords="628,58,705,82,741,98,771,115,795,135,808,157,809,182,794,208,776,222,751,234,683,251,604,261,529,266,528,261,603,256,682,246,749,229,774,218,790,205,803,181,803,159,791,139,768,120,738,103,703,87,626,63"/>
+<area shape="rect" href="../../df/dbf/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2graphisme_8h.html" title="Gestion de l&#39;affichage graphique 2D (SDL2) pour le jeu TronZZ." alt="" coords="99,108,266,133"/>
+<area shape="poly" title=" " alt="" coords="408,63,240,107,238,102,407,57"/>
+<area shape="rect" href="../../d8/d08/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2mj_8h.html" title="En&#45;tete du Maitre du Jeu (MJ) &#45; regles de deplacement, calcul de perception et collisions." alt="" coords="449,108,564,133"/>
+<area shape="poly" title=" " alt="" coords="509,60,509,94,504,94,504,60"/>
+<area shape="rect" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html" title="Gestion de l&#39;IA (matrice de poids theta, choix de l&#39;action et apprentissage REINFORCE)." alt="" coords="283,181,354,207"/>
+<area shape="poly" title=" " alt="" coords="477,62,344,174,341,170,474,58"/>
+<area shape="poly" title=" " alt="" coords="191,132,208,168,203,170,186,135"/>
+<area shape="poly" title=" " alt="" coords="163,136,88,177,86,172,161,131"/>
+<area shape="poly" title=" " alt="" coords="177,135,161,170,159,188,166,205,178,215,196,224,247,240,306,250,365,257,365,263,305,256,245,245,194,229,175,220,162,208,154,189,156,168,172,133"/>
+<area shape="poly" title=" " alt="" coords="493,135,440,175,437,171,490,131"/>
+<area shape="poly" title=" " alt="" coords="531,131,615,173,613,177,528,136"/>
+<area shape="poly" title=" " alt="" coords="461,136,273,182,272,177,460,131"/>
+<area shape="poly" title=" " alt="" coords="546,131,696,176,694,181,544,136"/>
+<area shape="poly" title=" " alt="" coords="522,132,537,147,550,166,557,187,553,208,530,234,500,251,497,247,526,230,548,205,552,187,545,168,533,150,519,136"/>
+<area shape="rect" title=" " alt="" coords="470,181,538,207"/>
+<area shape="poly" title=" " alt="" coords="509,134,508,168,502,168,504,134"/>
+<area shape="poly" title=" " alt="" coords="477,136,363,179,361,174,476,131"/>
+<area shape="poly" title=" " alt="" coords="341,204,415,245,412,250,338,209"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97" id="r_a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/dbc/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
+<tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a0ddf1224851353fc92bfbff6f499fa97" name="a0ddf1224851353fc92bfbff6f499fa97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ddf1224851353fc92bfbff6f499fa97">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>argc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>argv</em>[]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_a357ef18bcbeaa7064e8857fcf3698ce.html">TronZZ</a></li><li class="navelem"><a class="el" href="../../dir_a9e535612e7dd3fa8a33298d8ddfdaf1.html">SMA_REINFORCE</a></li><li class="navelem"><a class="el" href="../../dir_9b00e37618787c4f60b62a12a7cd4598.html">SMA_REINFORCE_SANS PARALLELISATION</a></li><li class="navelem"><a class="el" href="../../dir_4916ac6f0f3cd3dd6379f3c935e99edb.html">src</a></li><li class="navelem"><a class="el" href="../../d0/dbc/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c.html">main.c</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

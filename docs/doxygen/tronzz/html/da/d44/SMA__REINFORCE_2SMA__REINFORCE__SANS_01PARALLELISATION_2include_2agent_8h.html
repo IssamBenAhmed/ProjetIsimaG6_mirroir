@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement: Référence du fichier TronZZ/SMA_REINFORCE/SMA_REINFORCE_SANS PARALLELISATION/include/agent.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier agent.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Gestion de l'IA (matrice de poids theta, choix de l'action et apprentissage REINFORCE).  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h_source.html">config.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de agent.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d5/dcc/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h__incl.png" border="0" usemap="#aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h" alt=""/></div>
+<map name="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h" id="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h">
+<area shape="rect" title="Gestion de l&#39;IA (matrice de poids theta, choix de l&#39;action et apprentissage REINFORCE)." alt="" coords="5,5,305,60"/>
+<area shape="rect" href="../../d2/d03/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2config_8h.html" title="Constantes de configuration globale, reglages et structures de perception pour TronZZ." alt="" coords="119,108,192,133"/>
+<area shape="poly" title=" " alt="" coords="158,60,158,94,153,94,153,60"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier :</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d2/d11/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h__dep__incl.png" border="0" usemap="#aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8hdep" alt=""/></div>
+<map name="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8hdep" id="aTronZZ_2SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8hdep">
+<area shape="rect" title="Gestion de l&#39;IA (matrice de poids theta, choix de l&#39;action et apprentissage REINFORCE)." alt="" coords="261,5,561,60"/>
+<area shape="rect" href="../../d8/d08/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2mj_8h.html" title="En&#45;tete du Maitre du Jeu (MJ) &#45; regles de deplacement, calcul de perception et collisions." alt="" coords="168,108,468,163"/>
+<area shape="poly" title=" " alt="" coords="379,72,344,110,340,106,375,69"/>
+<area shape="rect" href="../../d0/dbc/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2main_8c.html" title=" " alt="" coords="5,211,305,265"/>
+<area shape="poly" title=" " alt="" coords="254,66,194,86,172,97,157,110,146,133,143,160,145,186,150,210,144,211,139,187,137,160,141,132,153,106,169,93,192,81,253,61"/>
+<area shape="rect" href="../../db/db3/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2mj_8c.html" title=" " alt="" coords="343,211,643,265"/>
+<area shape="poly" title=" " alt="" coords="456,68,471,86,483,107,492,133,497,161,498,210,492,210,491,162,487,135,478,109,467,89,452,72"/>
+<area shape="rect" href="../../d9/dff/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2src_2agent_8c.html" title=" " alt="" coords="544,108,844,163"/>
+<area shape="poly" title=" " alt="" coords="499,62,621,105,619,110,497,67"/>
+<area shape="poly" title=" " alt="" coords="265,172,199,213,197,208,263,168"/>
+<area shape="poly" title=" " alt="" coords="377,167,448,208,446,213,374,172"/>
+</map>
+</div>
+</div>
+<p><a href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Representation de l'historique d'une etape (frame) de jeu.  <a href="../../d3/d8e/structFrameMemoire.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Historique complet d'un episode utilise pour la propagation arriere du gradient.  <a href="../../d6/d4f/structEpisodeMemoire.html#details">Plus de détails...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a352b61e001b6682cfe745eb5cde2bec3" id="r_a352b61e001b6682cfe745eb5cde2bec3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a352b61e001b6682cfe745eb5cde2bec3">MAX_FRAMES_EPISODE</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="memdesc:a352b61e001b6682cfe745eb5cde2bec3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Taille fixe de l'historique d'un episode pour l'apprentissage REINFORCE.  <br /></td></tr>
+<tr class="separator:a352b61e001b6682cfe745eb5cde2bec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:aaef1cafdeb174aaaa9d323eba0aa6f5b" id="r_aaef1cafdeb174aaaa9d323eba0aa6f5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#aaef1cafdeb174aaaa9d323eba0aa6f5b">generer_phi</a> (<a class="el" href="../../d5/d57/structPerception.html">Perception</a> p, float phi[15])</td></tr>
+<tr class="memdesc:aaef1cafdeb174aaaa9d323eba0aa6f5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traduit la structure logique de perception en un vecteur mathematique abstrait phi.  <br /></td></tr>
+<tr class="separator:aaef1cafdeb174aaaa9d323eba0aa6f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c0dbcd873400e60e183ddad2fb864a" id="r_a07c0dbcd873400e60e183ddad2fb864a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a07c0dbcd873400e60e183ddad2fb864a">init_theta</a> (void)</td></tr>
+<tr class="memdesc:a07c0dbcd873400e60e183ddad2fb864a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialise la matrice de poids theta avec de petites valeurs aleatoires et asymetriques.  <br /></td></tr>
+<tr class="separator:a07c0dbcd873400e60e183ddad2fb864a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bc2cfbb330275a6026d7551bccf0718" id="r_a0bc2cfbb330275a6026d7551bccf0718"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a0bc2cfbb330275a6026d7551bccf0718">sauvegarder_theta</a> (const char *filename)</td></tr>
+<tr class="memdesc:a0bc2cfbb330275a6026d7551bccf0718"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sauvegarde la matrice theta courante sur le disque dur.  <br /></td></tr>
+<tr class="separator:a0bc2cfbb330275a6026d7551bccf0718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af27232a9b660921713c732a42f6fce12" id="r_af27232a9b660921713c732a42f6fce12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#af27232a9b660921713c732a42f6fce12">charger_theta</a> (const char *filename)</td></tr>
+<tr class="memdesc:af27232a9b660921713c732a42f6fce12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Charge la matrice theta depuis le disque, ou l'initialise si absente.  <br /></td></tr>
+<tr class="separator:af27232a9b660921713c732a42f6fce12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b4219e00e6d6f9da316ea961c657e04" id="r_a6b4219e00e6d6f9da316ea961c657e04"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a6b4219e00e6d6f9da316ea961c657e04">random_float</a> (void)</td></tr>
+<tr class="memdesc:a6b4219e00e6d6f9da316ea961c657e04"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generateur de nombre pseudo-aleatoire uniforme dans [0.0, 1.0].  <br /></td></tr>
+<tr class="separator:a6b4219e00e6d6f9da316ea961c657e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ccefca9a9467f97460b906aba973389" id="r_a1ccefca9a9467f97460b906aba973389"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a1ccefca9a9467f97460b906aba973389">choisir_action</a> (<a class="el" href="../../d5/d57/structPerception.html">Perception</a> p, <a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> *mem_frame)</td></tr>
+<tr class="memdesc:a1ccefca9a9467f97460b906aba973389"><td class="mdescLeft">&#160;</td><td class="mdescRight">Choisit une action par tirage stochastique biaise apres calcul du Softmax et memorise l'etat.  <br /></td></tr>
+<tr class="separator:a1ccefca9a9467f97460b906aba973389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524603891c9a4d973574ef677ef69468" id="r_a524603891c9a4d973574ef677ef69468"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html#a524603891c9a4d973574ef677ef69468">maj_theta</a> (<a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a> *ep, float alpha, float gamma)</td></tr>
+<tr class="memdesc:a524603891c9a4d973574ef677ef69468"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applique la descente de gradient de politique (REINFORCE) a la fin d'un episode.  <br /></td></tr>
+<tr class="separator:a524603891c9a4d973574ef677ef69468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Gestion de l'IA (matrice de poids theta, choix de l'action et apprentissage REINFORCE). </p>
+</div><h2 class="groupheader">Documentation des macros</h2>
+<a id="a352b61e001b6682cfe745eb5cde2bec3" name="a352b61e001b6682cfe745eb5cde2bec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a352b61e001b6682cfe745eb5cde2bec3">&#9670;&#160;</a></span>MAX_FRAMES_EPISODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_FRAMES_EPISODE&#160;&#160;&#160;10000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Taille fixe de l'historique d'un episode pour l'apprentissage REINFORCE. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="af27232a9b660921713c732a42f6fce12" name="af27232a9b660921713c732a42f6fce12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af27232a9b660921713c732a42f6fce12">&#9670;&#160;</a></span>charger_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void charger_theta </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Charge la matrice theta depuis le disque, ou l'initialise si absente. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Chemin vers le fichier de sauvegarde binaire. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a1ccefca9a9467f97460b906aba973389" name="a1ccefca9a9467f97460b906aba973389"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ccefca9a9467f97460b906aba973389">&#9670;&#160;</a></span>choisir_action()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int choisir_action </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d5/d57/structPerception.html">Perception</a>&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> *&#160;</td>
+          <td class="paramname"><em>mem_frame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Choisit une action par tirage stochastique biaise apres calcul du Softmax et memorise l'etat. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>La perception courante de l'agent. </td></tr>
+    <tr><td class="paramname">mem_frame</td><td>Pointeur vers la frame a remplir dans l'historique (NULL si aucun enregistrement). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>L'action choisie (ACTION_FORWARD, ACTION_LEFT, ACTION_RIGHT). </dd></dl>
+
+</div>
+</div>
+<a id="aaef1cafdeb174aaaa9d323eba0aa6f5b" name="aaef1cafdeb174aaaa9d323eba0aa6f5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaef1cafdeb174aaaa9d323eba0aa6f5b">&#9670;&#160;</a></span>generer_phi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void generer_phi </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d5/d57/structPerception.html">Perception</a>&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>phi</em>[15]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Traduit la structure logique de perception en un vecteur mathematique abstrait phi. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">p</td><td>La structure de perception fournie par le MJ. </td></tr>
+    <tr><td class="paramname">phi</td><td>Le vecteur flottant de sortie a remplir. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a07c0dbcd873400e60e183ddad2fb864a" name="a07c0dbcd873400e60e183ddad2fb864a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c0dbcd873400e60e183ddad2fb864a">&#9670;&#160;</a></span>init_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_theta </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialise la matrice de poids theta avec de petites valeurs aleatoires et asymetriques. </p>
+
+</div>
+</div>
+<a id="a524603891c9a4d973574ef677ef69468" name="a524603891c9a4d973574ef677ef69468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a524603891c9a4d973574ef677ef69468">&#9670;&#160;</a></span>maj_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float maj_theta </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a> *&#160;</td>
+          <td class="paramname"><em>ep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Applique la descente de gradient de politique (REINFORCE) a la fin d'un episode. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ep</td><td>Pointeur vers l'episode complet. </td></tr>
+    <tr><td class="paramname">alpha</td><td>Le taux d'apprentissage (learning rate). </td></tr>
+    <tr><td class="paramname">gamma</td><td>Le facteur d'attenuation temporelle. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Renvoie</dt><dd>Le score total G_0 de l'episode pour le suivi statistique. </dd></dl>
+
+</div>
+</div>
+<a id="a6b4219e00e6d6f9da316ea961c657e04" name="a6b4219e00e6d6f9da316ea961c657e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b4219e00e6d6f9da316ea961c657e04">&#9670;&#160;</a></span>random_float()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float random_float </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generateur de nombre pseudo-aleatoire uniforme dans [0.0, 1.0]. </p>
+<dl class="section return"><dt>Renvoie</dt><dd>Un flottant pseudo-aleatoire uniforme. </dd></dl>
+
+</div>
+</div>
+<a id="a0bc2cfbb330275a6026d7551bccf0718" name="a0bc2cfbb330275a6026d7551bccf0718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bc2cfbb330275a6026d7551bccf0718">&#9670;&#160;</a></span>sauvegarder_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sauvegarder_theta </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sauvegarde la matrice theta courante sur le disque dur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">filename</td><td>Chemin vers le fichier binaire de destination. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_a357ef18bcbeaa7064e8857fcf3698ce.html">TronZZ</a></li><li class="navelem"><a class="el" href="../../dir_a9e535612e7dd3fa8a33298d8ddfdaf1.html">SMA_REINFORCE</a></li><li class="navelem"><a class="el" href="../../dir_9b00e37618787c4f60b62a12a7cd4598.html">SMA_REINFORCE_SANS PARALLELISATION</a></li><li class="navelem"><a class="el" href="../../dir_b0649085caa73865cd9441879853331d.html">include</a></li><li class="navelem"><a class="el" href="../../da/d44/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2agent_8h.html">agent.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

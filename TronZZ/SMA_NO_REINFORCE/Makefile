@@ -5,8 +5,8 @@ SRC := src/main.c \
        src/mj.c \
        src/graphisme.c
 OBJ := $(SRC:.c=.o)
-CFLAGS := -Wall -Wextra -Werror -std=c11 -Iinclude $(shell pkg-config --cflags sdl2)
-LDLIBS := $(shell pkg-config --libs sdl2) -lm
+CFLAGS := -Wall -Wextra -Werror -g -std=c11 -Iinclude -fsanitize=address -fsanitize=undefined $(shell pkg-config --cflags sdl2)
+LDLIBS := -fsanitize=address -fsanitize=undefined $(shell pkg-config --libs sdl2) -lm
 
 .PHONY: all clean fclean re run
 

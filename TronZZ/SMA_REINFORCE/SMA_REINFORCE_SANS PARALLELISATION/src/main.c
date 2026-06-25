@@ -47,7 +47,11 @@ int main(int argc, char *argv[])
      * episodememoire contient un tableau de frames (etats, actions, probabilites).
      * c'est ce tampon qui sera lu a l'envers lors de la mort pour calculer le gradient.
      */
-    EpisodeMemoire memoires[MAX_MOTOS + 1] = {0};
+    EpisodeMemoire *memoires = calloc(MAX_MOTOS + 1, sizeof(EpisodeMemoire));
+    if (memoires == NULL) {
+        perror("erreur allocation memoires");
+        return EXIT_FAILURE;
+    }
 
     /* ===================================================================== *
      * mode joueur (avec sdl et ecrans)                                      *
@@ -62,11 +66,13 @@ int main(int argc, char *argv[])
         /* initialisation du sous-systeme video de la bibliotheque sdl2 */
         if (SDL_Init(SDL_INIT_VIDEO) != 0) {
             fprintf(stderr, "erreur sdl init : %s\n", SDL_GetError());
+            free(memoires);
             return EXIT_FAILURE;
         }
          if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) == 0) {
             fprintf(stderr, "erreur IMG_Init : %s\n", IMG_GetError());
             SDL_Quit();
+            free(memoires);
             return EXIT_FAILURE;
         }
 
@@ -85,6 +91,7 @@ int main(int argc, char *argv[])
         if (window == NULL) {
             fprintf(stderr, "erreur creation fenetre : %s\n", SDL_GetError());
             SDL_Quit();
+            free(memoires);
             return EXIT_FAILURE;
         }
 
@@ -103,6 +110,7 @@ int main(int argc, char *argv[])
             fprintf(stderr, "erreur creation renderer : %s\n", SDL_GetError());
             SDL_DestroyWindow(window);
             SDL_Quit();
+            free(memoires);
             return EXIT_FAILURE;
         }
 
@@ -116,6 +124,7 @@ int main(int argc, char *argv[])
             SDL_DestroyWindow(window);
             IMG_Quit();
             SDL_Quit();
+            free(memoires);
             return EXIT_FAILURE;
         }
         /* * la fonction afficher_ecran_titre bloque l'execution jusqu'a ce que 
@@ -125,6 +134,7 @@ int main(int argc, char *argv[])
             SDL_DestroyRenderer(renderer);
             SDL_DestroyWindow(window);
             SDL_Quit();
+            free(memoires);
             return EXIT_SUCCESS;
         }
         /* * srand initialise la graine (seed) du generateur de nombres pseudo-aleatoires.
@@ -227,6 +237,7 @@ int main(int argc, char *argv[])
         SDL_DestroyWindow(window);
         SDL_Quit();
 
+        free(memoires);
         return EXIT_SUCCESS;
 
     /* ===================================================================== *
@@ -446,6 +457,7 @@ int main(int argc, char *argv[])
         printf("entrainement termine avec succes.\n");
         sauvegarder_theta(filename_theta);
 
+        free(memoires);
         return EXIT_SUCCESS;
 
     
@@ -453,6 +465,7 @@ int main(int argc, char *argv[])
         /* le programme se referme net si l'argument ne correspond ni a play ni a train */
         fprintf(stderr, "mode inconnu: %s\n", argv[1]);
         fprintf(stderr, "modes: %s, %s\n", ENTRAINEMENT, JOUEUR);
+        free(memoires);
         return EXIT_FAILURE;
     }
 }
