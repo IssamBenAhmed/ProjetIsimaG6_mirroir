@@ -10,8 +10,8 @@ SRC := src/main.c \
 
 OBJ := $(SRC:.c=.o)
 
-CFLAGS := -Wall -Wextra -g -std=c11 -Iinclude $(shell pkg-config --cflags sdl2) -pthread
-LDLIBS := $(shell pkg-config --libs sdl2) -lm -pthread
+CFLAGS := -Wall -Wextra -g -pg -std=c11 -Iinclude $(shell pkg-config --cflags sdl2) -pthread
+LDLIBS := -pg $(shell pkg-config --libs sdl2) -lm -pthread
 
 .PHONY: all clean fclean re run
 
