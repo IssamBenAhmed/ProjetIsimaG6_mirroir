@@ -1,0 +1,380 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement: Référence du fichier TronZZ/include/agent.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('de/d9e/agent_8h.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier agent.h</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &quot;<a class="el" href="../../db/d16/config_8h_source.html">config.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de agent.h:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d23/agent_8h__incl.png" border="0" usemap="#aTronZZ_2include_2agent_8h" alt=""/></div>
+<map name="aTronZZ_2include_2agent_8h" id="aTronZZ_2include_2agent_8h">
+<area shape="rect" title=" " alt="" coords="5,5,176,31"/>
+<area shape="rect" href="../../db/d16/config_8h.html" title=" " alt="" coords="54,79,127,104"/>
+<area shape="poly" title=" " alt="" coords="93,31,93,65,88,65,88,31"/>
+</map>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier :</div>
+<div class="dyncontent">
+<div class="center"><img src="../../da/dfd/agent_8h__dep__incl.png" border="0" usemap="#aTronZZ_2include_2agent_8hdep" alt=""/></div>
+<map name="aTronZZ_2include_2agent_8hdep" id="aTronZZ_2include_2agent_8hdep">
+<area shape="rect" title=" " alt="" coords="181,5,352,31"/>
+<area shape="rect" href="../../da/dc2/mj_8h.html" title=" " alt="" coords="191,79,342,104"/>
+<area shape="poly" title=" " alt="" coords="269,44,269,79,264,79,264,44"/>
+<area shape="rect" href="../../d0/d29/main_8c.html" title=" " alt="" coords="5,152,144,177"/>
+<area shape="poly" title=" " alt="" coords="236,40,172,81,125,120,88,154,85,150,121,116,169,77,233,35"/>
+<area shape="rect" href="../../d0/d20/mj_8c.html" title=" " alt="" coords="168,152,291,177"/>
+<area shape="poly" title=" " alt="" coords="226,39,201,57,182,80,179,99,187,118,200,135,216,150,212,153,196,139,182,120,174,99,178,78,198,53,223,35"/>
+<area shape="rect" href="../../d5/d7f/tests_8c.html" title="Suite de tests unitaires pour valider les composants critiques de TronZZ." alt="" coords="315,152,466,177"/>
+<area shape="poly" title=" " alt="" coords="305,35,332,53,357,77,379,116,391,151,385,153,374,118,353,80,329,58,302,40"/>
+<area shape="rect" href="../../d6/d2b/agent_8c.html" title=" " alt="" coords="418,79,561,104"/>
+<area shape="poly" title=" " alt="" coords="316,32,454,76,452,81,314,37"/>
+<area shape="poly" title=" " alt="" coords="224,111,107,154,105,149,222,106"/>
+<area shape="poly" title=" " alt="" coords="257,117,238,153,233,151,252,115"/>
+<area shape="poly" title=" " alt="" coords="300,108,372,149,369,154,297,113"/>
+</map>
+</div>
+</div>
+<p><a href="../../de/d9e/agent_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a352b61e001b6682cfe745eb5cde2bec3" id="r_a352b61e001b6682cfe745eb5cde2bec3"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a352b61e001b6682cfe745eb5cde2bec3">MAX_FRAMES_EPISODE</a>&#160;&#160;&#160;10000</td></tr>
+<tr class="separator:a352b61e001b6682cfe745eb5cde2bec3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a6b4219e00e6d6f9da316ea961c657e04" id="r_a6b4219e00e6d6f9da316ea961c657e04"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a6b4219e00e6d6f9da316ea961c657e04">random_float</a> (void)</td></tr>
+<tr class="separator:a6b4219e00e6d6f9da316ea961c657e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaef1cafdeb174aaaa9d323eba0aa6f5b" id="r_aaef1cafdeb174aaaa9d323eba0aa6f5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#aaef1cafdeb174aaaa9d323eba0aa6f5b">generer_phi</a> (<a class="el" href="../../d5/d57/structPerception.html">Perception</a> p, float phi[15])</td></tr>
+<tr class="separator:aaef1cafdeb174aaaa9d323eba0aa6f5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c0dbcd873400e60e183ddad2fb864a" id="r_a07c0dbcd873400e60e183ddad2fb864a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a07c0dbcd873400e60e183ddad2fb864a">init_theta</a> (void)</td></tr>
+<tr class="separator:a07c0dbcd873400e60e183ddad2fb864a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0bc2cfbb330275a6026d7551bccf0718" id="r_a0bc2cfbb330275a6026d7551bccf0718"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a0bc2cfbb330275a6026d7551bccf0718">sauvegarder_theta</a> (const char *filename)</td></tr>
+<tr class="separator:a0bc2cfbb330275a6026d7551bccf0718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af27232a9b660921713c732a42f6fce12" id="r_af27232a9b660921713c732a42f6fce12"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#af27232a9b660921713c732a42f6fce12">charger_theta</a> (const char *filename)</td></tr>
+<tr class="separator:af27232a9b660921713c732a42f6fce12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ccefca9a9467f97460b906aba973389" id="r_a1ccefca9a9467f97460b906aba973389"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a1ccefca9a9467f97460b906aba973389">choisir_action</a> (<a class="el" href="../../d5/d57/structPerception.html">Perception</a> p, <a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> *mem_frame)</td></tr>
+<tr class="separator:a1ccefca9a9467f97460b906aba973389"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524603891c9a4d973574ef677ef69468" id="r_a524603891c9a4d973574ef677ef69468"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a524603891c9a4d973574ef677ef69468">maj_theta</a> (<a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a> *ep, float alpha, float gamma)</td></tr>
+<tr class="separator:a524603891c9a4d973574ef677ef69468"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a5dff53f13903a56b8908bcb265b9a629" id="r_a5dff53f13903a56b8908bcb265b9a629"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/d9e/agent_8h.html#a5dff53f13903a56b8908bcb265b9a629">theta</a> [15][3]</td></tr>
+<tr class="separator:a5dff53f13903a56b8908bcb265b9a629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Documentation des macros</h2>
+<a id="a352b61e001b6682cfe745eb5cde2bec3" name="a352b61e001b6682cfe745eb5cde2bec3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a352b61e001b6682cfe745eb5cde2bec3">&#9670;&#160;</a></span>MAX_FRAMES_EPISODE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define MAX_FRAMES_EPISODE&#160;&#160;&#160;10000</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="af27232a9b660921713c732a42f6fce12" name="af27232a9b660921713c732a42f6fce12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af27232a9b660921713c732a42f6fce12">&#9670;&#160;</a></span>charger_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void charger_theta </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1ccefca9a9467f97460b906aba973389" name="a1ccefca9a9467f97460b906aba973389"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ccefca9a9467f97460b906aba973389">&#9670;&#160;</a></span>choisir_action()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int choisir_action </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d5/d57/structPerception.html">Perception</a>&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="../../d3/d8e/structFrameMemoire.html">FrameMemoire</a> *&#160;</td>
+          <td class="paramname"><em>mem_frame</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aaef1cafdeb174aaaa9d323eba0aa6f5b" name="aaef1cafdeb174aaaa9d323eba0aa6f5b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaef1cafdeb174aaaa9d323eba0aa6f5b">&#9670;&#160;</a></span>generer_phi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void generer_phi </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d5/d57/structPerception.html">Perception</a>&#160;</td>
+          <td class="paramname"><em>p</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>phi</em>[15]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a07c0dbcd873400e60e183ddad2fb864a" name="a07c0dbcd873400e60e183ddad2fb864a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c0dbcd873400e60e183ddad2fb864a">&#9670;&#160;</a></span>init_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void init_theta </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a524603891c9a4d973574ef677ef69468" name="a524603891c9a4d973574ef677ef69468"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a524603891c9a4d973574ef677ef69468">&#9670;&#160;</a></span>maj_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float maj_theta </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d6/d4f/structEpisodeMemoire.html">EpisodeMemoire</a> *&#160;</td>
+          <td class="paramname"><em>ep</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>alpha</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a6b4219e00e6d6f9da316ea961c657e04" name="a6b4219e00e6d6f9da316ea961c657e04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b4219e00e6d6f9da316ea961c657e04">&#9670;&#160;</a></span>random_float()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float random_float </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0bc2cfbb330275a6026d7551bccf0718" name="a0bc2cfbb330275a6026d7551bccf0718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0bc2cfbb330275a6026d7551bccf0718">&#9670;&#160;</a></span>sauvegarder_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sauvegarder_theta </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a id="a5dff53f13903a56b8908bcb265b9a629" name="a5dff53f13903a56b8908bcb265b9a629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dff53f13903a56b8908bcb265b9a629">&#9670;&#160;</a></span>theta</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float theta[15][3]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_a357ef18bcbeaa7064e8857fcf3698ce.html">TronZZ</a></li><li class="navelem"><a class="el" href="../../dir_329defa2eaa4a3b70f670b107c18229e.html">include</a></li><li class="navelem"><a class="el" href="../../de/d9e/agent_8h.html">agent.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

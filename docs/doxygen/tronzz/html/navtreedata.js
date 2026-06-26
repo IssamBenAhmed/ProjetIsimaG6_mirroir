@@ -48,8 +48,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"df/dbf/SMA__REINFORCE_2SMA__REINFORCE__SANS_01PARALLELISATION_2include_2graphisme_8h.html#addb51fc73c6e9054b3928d84afd5d55e"
+"annotated.html"
 ];
 
 var SYNCONMSG = 'cliquez pour désactiver la synchronisation du panel';

@@ -1,0 +1,365 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement: Référence du fichier TronZZ/tests/tests.c</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../resize.js"></script>
+<script type="text/javascript" src="../../navtreedata.js"></script>
+<script type="text/javascript" src="../../navtree.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/searchdata.js"></script>
+<script type="text/javascript" src="../../search/search.js"></script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">TronZZ - Jeu de Tron &amp; Apprentissage par Renforcement
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "../../search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="../../menudata.js"></script>
+<script type="text/javascript" src="../../menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('../../',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('d5/d7f/tests_8c.html','../../'); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Chargement...</div>
+<div class="SRStatus" id="Searching">Recherche...</div>
+<div class="SRStatus" id="NoMatches">Aucune correspondance</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier tests.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Suite de tests unitaires pour valider les composants critiques de TronZZ.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;assert.h&gt;</code><br />
+<code>#include &lt;math.h&gt;</code><br />
+<code>#include &lt;stdbool.h&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &quot;<a class="el" href="../../de/d9e/agent_8h_source.html">agent.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../db/d16/config_8h_source.html">config.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="../../da/dc2/mj_8h_source.html">mj.h</a>&quot;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de tests.c:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d4/d5d/tests_8c__incl.png" border="0" usemap="#aTronZZ_2tests_2tests_8c" alt=""/></div>
+<map name="aTronZZ_2tests_2tests_8c" id="aTronZZ_2tests_2tests_8c">
+<area shape="rect" title="Suite de tests unitaires pour valider les composants critiques de TronZZ." alt="" coords="253,5,403,31"/>
+<area shape="rect" title=" " alt="" coords="5,79,80,104"/>
+<area shape="poly" title=" " alt="" coords="283,33,94,80,93,75,282,28"/>
+<area shape="rect" title=" " alt="" coords="105,79,173,104"/>
+<area shape="poly" title=" " alt="" coords="299,33,183,76,182,71,297,28"/>
+<area shape="rect" title=" " alt="" coords="249,152,332,177"/>
+<area shape="poly" title=" " alt="" coords="297,33,264,52,250,65,238,80,235,96,240,112,251,128,265,142,262,145,247,131,235,115,230,96,234,78,246,61,261,47,294,29"/>
+<area shape="rect" title=" " alt="" coords="248,79,315,104"/>
+<area shape="poly" title=" " alt="" coords="323,32,299,69,294,66,318,30"/>
+<area shape="rect" title=" " alt="" coords="339,79,410,104"/>
+<area shape="poly" title=" " alt="" coords="338,30,362,66,357,69,333,32"/>
+<area shape="rect" href="../../de/d9e/agent_8h.html" title=" " alt="" coords="475,152,546,177"/>
+<area shape="poly" title=" " alt="" coords="404,26,455,43,479,58,499,77,508,91,513,107,516,138,510,138,508,108,503,93,495,80,476,62,453,48,402,31"/>
+<area shape="rect" href="../../db/d16/config_8h.html" title=" " alt="" coords="474,225,547,251"/>
+<area shape="poly" title=" " alt="" coords="404,26,466,43,496,58,523,77,547,99,562,122,567,147,561,178,550,199,536,217,532,213,546,196,556,176,562,148,557,124,542,102,520,81,493,62,464,48,403,31"/>
+<area shape="rect" href="../../da/dc2/mj_8h.html" title=" " alt="" coords="435,79,485,104"/>
+<area shape="poly" title=" " alt="" coords="350,28,428,70,425,74,348,33"/>
+<area shape="poly" title=" " alt="" coords="513,178,513,212,508,212,508,178"/>
+<area shape="poly" title=" " alt="" coords="436,106,331,149,329,144,434,101"/>
+<area shape="poly" title=" " alt="" coords="471,103,497,139,492,142,466,106"/>
+<area shape="poly" title=" " alt="" coords="461,104,460,137,467,176,477,196,491,214,486,217,472,199,461,178,454,138,456,104"/>
+</map>
+</div>
+</div><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a002b2f4894492820fe708b1b7e7c5e70" id="r_a002b2f4894492820fe708b1b7e7c5e70"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a002b2f4894492820fe708b1b7e7c5e70">EPSILON</a>&#160;&#160;&#160;1e-5f</td></tr>
+<tr class="separator:a002b2f4894492820fe708b1b7e7c5e70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a95e6422a10cbfc06b6de63eb51d381ca" id="r_a95e6422a10cbfc06b6de63eb51d381ca"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a95e6422a10cbfc06b6de63eb51d381ca">test_initialiser_grille</a> (void)</td></tr>
+<tr class="memdesc:a95e6422a10cbfc06b6de63eb51d381ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test de l'initialisation de la grille logique.  <br /></td></tr>
+<tr class="separator:a95e6422a10cbfc06b6de63eb51d381ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae55d9589d64a6d37095a3ee3873b278c" id="r_ae55d9589d64a6d37095a3ee3873b278c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#ae55d9589d64a6d37095a3ee3873b278c">test_cause_mort</a> (void)</td></tr>
+<tr class="memdesc:ae55d9589d64a6d37095a3ee3873b278c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test de la fonction cause_mort (détection des collisions hors-grille et obstacles).  <br /></td></tr>
+<tr class="separator:ae55d9589d64a6d37095a3ee3873b278c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d6ae5853eaba1b139ab1a081da90037" id="r_a9d6ae5853eaba1b139ab1a081da90037"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a9d6ae5853eaba1b139ab1a081da90037">test_generer_phi</a> (void)</td></tr>
+<tr class="memdesc:a9d6ae5853eaba1b139ab1a081da90037"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test de l'extraction de caractéristiques (generer_phi).  <br /></td></tr>
+<tr class="separator:a9d6ae5853eaba1b139ab1a081da90037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae001b887d73c929c6ef5893176197264" id="r_ae001b887d73c929c6ef5893176197264"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#ae001b887d73c929c6ef5893176197264">test_choisir_action</a> (void)</td></tr>
+<tr class="memdesc:ae001b887d73c929c6ef5893176197264"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test de la sélection d'actions Softmax stochastique.  <br /></td></tr>
+<tr class="separator:ae001b887d73c929c6ef5893176197264"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4953b041c8f129a70f8a1359fa44bcc1" id="r_a4953b041c8f129a70f8a1359fa44bcc1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a4953b041c8f129a70f8a1359fa44bcc1">test_maj_theta</a> (void)</td></tr>
+<tr class="memdesc:a4953b041c8f129a70f8a1359fa44bcc1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test mathématique de la mise à jour stochastique du gradient (REINFORCE).  <br /></td></tr>
+<tr class="separator:a4953b041c8f129a70f8a1359fa44bcc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86239dc18db538f0d7e832a31cab5ee3" id="r_a86239dc18db538f0d7e832a31cab5ee3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a86239dc18db538f0d7e832a31cab5ee3">test_calculer_perception_rayons</a> (void)</td></tr>
+<tr class="memdesc:a86239dc18db538f0d7e832a31cab5ee3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Test du raycasting géométrique de la perception de l'agent.  <br /></td></tr>
+<tr class="separator:a86239dc18db538f0d7e832a31cab5ee3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a840291bc02cba5474a4cb46a9b9566fe" id="r_a840291bc02cba5474a4cb46a9b9566fe"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a840291bc02cba5474a4cb46a9b9566fe">main</a> (void)</td></tr>
+<tr class="memdesc:a840291bc02cba5474a4cb46a9b9566fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Point d'entrée de la suite de tests unitaires.  <br /></td></tr>
+<tr class="separator:a840291bc02cba5474a4cb46a9b9566fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a5dff53f13903a56b8908bcb265b9a629" id="r_a5dff53f13903a56b8908bcb265b9a629"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d7f/tests_8c.html#a5dff53f13903a56b8908bcb265b9a629">theta</a> [15][3]</td></tr>
+<tr class="separator:a5dff53f13903a56b8908bcb265b9a629"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Suite de tests unitaires pour valider les composants critiques de TronZZ. </p>
+<p>Ce fichier contient les tests unitaires essentiels demandés pour valider le moteur physique, la perception, le calcul de probabilités Softmax et la descente de gradient stochastique (REINFORCE). </p>
+</div><h2 class="groupheader">Documentation des macros</h2>
+<a id="a002b2f4894492820fe708b1b7e7c5e70" name="a002b2f4894492820fe708b1b7e7c5e70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a002b2f4894492820fe708b1b7e7c5e70">&#9670;&#160;</a></span>EPSILON</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define EPSILON&#160;&#160;&#160;1e-5f</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a840291bc02cba5474a4cb46a9b9566fe" name="a840291bc02cba5474a4cb46a9b9566fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a840291bc02cba5474a4cb46a9b9566fe">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Point d'entrée de la suite de tests unitaires. </p>
+
+</div>
+</div>
+<a id="a86239dc18db538f0d7e832a31cab5ee3" name="a86239dc18db538f0d7e832a31cab5ee3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a86239dc18db538f0d7e832a31cab5ee3">&#9670;&#160;</a></span>test_calculer_perception_rayons()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_calculer_perception_rayons </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test du raycasting géométrique de la perception de l'agent. </p>
+
+</div>
+</div>
+<a id="ae55d9589d64a6d37095a3ee3873b278c" name="ae55d9589d64a6d37095a3ee3873b278c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae55d9589d64a6d37095a3ee3873b278c">&#9670;&#160;</a></span>test_cause_mort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_cause_mort </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test de la fonction cause_mort (détection des collisions hors-grille et obstacles). </p>
+
+</div>
+</div>
+<a id="ae001b887d73c929c6ef5893176197264" name="ae001b887d73c929c6ef5893176197264"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae001b887d73c929c6ef5893176197264">&#9670;&#160;</a></span>test_choisir_action()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_choisir_action </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test de la sélection d'actions Softmax stochastique. </p>
+
+</div>
+</div>
+<a id="a9d6ae5853eaba1b139ab1a081da90037" name="a9d6ae5853eaba1b139ab1a081da90037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d6ae5853eaba1b139ab1a081da90037">&#9670;&#160;</a></span>test_generer_phi()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_generer_phi </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test de l'extraction de caractéristiques (generer_phi). </p>
+
+</div>
+</div>
+<a id="a95e6422a10cbfc06b6de63eb51d381ca" name="a95e6422a10cbfc06b6de63eb51d381ca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95e6422a10cbfc06b6de63eb51d381ca">&#9670;&#160;</a></span>test_initialiser_grille()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_initialiser_grille </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test de l'initialisation de la grille logique. </p>
+
+</div>
+</div>
+<a id="a4953b041c8f129a70f8a1359fa44bcc1" name="a4953b041c8f129a70f8a1359fa44bcc1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4953b041c8f129a70f8a1359fa44bcc1">&#9670;&#160;</a></span>test_maj_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void test_maj_theta </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Test mathématique de la mise à jour stochastique du gradient (REINFORCE). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Documentation des variables</h2>
+<a id="a5dff53f13903a56b8908bcb265b9a629" name="a5dff53f13903a56b8908bcb265b9a629"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dff53f13903a56b8908bcb265b9a629">&#9670;&#160;</a></span>theta</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float theta[15][3]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="../../dir_a357ef18bcbeaa7064e8857fcf3698ce.html">TronZZ</a></li><li class="navelem"><a class="el" href="../../dir_a9b5baafbd8e135133ad67a30c36c37a.html">tests</a></li><li class="navelem"><a class="el" href="../../d5/d7f/tests_8c.html">tests.c</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="../../doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>
