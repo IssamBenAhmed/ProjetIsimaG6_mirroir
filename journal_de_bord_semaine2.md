@@ -82,9 +82,14 @@
       *  Ici, nous observons que le temps d'exécution de l'entrainement avec la parallélisation est environ 5 à 6 fois plus rapide que l'entrainement sans la parallélisation .
 
 
+### Finalisation de jeu (le vendredi 26 juin) 
+*   **Réalisations du groupe :**
 
+  * **Amélioration de qualité d’animation de jeu**  
 
+  * **Arrangement de git pour le rendre plus clair** 
 
+ 
 
 
 
