@@ -7,7 +7,8 @@ TARGET := tronzz
 SRC := src/main.c \
        src/agent.c \
        src/mj.c \
-       src/graphisme.c
+       src/graphisme.c \
+       src/parallel.c
 
 OBJ := $(SRC:.c=.o)
 

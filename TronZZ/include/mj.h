@@ -134,46 +134,8 @@ void mettre_a_jour_monde_entrainement(int grille[WIDTH][HEIGHT],
                                       bool etats_vie[MAX_MOTOS + 1],
                                       EpisodeMemoire memoires[MAX_MOTOS + 1]);
 
-#ifdef PARALLEL
-/**
- * @brief Génère un entier pseudo-aléatoire thread-safe.
- * @param seed Pointeur vers la graine aléatoire.
- * @param max Valeur maximale exclusive de l'entier.
- * @return int Valeur aléatoire
- */
-int random_int_thread(unsigned int *seed, int max);
+void modifier_recompense(float recompense, FrameMemoire *frame);
 
-/**
- * @brief Initialise une nouvelle partie de manière thread-safe (graine locale).
- * @param grille La grille de jeu.
- * @param pos_motos Positions des motos.
- * @param dir_motos Directions des motos.
- * @param etats_vie État de vie des motos.
- * @param seed Pointeur vers la graine aléatoire du thread.
- */
-void initialiser_partie_thread(int grille[WIDTH][HEIGHT],
-                               int pos_motos[MAX_MOTOS + 1][2],
-                               int dir_motos[MAX_MOTOS + 1],
-                               bool etats_vie[MAX_MOTOS + 1],
-                               unsigned int *seed);
-
-/**
- * @brief Met à jour le monde de jeu d'une frame pour l'entraînement parallèle
- * de manière thread-safe.
- * @param grille La grille de jeu locale du thread.
- * @param pos_motos Positions locales des motos.
- * @param dir_motos Directions locales des motos.
- * @param etats_vie État de vie local des motos.
- * @param memoires Mémoires locales d'épisodes de tous les agents.
- * @param theta_local Matrice locale de poids theta de l'agent.
- * @param seed Pointeur vers la graine aléatoire locale.
- */
-void mettre_a_jour_monde_entrainement_thread(
-    int grille[WIDTH][HEIGHT], int pos_motos[MAX_MOTOS + 1][2],
-    int dir_motos[MAX_MOTOS + 1], bool etats_vie[MAX_MOTOS + 1],
-    EpisodeMemoire memoires[MAX_MOTOS + 1], float theta_local[15][3],
-    unsigned int *seed);
-#endif /* PARALLEL */
 #endif /* NO_REINFORCE */
 
 #endif /* MJ_H */

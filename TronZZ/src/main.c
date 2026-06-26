@@ -2,6 +2,7 @@
 #include "../include/config.h"
 #include "../include/graphisme.h"
 #include "../include/mj.h"
+#include "../include/parallel.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <stdbool.h>
@@ -9,118 +10,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-
-#ifdef PARALLEL
-#include <threads.h> // Nécessaire pour thrd_t, thrd_create, etc.
-
-typedef struct {
-  int id_thread;
-  long nb_episodes;
-  unsigned int seed;
-  float theta_local[15][3];
-  long somme_frames;
-  int max_frames;
-  long victoires;
-} ParamThread;
-
-static void copier_theta(float source[15][3], float destination[15][3]) {
-  for (int i = 0; i < 15; i++) {
-    for (int j = 0; j < 3; j++) {
-      destination[i][j] = source[i][j];
-    }
-  }
-}
-
-static int entrainer_thread(void *arg) {
-  ParamThread *p = (ParamThread *)arg;
-
-  int grid_local[WIDTH][HEIGHT];
-  int pos_motos_local[MAX_MOTOS + 1][2];
-  int dir_motos_local[MAX_MOTOS + 1];
-  bool moto_alive_local[MAX_MOTOS + 1];
-
-  EpisodeMemoire *memoires_local =
-      calloc(MAX_MOTOS + 1, sizeof(EpisodeMemoire));
-  if (memoires_local == NULL) {
-    return 1;
-  }
-
-  p->somme_frames = 0;
-  p->max_frames = 0;
-  p->victoires = 0;
-
-  for (long episode = 0; episode < p->nb_episodes; episode++) {
-    initialiser_partie_thread(grid_local, pos_motos_local, dir_motos_local,
-                              moto_alive_local, &p->seed);
-
-    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
-      memoires_local[i].taille = 0;
-    }
-
-    bool partie_continue = true;
-    int frames = 0;
-    int dernier_vivant = 0;
-
-    while (partie_continue) {
-      bool vie_avant[MAX_MOTOS + 1];
-      for (int i = 0; i <= MAX_MOTOS; i++) {
-        vie_avant[i] = moto_alive_local[i];
-      }
-
-      mettre_a_jour_monde_entrainement_thread(
-          grid_local, pos_motos_local, dir_motos_local, moto_alive_local,
-          memoires_local, p->theta_local, &p->seed);
-      frames++;
-
-      int nb_vivants = 0;
-      dernier_vivant = 0;
-
-      for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
-        if (vie_avant[i] && !moto_alive_local[i]) {
-          if (memoires_local[i].taille > 0) {
-            memoires_local[i].frames[memoires_local[i].taille - 1].recompense =
-                -100.0f;
-            maj_theta_thread(&memoires_local[i], ALPHA, 0.99f, p->theta_local);
-            memoires_local[i].taille = 0;
-          }
-        }
-        if (moto_alive_local[i]) {
-          nb_vivants++;
-          dernier_vivant = i;
-        }
-      }
-
-      if (nb_vivants <= 1 || frames >= 2000) {
-        partie_continue = false;
-      }
-    }
-
-    p->somme_frames += frames;
-    if (frames > p->max_frames) {
-      p->max_frames = frames;
-    }
-
-    if (dernier_vivant >= CELL_PLAYER && dernier_vivant <= CELL_AI_3) {
-      p->victoires++;
-    }
-
-    for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
-      if (moto_alive_local[i] && memoires_local[i].taille > 0) {
-        maj_theta_thread(&memoires_local[i], ALPHA, 0.99f, p->theta_local);
-      }
-    }
-
-    if ((episode + 1) % 1000 == 0 || episode + 1 == p->nb_episodes) {
-      printf("[thread %d] episode %ld / %ld termine\n", p->id_thread,
-             episode + 1, p->nb_episodes);
-      fflush(stdout);
-    }
-  }
-
-  free(memoires_local);
-  return 0;
-}
-#endif
 
 int main(int argc, char *argv[]) {
   int grid[WIDTH][HEIGHT] = {0};

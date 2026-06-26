@@ -88,38 +88,6 @@ float maj_theta(EpisodeMemoire *ep, float alpha, float gamma);
 
 extern float theta[15][3]; /**< Matrice globale de poids theta de l'agent */
 
-#ifdef PARALLEL
-/**
- * @brief Génère un nombre flottant pseudo-aléatoire thread-safe.
- * @param seed Pointeur vers la graine du générateur aléatoire.
- * @return float Valeur aléatoire dans [0, 1]
- */
-float random_float_thread(unsigned int *seed);
-
-/**
- * @brief Choisit une action de manière thread-safe selon une matrice de poids
- * locale.
- * @param p La perception courante.
- * @param mem_frame Pointeur vers la structure de mémoire de frame.
- * @param theta_local Matrice locale de poids theta.
- * @param seed Pointeur vers la graine aléatoire du thread.
- * @return int Action choisie
- */
-int choisir_action_thread(Perception p, FrameMemoire *mem_frame,
-                          float theta_local[15][3], unsigned int *seed);
-
-/**
- * @brief Met à jour les poids theta locaux de manière thread-safe à la fin d'un
- * épisode.
- * @param ep Pointeur vers la mémoire de l'épisode complété.
- * @param alpha Taux d'apprentissage.
- * @param gamma Facteur d'atténuation.
- * @param theta_local Matrice locale de poids theta à mettre à jour.
- * @return float Le score total (G0) de l'épisode.
- */
-float maj_theta_thread(EpisodeMemoire *ep, float alpha, float gamma,
-                       float theta_local[15][3]);
-#endif /* PARALLEL */
 #endif /* NO_REINFORCE */
 
 #endif /* AGENT_H */
