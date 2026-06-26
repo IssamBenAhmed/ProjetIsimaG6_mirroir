@@ -85,9 +85,9 @@
 ### Finalisation de jeu (le vendredi 26 juin) 
 *   **Réalisations du groupe :**
 
-  * **Amélioration de qualité d’animation de jeu**  
+    * **Amélioration de qualité d’animation de jeu**  
 
-  * **Arrangement de git pour le rendre plus clair** 
+    * **Arrangement de git pour le rendre plus clair** 
 
  
 
