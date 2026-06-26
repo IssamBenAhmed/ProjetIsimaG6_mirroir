@@ -1,7 +1,9 @@
 #include "graphisme.h"
 #include <SDL2/SDL_image.h>
+
 static SDL_Texture *textures_motos[MAX_MOTOS + 1] = {NULL};
 
+//les chemins des fichiers images
 static const char *fichiers_motos[MAX_MOTOS + 1] = {
     NULL,
     "assets/moto_joueur.png",
@@ -27,18 +29,18 @@ typedef struct Couleur {
     Uint8 a;
 } Couleur;
 
-static void set_couleur(SDL_Renderer *renderer, Couleur c)
+static void set_couleur(SDL_Renderer *renderer, Couleur c) // imposer une couleur
 {
     SDL_SetRenderDrawColor(renderer, c.r, c.g, c.b, c.a);
 }
 
-static void remplir_rect(SDL_Renderer *renderer, int x, int y, int w, int h)
+static void remplir_rect(SDL_Renderer *renderer, int x, int y, int w, int h)// remplir un rectangle complet 
 {
     SDL_Rect rect = {x, y, w, h};
     SDL_RenderFillRect(renderer, &rect);
 }
 
-static void remplir_rect_limite(SDL_Renderer *renderer, int x, int y, int w, int h)
+static void remplir_rect_limite(SDL_Renderer *renderer, int x, int y, int w, int h)// remplir un rectangle sans depasser les limites
 {
     if (x < 0) {
         w += x;
@@ -68,34 +70,34 @@ static void remplir_rect_limite(SDL_Renderer *renderer, int x, int y, int w, int
 static Couleur couleur_principale(int cellule)
 {
     if (cellule == CELL_PLAYER) {
-        return (Couleur){0, 240, 255, 255};
+        return (Couleur){0, 240, 255, 255};// Bleu clair 
     } else if (cellule == CELL_AI_1) {
-        return (Couleur){255, 160, 0, 255};
+        return (Couleur){255, 160, 0, 255};// orange nèon
     } else if (cellule == CELL_AI_2) {
-        return (Couleur){0, 255, 120, 255};
+        return (Couleur){0, 255, 120, 255};// vert néon
     }
 
-    return (Couleur){240, 80, 255, 255};
+    return (Couleur){240, 80, 255, 255};// violet/rose néon (=couleur lumineuse comme brillée dans le noir)
 }
 
-static Couleur couleur_lueur(int cellule)
+static Couleur couleur_lueur(int cellule) //(autour de la moto ou de sa trace, on voit une lumière colorée qui brille un peu.)
 {
     if (cellule == CELL_PLAYER) {
-        return (Couleur){0, 160, 255, 160};
+        return (Couleur){0, 160, 255, 160};//(bleu transparente)
     } else if (cellule == CELL_AI_1) {
-        return (Couleur){255, 110, 0, 160};
+        return (Couleur){255, 110, 0, 160};//(orange transparente)
     } else if (cellule == CELL_AI_2) {
-        return (Couleur){0, 230, 100, 160};
+        return (Couleur){0, 230, 100, 160};//(vert transparente)
     }
 
-    return (Couleur){220, 60, 255, 160};
+    return (Couleur){220, 60, 255, 160};//(violet transparente)
 }
 
-
+//true si toutes les images sont chargées et false s'il ya une erreur 
 bool initialiser_textures_motos(SDL_Renderer *renderer)
 {
     for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
-        SDL_Surface *surface = IMG_Load(fichiers_motos[i]);
+        SDL_Surface *surface = IMG_Load(fichiers_motos[i]);//on charge la moto sur la surface 
 
         if (surface == NULL) {
             fprintf(stderr, "erreur chargement image %s : %s\n",
@@ -108,8 +110,8 @@ bool initialiser_textures_motos(SDL_Renderer *renderer)
          * Rend le blanc transparent.
          * Utile si l'image a encore un fond blanc.
          */
-        Uint32 blanc = SDL_MapRGB(surface->format, 255, 255, 255);
-        SDL_SetColorKey(surface, SDL_TRUE, blanc);
+        Uint32 blanc = SDL_MapRGB(surface->format, 255, 255, 255);//crée la couleur blanche dans le format de l'image.Unit32 est utilisée dans SDL pour representer une couleur
+        SDL_SetColorKey(surface, SDL_TRUE, blanc); //Dans l’image surface, tous les pixels qui ont la couleur blanc deviennent transparents.
 
         textures_motos[i] = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
@@ -157,15 +159,12 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
                                int direction,
                                int cellule)
 {
-    if (textures_motos[cellule] == NULL) {
+    if (textures_motos[cellule] == NULL) // L'image n'a pas ete chargée 
+    {
         return;
     }
 
-    /*
-     * Moto plus grande.
-     * Avant : 3 * CELL_SIZE
-     * Maintenant : 5 * CELL_SIZE
-     */
+   
     int taille = CELL_SIZE * 5;
 
     SDL_Rect dest = {
@@ -185,13 +184,13 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
 }
 static void dessiner_fond(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);
+    SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);// fond noir bleu trés sombre
     SDL_RenderClear(renderer);
 
-    SDL_SetRenderDrawColor(renderer, 6, 18, 38, 255);
+    SDL_SetRenderDrawColor(renderer, 6, 18, 38, 255);// couleur sombre un peu plus clair 
     remplir_rect(renderer, 5, 5, WINDOW_WIDTH - 10, WINDOW_HEIGHT - 10);
 
-    SDL_SetRenderDrawColor(renderer, 0, 35, 60, 180);
+    SDL_SetRenderDrawColor(renderer, 0, 35, 60, 180);// bleu sombre semi transparent
 
     for (int y = 0; y < WINDOW_HEIGHT; y += 14) {
         SDL_RenderDrawLine(renderer, 0, y, WINDOW_WIDTH, y);
@@ -200,7 +199,7 @@ static void dessiner_fond(SDL_Renderer *renderer)
 
 static void dessiner_grille(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 0, 90, 130, 120);
+    SDL_SetRenderDrawColor(renderer, 0, 90, 130, 120);// bleu cyan sombre transparent
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
@@ -210,7 +209,7 @@ static void dessiner_grille(SDL_Renderer *renderer)
         SDL_RenderDrawLine(renderer, 0, y, WINDOW_WIDTH, y);
     }
 
-    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 190);
+    SDL_SetRenderDrawColor(renderer, 0, 220, 255, 190);// bleu clair lumineux
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE * 5) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
@@ -220,7 +219,7 @@ static void dessiner_grille(SDL_Renderer *renderer)
         SDL_RenderDrawLine(renderer, 0, y, WINDOW_WIDTH, y);
     }
 
-    SDL_SetRenderDrawColor(renderer, 180, 245, 255, 140);
+    SDL_SetRenderDrawColor(renderer, 180, 245, 255, 140);// cyan tres clair transparent
 
     for (int x = 0; x <= WINDOW_WIDTH; x += CELL_SIZE * 10) {
         SDL_RenderDrawLine(renderer, x, 0, x, WINDOW_HEIGHT);
