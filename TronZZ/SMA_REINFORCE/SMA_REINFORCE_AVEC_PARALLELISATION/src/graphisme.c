@@ -1,5 +1,6 @@
 #include "graphisme.h"
 #include <SDL2/SDL_image.h>
+
 static SDL_Texture *textures_motos[MAX_MOTOS + 1] = {NULL};
 
 //les chemins des fichiers images
@@ -13,11 +14,11 @@ static const char *fichiers_motos[MAX_MOTOS + 1] = {
 /*
  * graphisme.c
  * Style Tron :
- * - écran titre avant le jeu
+ * - �cran titre avant le jeu
  * - fond bleu sombre
  * - grille cyan visible
  * - traces lumineuses
- * - bordure néon
+ * - bordure n�on
  * - panneau WIN / LOSE
  */
 
@@ -71,15 +72,15 @@ static Couleur couleur_principale(int cellule)
     if (cellule == CELL_PLAYER) {
         return (Couleur){0, 240, 255, 255};// Bleu clair 
     } else if (cellule == CELL_AI_1) {
-        return (Couleur){255, 160, 0, 255};// orange nèon
+        return (Couleur){255, 160, 0, 255};// orange néon
     } else if (cellule == CELL_AI_2) {
         return (Couleur){0, 255, 120, 255};// vert néon
     }
 
-    return (Couleur){240, 80, 255, 255};// violet/rose néon (=couleur lumineuse comme brillée dans le noir)
+    return (Couleur){240, 80, 255, 255};// violet/rose n�on (=couleur lumineuse comme brill�e dans le noir)
 }
 
-static Couleur couleur_lueur(int cellule) //(autour de la moto ou de sa trace, on voit une lumière colorée qui brille un peu.)
+static Couleur couleur_lueur(int cellule) //(autour de la moto ou de sa trace, on voit une lumi�re color�e qui brille un peu.)
 {
     if (cellule == CELL_PLAYER) {
         return (Couleur){0, 160, 255, 160};//(bleu transparente)
@@ -92,7 +93,7 @@ static Couleur couleur_lueur(int cellule) //(autour de la moto ou de sa trace, o
     return (Couleur){220, 60, 255, 160};//(violet transparente)
 }
 
-//true si toutes les images sont chargées et false s'il ya une erreur 
+//true si toutes les images sont charg�es et false s'il ya une erreur 
 bool initialiser_textures_motos(SDL_Renderer *renderer)
 {
     for (int i = CELL_PLAYER; i <= CELL_AI_3; i++) {
@@ -109,8 +110,8 @@ bool initialiser_textures_motos(SDL_Renderer *renderer)
          * Rend le blanc transparent.
          * Utile si l'image a encore un fond blanc.
          */
-        Uint32 blanc = SDL_MapRGB(surface->format, 255, 255, 255);//crée la couleur blanche dans le format de l'image.Unit32 est utilisée dans SDL pour representer une couleur
-        SDL_SetColorKey(surface, SDL_TRUE, blanc); //Dans l’image surface, tous les pixels qui ont la couleur blanc deviennent transparents.
+        Uint32 blanc = SDL_MapRGB(surface->format, 255, 255, 255);//cr�e la couleur blanche dans le format de l'image.Unit32 est utilis�e dans SDL pour representer une couleur
+        SDL_SetColorKey(surface, SDL_TRUE, blanc); //Dans limage surface, tous les pixels qui ont la couleur blanc deviennent transparents.
 
         textures_motos[i] = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
@@ -158,7 +159,7 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
                                int direction,
                                int cellule)
 {
-    if (textures_motos[cellule] == NULL) // L'image n'a pas ete chargée 
+    if (textures_motos[cellule] == NULL) // L'image n'a pas ete charg�e 
     {
         return;
     }
@@ -167,23 +168,24 @@ static void dessiner_tete_moto(SDL_Renderer *renderer,
     int taille = CELL_SIZE * 5;
 
     SDL_Rect dest = {
-        x * CELL_SIZE - (taille - CELL_SIZE) / 2,
+        x * CELL_SIZE - (taille - CELL_SIZE) / 2,// l'image est affichée de x-2 à x+2
         y * CELL_SIZE - (taille - CELL_SIZE) / 2,
         taille,
         taille
     };
-
+//afficher une image + choisir sa taille + choisir sa position + la tourner + éventuellement la retourner
     SDL_RenderCopyEx(renderer,
                      textures_motos[cellule],
-                     NULL,
+                     NULL,// on prend toute l'image pas seulement une partie 
                      &dest,
-                     angle_direction(direction),
-                     NULL,
-                     SDL_FLIP_NONE);
+                     angle_direction(direction),//tourner l'image selon la direction de la moto
+                     NULL,// on tourne l'image autour de son centre normal
+                     SDL_FLIP_NONE);// on ne retourne pas l'image 
 }
+
 static void dessiner_fond(SDL_Renderer *renderer)
 {
-    SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);// fond noir bleu trés sombre
+    SDL_SetRenderDrawColor(renderer, 3, 8, 18, 255);// fond noir bleu tr�s sombre
     SDL_RenderClear(renderer);
 
     SDL_SetRenderDrawColor(renderer, 6, 18, 38, 255);// couleur sombre un peu plus clair 
@@ -273,49 +275,159 @@ static void dessiner_bordure(SDL_Renderer *renderer)
                        WINDOW_WIDTH - 1,
                        WINDOW_HEIGHT - l);
 }
+static Uint8 limiter_alpha(int valeur)
+{
+    if (valeur < 0) {
+        return 0;
+    }
+
+    if (valeur > 255) {
+        return 255;
+    }
+
+    return (Uint8)valeur;
+}
+// donner une couleur plus claire et plus lumineuse au milieu de la trace 
+static Couleur couleur_coeur_neon(int cellule)
+{
+    if (cellule == CELL_PLAYER) {
+        return (Couleur){180, 255, 255, 255};// bleu trés clair presque blanc
+    } else if (cellule == CELL_AI_1) {
+        return (Couleur){255, 245, 80, 255};// orange trés lumineux 
+    } else if (cellule == CELL_AI_2) {
+        return (Couleur){160, 255, 120, 255};// vert clair lumineux 
+    }
+
+    return (Couleur){255, 180, 255, 255};// violet clair
+}
 
 static void dessiner_cellule(SDL_Renderer *renderer, int x, int y, int cellule)
 {
-    int px = x * CELL_SIZE;
+    int px = x * CELL_SIZE; //SDL dessine avec des pixels 
     int py = y * CELL_SIZE;
 
     Couleur principale = couleur_principale(cellule);
     Couleur lueur = couleur_lueur(cellule);
+    Couleur coeur = couleur_coeur_neon(cellule);
+
+    Uint32 ticks = SDL_GetTicks(); // le temps depuis le lancement du jeu 
 
     /*
-     * Grande lueur autour de la trace.
+     * Animation rapide : la lumiere circule dans la trace.
      */
+    int temps = (int)(ticks / 2);// pour controler la vitesse de l'animation /2 rapide , /10 lente
+    int phase = (x * 4 + y * 6 + temps) % 18;// fait bouger la lumiére avec le temps décale les cases entre elles, pour qu’elles ne brillent pas toutes en même temps.
+
+    int bonus_lumiere = 0;
+
+    if (phase < 5) {
+        bonus_lumiere = 130 - phase * 20;
+    } else if (phase > 13) {
+        bonus_lumiere = (phase - 13) * 25;
+    }
+
+    /*
+     * Mode ADD pour donner un effet tube neon.
+     */
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_ADD);// on active un mode tres lumineux , les couleurs s'additionnent 
+
+    /*
+     * Grand halo externe, reduit un peu pour voir les cases vides.
+     */
+    lueur.a = limiter_alpha(45 + bonus_lumiere / 4);
     set_couleur(renderer, lueur);
-    remplir_rect_limite(renderer, px - 2, py - 2, CELL_SIZE + 4, CELL_SIZE + 4);
+    remplir_rect_limite(renderer,
+                        px - 7,
+                        py - 7,
+                        CELL_SIZE + 14,
+                        CELL_SIZE + 14);
 
     /*
-     * Lueur plus forte.
+     * Halo moyen.
      */
-    lueur.a = 210;
+    lueur.a = limiter_alpha(85 + bonus_lumiere / 3);
     set_couleur(renderer, lueur);
-    remplir_rect_limite(renderer, px - 1, py - 1, CELL_SIZE + 2, CELL_SIZE + 2);
+    remplir_rect_limite(renderer,
+                        px - 4,
+                        py - 4,
+                        CELL_SIZE + 8,
+                        CELL_SIZE + 8);
 
     /*
-     * Trace principale continue.
+     * Halo proche.
      */
+    lueur.a = limiter_alpha(130 + bonus_lumiere / 2);
+    set_couleur(renderer, lueur);
+    remplir_rect_limite(renderer,
+                        px - 1,
+                        py - 1,
+                        CELL_SIZE + 2,
+                        CELL_SIZE + 2);
+
+    /*
+     * Trace principale coloree.
+     */
+    principale.a = 255;
     set_couleur(renderer, principale);
-    remplir_rect_limite(renderer, px, py, CELL_SIZE, CELL_SIZE);
+    remplir_rect_limite(renderer,
+                        px,
+                        py,
+                        CELL_SIZE,
+                        CELL_SIZE);
 
     /*
-     * Petit reflet clair au milieu.
+     * Coeur lumineux de la trace.
      */
-    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 90);
+    coeur.a = 255;
+    set_couleur(renderer, coeur);
+    remplir_rect_limite(renderer,
+                        px,
+                        py,
+                        CELL_SIZE,
+                        CELL_SIZE);
+
+    /*
+     * Reflet blanc au centre.
+     */
+    SDL_SetRenderDrawColor(renderer,
+                           255,
+                           255,
+                           255,
+                           limiter_alpha(90 + bonus_lumiere));
+
     remplir_rect_limite(renderer,
                         px + CELL_SIZE / 4,
                         py + CELL_SIZE / 4,
                         CELL_SIZE / 2,
                         CELL_SIZE / 2);
-}
 
-        
+    /*
+     * Petit flash quand la vague passe.
+     si la vague lumineuse passe ici, on ajoute un flash.
+     */
+    
+    if (bonus_lumiere > 70) {
+        SDL_SetRenderDrawColor(renderer,
+                               255,
+                               255,
+                               255,
+                               120);
+
+        remplir_rect_limite(renderer,
+                            px + 1,
+                            py + 1,
+                            CELL_SIZE - 2,
+                            CELL_SIZE - 2);
+    }
+
+    /*
+     * Retour au mode normal.
+     */
+    SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+}
 /*
  * Dessine le mot TRON avec des rectangles.
- * On évite SDL_ttf et les images.
+ * On �vite SDL_ttf et les images.
  */
 static void dessiner_mot_tron(SDL_Renderer *renderer, int x, int y, int s)
 {
@@ -382,7 +494,7 @@ static void dessiner_bouton_start(SDL_Renderer *renderer, int x, int y)
     SDL_RenderDrawLine(renderer, x + 80, y + 31, x + 100, y + 22);
 
     /*
-     * Ligne décorative.
+     * Ligne d�corative.
      */
     SDL_RenderDrawLine(renderer, x + 120, y + 22, x + 185, y + 22);
     SDL_RenderDrawLine(renderer, x + 185, y + 22, x + 175, y + 14);
@@ -390,7 +502,7 @@ static void dessiner_bouton_start(SDL_Renderer *renderer, int x, int y)
 }
 
 /*
- * Écran titre avant le début du jeu.
+ * �cran titre avant le d�but du jeu.
  */
 bool afficher_ecran_titre(SDL_Window *window, SDL_Renderer *renderer)
 {
@@ -463,7 +575,7 @@ bool afficher_ecran_titre(SDL_Window *window, SDL_Renderer *renderer)
         SDL_RenderDrawRect(renderer, &interne);
 
         /*
-         * Lueur derrière le logo.
+         * Lueur derri�re le logo.
          */
         SDL_SetRenderDrawColor(renderer, 0, 150, 255, 45);
         remplir_rect(renderer,
@@ -637,7 +749,7 @@ void dessiner_panneau_fin(SDL_Renderer *renderer, bool joueur_gagne)
     };
 
     /*
-     * Couleur différente selon le résultat.
+     * Couleur diff�rente selon le r�sultat.
      */
     if (joueur_gagne) {
         for (int i = 0; i < 8; i++) {
@@ -690,7 +802,7 @@ void dessiner_panneau_fin(SDL_Renderer *renderer, bool joueur_gagne)
     SDL_RenderDrawRect(renderer, &interne);
 
     /*
-     * Lignes décoratives.
+     * Lignes d�coratives.
      */
     if (joueur_gagne) {
         SDL_SetRenderDrawColor(renderer, 0, 240, 255, 180);
